@@ -45,9 +45,9 @@ class MessageItem
     //文字类型消息
     convenience init(body:NSString, user:UserInfo, date:NSDate, mtype:ChatType)
     {
-        let font =  UIFont.boldSystemFontOfSize(12)
+        let font =  UIFont.boldSystemFontOfSize(16)
         
-        let width =  225, height = 10000.0
+        let width =  160, height = 10000.0
         
         let atts =  [NSFontAttributeName: font]
         
@@ -71,10 +71,10 @@ class MessageItem
     {
         var size = image.size
         //等比缩放
-        if (size.width > 220)
+        if (size.width > 180)
         {
-            size.height /= (size.width / 220);
-            size.width = 220;
+            size.height /= (size.width / 180);
+            size.width = 180;
         }
         let imageView = UIImageView(frame:CGRectMake(0, 0, size.width, size.height))
         imageView.image = image
