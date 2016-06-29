@@ -10,7 +10,6 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupChatTable()
         setupSendPanel()
     }
