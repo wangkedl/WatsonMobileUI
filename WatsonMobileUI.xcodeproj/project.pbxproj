@@ -12,8 +12,19 @@
 		5A35D47A1C47B25600200076 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A35D4781C47B25600200076 /* Main.storyboard */; };
 		5A35D47C1C47B25600200076 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A35D47B1C47B25600200076 /* Assets.xcassets */; };
 		5A35D47F1C47B25600200076 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A35D47D1C47B25600200076 /* LaunchScreen.storyboard */; };
-		5A35D48A1C47B25600200076 /* hangge_559_2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A35D4891C47B25600200076 /* hangge_559_2Tests.swift */; };
-		5A35D4951C47B25600200076 /* hangge_559_2UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A35D4941C47B25600200076 /* hangge_559_2UITests.swift */; };
+		5A35D4AA1C47B27400200076 /* luguhu.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 5A35D4A31C47B27400200076 /* luguhu.jpeg */; };
+		5A35D4AB1C47B27400200076 /* mebubble.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A35D4A41C47B27400200076 /* mebubble.png */; };
+		5A35D4AC1C47B27400200076 /* mebubble@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A35D4A51C47B27400200076 /* mebubble@2x.png */; };
+		5A35D4AD1C47B27400200076 /* xiaohua.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A35D4A61C47B27400200076 /* xiaohua.png */; };
+		5A35D4AE1C47B27400200076 /* xiaoming.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A35D4A71C47B27400200076 /* xiaoming.png */; };
+		5A35D4AF1C47B27400200076 /* yoububble.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A35D4A81C47B27400200076 /* yoububble.png */; };
+		5A35D4B01C47B27400200076 /* yoububble@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5A35D4A91C47B27400200076 /* yoububble@2x.png */; };
+		5A35D4B41C47B29400200076 /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A35D4B21C47B29400200076 /* TableView.swift */; };
+		5A35D4B51C47B29400200076 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A35D4B31C47B29400200076 /* TableViewCell.swift */; };
+		5A35D4B91C47B2BD00200076 /* ChatDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A35D4B71C47B2BD00200076 /* ChatDataSource.swift */; };
+		5A35D4BA1C47B2BD00200076 /* MessageItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A35D4B81C47B2BD00200076 /* MessageItem.swift */; };
+		5A35D4BC1C47B2F000200076 /* TableHeaderViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A35D4BB1C47B2F000200076 /* TableHeaderViewCell.swift */; };
+		5A35D4BE1C47B30100200076 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A35D4BD1C47B30100200076 /* UserInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,19 +45,28 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5A35D4711C47B25600200076 /* hangge_559_2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hangge_559_2.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5A35D4711C47B25600200076 /* WatsonMobileUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatsonMobileUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A35D4741C47B25600200076 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5A35D4761C47B25600200076 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		5A35D4791C47B25600200076 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5A35D47B1C47B25600200076 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5A35D47E1C47B25600200076 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5A35D4801C47B25600200076 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5A35D4851C47B25600200076 /* hangge_559_2Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = hangge_559_2Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5A35D4891C47B25600200076 /* hangge_559_2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hangge_559_2Tests.swift; sourceTree = "<group>"; };
-		5A35D48B1C47B25600200076 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5A35D4901C47B25600200076 /* hangge_559_2UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = hangge_559_2UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5A35D4941C47B25600200076 /* hangge_559_2UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = hangge_559_2UITests.swift; sourceTree = "<group>"; };
-		5A35D4961C47B25600200076 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5A35D4851C47B25600200076 /* WatsonMobileUI.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WatsonMobileUI.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5A35D4901C47B25600200076 /* WatsonMobileUI.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WatsonMobileUI.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5A35D4A31C47B27400200076 /* luguhu.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = luguhu.jpeg; sourceTree = "<group>"; };
+		5A35D4A41C47B27400200076 /* mebubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mebubble.png; sourceTree = "<group>"; };
+		5A35D4A51C47B27400200076 /* mebubble@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mebubble@2x.png"; sourceTree = "<group>"; };
+		5A35D4A61C47B27400200076 /* xiaohua.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xiaohua.png; sourceTree = "<group>"; };
+		5A35D4A71C47B27400200076 /* xiaoming.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = xiaoming.png; sourceTree = "<group>"; };
+		5A35D4A81C47B27400200076 /* yoububble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yoububble.png; sourceTree = "<group>"; };
+		5A35D4A91C47B27400200076 /* yoububble@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yoububble@2x.png"; sourceTree = "<group>"; };
+		5A35D4B21C47B29400200076 /* TableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
+		5A35D4B31C47B29400200076 /* TableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		5A35D4B71C47B2BD00200076 /* ChatDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatDataSource.swift; sourceTree = "<group>"; };
+		5A35D4B81C47B2BD00200076 /* MessageItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageItem.swift; sourceTree = "<group>"; };
+		5A35D4BB1C47B2F000200076 /* TableHeaderViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableHeaderViewCell.swift; sourceTree = "<group>"; };
+		5A35D4BD1C47B30100200076 /* UserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,9 +97,7 @@
 		5A35D4681C47B25600200076 = {
 			isa = PBXGroup;
 			children = (
-				5A35D4731C47B25600200076 /* hangge_559_2 */,
-				5A35D4881C47B25600200076 /* hangge_559_2Tests */,
-				5A35D4931C47B25600200076 /* hangge_559_2UITests */,
+				5A35D4731C47B25600200076 /* WatsonMobileUI */,
 				5A35D4721C47B25600200076 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -87,16 +105,19 @@
 		5A35D4721C47B25600200076 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5A35D4711C47B25600200076 /* hangge_559_2.app */,
-				5A35D4851C47B25600200076 /* hangge_559_2Tests.xctest */,
-				5A35D4901C47B25600200076 /* hangge_559_2UITests.xctest */,
+				5A35D4711C47B25600200076 /* WatsonMobileUI.app */,
+				5A35D4851C47B25600200076 /* WatsonMobileUI.xctest */,
+				5A35D4901C47B25600200076 /* WatsonMobileUI.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		5A35D4731C47B25600200076 /* hangge_559_2 */ = {
+		5A35D4731C47B25600200076 /* WatsonMobileUI */ = {
 			isa = PBXGroup;
 			children = (
+				5A35D4B61C47B2BD00200076 /* model */,
+				5A35D4B11C47B29400200076 /* view */,
+				5A35D4A21C47B27400200076 /* images */,
 				5A35D4741C47B25600200076 /* AppDelegate.swift */,
 				5A35D4761C47B25600200076 /* ViewController.swift */,
 				5A35D4781C47B25600200076 /* Main.storyboard */,
@@ -104,33 +125,49 @@
 				5A35D47D1C47B25600200076 /* LaunchScreen.storyboard */,
 				5A35D4801C47B25600200076 /* Info.plist */,
 			);
-			path = hangge_559_2;
+			path = WatsonMobileUI;
 			sourceTree = "<group>";
 		};
-		5A35D4881C47B25600200076 /* hangge_559_2Tests */ = {
+		5A35D4A21C47B27400200076 /* images */ = {
 			isa = PBXGroup;
 			children = (
-				5A35D4891C47B25600200076 /* hangge_559_2Tests.swift */,
-				5A35D48B1C47B25600200076 /* Info.plist */,
+				5A35D4A31C47B27400200076 /* luguhu.jpeg */,
+				5A35D4A41C47B27400200076 /* mebubble.png */,
+				5A35D4A51C47B27400200076 /* mebubble@2x.png */,
+				5A35D4A61C47B27400200076 /* xiaohua.png */,
+				5A35D4A71C47B27400200076 /* xiaoming.png */,
+				5A35D4A81C47B27400200076 /* yoububble.png */,
+				5A35D4A91C47B27400200076 /* yoububble@2x.png */,
 			);
-			path = hangge_559_2Tests;
+			path = images;
 			sourceTree = "<group>";
 		};
-		5A35D4931C47B25600200076 /* hangge_559_2UITests */ = {
+		5A35D4B11C47B29400200076 /* view */ = {
 			isa = PBXGroup;
 			children = (
-				5A35D4941C47B25600200076 /* hangge_559_2UITests.swift */,
-				5A35D4961C47B25600200076 /* Info.plist */,
+				5A35D4B21C47B29400200076 /* TableView.swift */,
+				5A35D4BB1C47B2F000200076 /* TableHeaderViewCell.swift */,
+				5A35D4B31C47B29400200076 /* TableViewCell.swift */,
 			);
-			path = hangge_559_2UITests;
+			path = view;
+			sourceTree = "<group>";
+		};
+		5A35D4B61C47B2BD00200076 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				5A35D4BD1C47B30100200076 /* UserInfo.swift */,
+				5A35D4B71C47B2BD00200076 /* ChatDataSource.swift */,
+				5A35D4B81C47B2BD00200076 /* MessageItem.swift */,
+			);
+			path = model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5A35D4701C47B25600200076 /* hangge_559_2 */ = {
+		5A35D4701C47B25600200076 /* WatsonMobileUI */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5A35D4991C47B25600200076 /* Build configuration list for PBXNativeTarget "hangge_559_2" */;
+			buildConfigurationList = 5A35D4991C47B25600200076 /* Build configuration list for PBXNativeTarget "WatsonMobileUI" */;
 			buildPhases = (
 				5A35D46D1C47B25600200076 /* Sources */,
 				5A35D46E1C47B25600200076 /* Frameworks */,
@@ -140,14 +177,14 @@
 			);
 			dependencies = (
 			);
-			name = hangge_559_2;
+			name = WatsonMobileUI;
 			productName = hangge_559_2;
-			productReference = 5A35D4711C47B25600200076 /* hangge_559_2.app */;
+			productReference = 5A35D4711C47B25600200076 /* WatsonMobileUI.app */;
 			productType = "com.apple.product-type.application";
 		};
-		5A35D4841C47B25600200076 /* hangge_559_2Tests */ = {
+		5A35D4841C47B25600200076 /* WatsonMobileUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5A35D49C1C47B25700200076 /* Build configuration list for PBXNativeTarget "hangge_559_2Tests" */;
+			buildConfigurationList = 5A35D49C1C47B25700200076 /* Build configuration list for PBXNativeTarget "WatsonMobileUITests" */;
 			buildPhases = (
 				5A35D4811C47B25600200076 /* Sources */,
 				5A35D4821C47B25600200076 /* Frameworks */,
@@ -158,14 +195,14 @@
 			dependencies = (
 				5A35D4871C47B25600200076 /* PBXTargetDependency */,
 			);
-			name = hangge_559_2Tests;
+			name = WatsonMobileUITests;
 			productName = hangge_559_2Tests;
-			productReference = 5A35D4851C47B25600200076 /* hangge_559_2Tests.xctest */;
+			productReference = 5A35D4851C47B25600200076 /* WatsonMobileUI.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		5A35D48F1C47B25600200076 /* hangge_559_2UITests */ = {
+		5A35D48F1C47B25600200076 /* WatsonMobileUIUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5A35D49F1C47B25700200076 /* Build configuration list for PBXNativeTarget "hangge_559_2UITests" */;
+			buildConfigurationList = 5A35D49F1C47B25700200076 /* Build configuration list for PBXNativeTarget "WatsonMobileUIUITests" */;
 			buildPhases = (
 				5A35D48C1C47B25600200076 /* Sources */,
 				5A35D48D1C47B25600200076 /* Frameworks */,
@@ -176,9 +213,9 @@
 			dependencies = (
 				5A35D4921C47B25600200076 /* PBXTargetDependency */,
 			);
-			name = hangge_559_2UITests;
+			name = WatsonMobileUIUITests;
 			productName = hangge_559_2UITests;
-			productReference = 5A35D4901C47B25600200076 /* hangge_559_2UITests.xctest */;
+			productReference = 5A35D4901C47B25600200076 /* WatsonMobileUI.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -193,7 +230,7 @@
 				TargetAttributes = {
 					5A35D4701C47B25600200076 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = YTKU6P6A26;
+						DevelopmentTeam = C5SR8TD32J;
 					};
 					5A35D4841C47B25600200076 = {
 						CreatedOnToolsVersion = 7.2;
@@ -207,7 +244,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 5A35D46C1C47B25600200076 /* Build configuration list for PBXProject "hangge_559_2" */;
+			buildConfigurationList = 5A35D46C1C47B25600200076 /* Build configuration list for PBXProject "WatsonMobileUI" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -220,9 +257,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5A35D4701C47B25600200076 /* hangge_559_2 */,
-				5A35D4841C47B25600200076 /* hangge_559_2Tests */,
-				5A35D48F1C47B25600200076 /* hangge_559_2UITests */,
+				5A35D4701C47B25600200076 /* WatsonMobileUI */,
+				5A35D4841C47B25600200076 /* WatsonMobileUITests */,
+				5A35D48F1C47B25600200076 /* WatsonMobileUIUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -232,8 +269,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A35D4AF1C47B27400200076 /* yoububble.png in Resources */,
 				5A35D47F1C47B25600200076 /* LaunchScreen.storyboard in Resources */,
+				5A35D4AA1C47B27400200076 /* luguhu.jpeg in Resources */,
+				5A35D4AC1C47B27400200076 /* mebubble@2x.png in Resources */,
+				5A35D4AE1C47B27400200076 /* xiaoming.png in Resources */,
+				5A35D4AB1C47B27400200076 /* mebubble.png in Resources */,
 				5A35D47C1C47B25600200076 /* Assets.xcassets in Resources */,
+				5A35D4AD1C47B27400200076 /* xiaohua.png in Resources */,
+				5A35D4B01C47B27400200076 /* yoububble@2x.png in Resources */,
 				5A35D47A1C47B25600200076 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -260,7 +304,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A35D4771C47B25600200076 /* ViewController.swift in Sources */,
+				5A35D4B51C47B29400200076 /* TableViewCell.swift in Sources */,
+				5A35D4BA1C47B2BD00200076 /* MessageItem.swift in Sources */,
+				5A35D4B41C47B29400200076 /* TableView.swift in Sources */,
+				5A35D4BE1C47B30100200076 /* UserInfo.swift in Sources */,
 				5A35D4751C47B25600200076 /* AppDelegate.swift in Sources */,
+				5A35D4BC1C47B2F000200076 /* TableHeaderViewCell.swift in Sources */,
+				5A35D4B91C47B2BD00200076 /* ChatDataSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,7 +318,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5A35D48A1C47B25600200076 /* hangge_559_2Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,7 +325,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5A35D4951C47B25600200076 /* hangge_559_2UITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,12 +333,12 @@
 /* Begin PBXTargetDependency section */
 		5A35D4871C47B25600200076 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 5A35D4701C47B25600200076 /* hangge_559_2 */;
+			target = 5A35D4701C47B25600200076 /* WatsonMobileUI */;
 			targetProxy = 5A35D4861C47B25600200076 /* PBXContainerItemProxy */;
 		};
 		5A35D4921C47B25600200076 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 5A35D4701C47B25600200076 /* hangge_559_2 */;
+			target = 5A35D4701C47B25600200076 /* WatsonMobileUI */;
 			targetProxy = 5A35D4911C47B25600200076 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -402,10 +450,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = hangge_559_2/Info.plist;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = "$(SRCROOT)/WatsonMobileUI/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.hangge.hangge-559-2";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ibm.watson;
+				PRODUCT_NAME = WatsonMobileUI;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -413,10 +464,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = hangge_559_2/Info.plist;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = "$(SRCROOT)/WatsonMobileUI/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.hangge.hangge-559-2";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ibm.watson;
+				PRODUCT_NAME = WatsonMobileUI;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -427,8 +481,8 @@
 				INFOPLIST_FILE = hangge_559_2Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.hangge.hangge-559-2Tests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/hangge_559_2.app/hangge_559_2";
+				PRODUCT_NAME = WatsonMobileUI;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WatsonMobileUI.app/WatsonMobileUI";
 			};
 			name = Debug;
 		};
@@ -439,8 +493,8 @@
 				INFOPLIST_FILE = hangge_559_2Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.hangge.hangge-559-2Tests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/hangge_559_2.app/hangge_559_2";
+				PRODUCT_NAME = WatsonMobileUI;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WatsonMobileUI.app/WatsonMobileUI";
 			};
 			name = Release;
 		};
@@ -450,7 +504,7 @@
 				INFOPLIST_FILE = hangge_559_2UITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.hangge.hangge-559-2UITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = WatsonMobileUI;
 				TEST_TARGET_NAME = hangge_559_2;
 				USES_XCTRUNNER = YES;
 			};
@@ -462,7 +516,7 @@
 				INFOPLIST_FILE = hangge_559_2UITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.hangge.hangge-559-2UITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = WatsonMobileUI;
 				TEST_TARGET_NAME = hangge_559_2;
 				USES_XCTRUNNER = YES;
 			};
@@ -471,7 +525,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5A35D46C1C47B25600200076 /* Build configuration list for PBXProject "hangge_559_2" */ = {
+		5A35D46C1C47B25600200076 /* Build configuration list for PBXProject "WatsonMobileUI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5A35D4971C47B25600200076 /* Debug */,
@@ -480,29 +534,32 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5A35D4991C47B25600200076 /* Build configuration list for PBXNativeTarget "hangge_559_2" */ = {
+		5A35D4991C47B25600200076 /* Build configuration list for PBXNativeTarget "WatsonMobileUI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5A35D49A1C47B25700200076 /* Debug */,
 				5A35D49B1C47B25700200076 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
-		5A35D49C1C47B25700200076 /* Build configuration list for PBXNativeTarget "hangge_559_2Tests" */ = {
+		5A35D49C1C47B25700200076 /* Build configuration list for PBXNativeTarget "WatsonMobileUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5A35D49D1C47B25700200076 /* Debug */,
 				5A35D49E1C47B25700200076 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
-		5A35D49F1C47B25700200076 /* Build configuration list for PBXNativeTarget "hangge_559_2UITests" */ = {
+		5A35D49F1C47B25700200076 /* Build configuration list for PBXNativeTarget "WatsonMobileUIUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5A35D4A01C47B25700200076 /* Debug */,
 				5A35D4A11C47B25700200076 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
