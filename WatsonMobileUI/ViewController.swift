@@ -19,10 +19,9 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
         let screenWidth = UIScreen.mainScreen().bounds.width
         let sendView = UIView(frame:CGRectMake(0,self.view.frame.size.height - 56,screenWidth,56))
         
-        sendView.backgroundColor=UIColor.lightGrayColor()
-        sendView.alpha=0.9
+        sendView.backgroundColor=UIColor(red:0.1, green:0.1, blue:0.1, alpha:0.1)
         
-        txtMsg = UITextField(frame:CGRectMake(7,10,screenWidth - 95,36))
+        txtMsg = UITextField(frame:CGRectMake(42,10,screenWidth - 95,36))
         txtMsg.backgroundColor = UIColor.whiteColor()
         txtMsg.textColor=UIColor.blackColor()
         txtMsg.font=UIFont.boldSystemFontOfSize(12)
@@ -34,13 +33,17 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
         sendView.addSubview(txtMsg)
         self.view.addSubview(sendView)
         
-        let sendButton = UIButton(frame:CGRectMake(screenWidth - 80,10,72,36))
-        sendButton.backgroundColor=UIColor(red: 0x37/255, green: 0xba/255, blue: 0x46/255, alpha: 1)
-        sendButton.addTarget(self, action:#selector(ViewController.sendMessage) ,
+        let mircoButton = UIButton(frame:CGRectMake(5,10,40,35))
+        mircoButton.addTarget(self, action:#selector(ViewController.sendMessage) ,
+                            forControlEvents:UIControlEvents.TouchUpInside)
+        mircoButton.setImage(UIImage(named:"mirco"),forState:UIControlState.Normal)
+        sendView.addSubview(mircoButton)
+        
+        let addButton = UIButton(frame:CGRectMake(screenWidth - 45,12,33,30))
+        addButton.addTarget(self, action:#selector(ViewController.sendMessage) ,
                              forControlEvents:UIControlEvents.TouchUpInside)
-        sendButton.layer.cornerRadius=6.0
-        sendButton.setTitle("发送", forState:UIControlState.Normal)
-        sendView.addSubview(sendButton)
+        addButton.setImage(UIImage(named:"add1"),forState:UIControlState.Normal)
+        sendView.addSubview(addButton)
     }
     
     func textFieldShouldReturn(textField:UITextField) -> Bool
