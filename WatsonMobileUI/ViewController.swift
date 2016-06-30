@@ -57,15 +57,17 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
     {
         let sender = txtMsg
         let thisChat =  MessageItem(body:sender.text!, user:me, date:NSDate(), mtype:ChatType.Mine)
-        let thatChat =  MessageItem(body:"你说的是：\(sender.text!)", user:Watson, date:NSDate(), mtype:ChatType.Someone)
         
         Chats.addObject(thisChat)
-        Chats.addObject(thatChat)
         self.tableView.chatDataSource = self
         self.tableView.reloadData()
-        
         sender.resignFirstResponder()
         sender.text = ""
+        
+        
+        let url = "http://watsonserver.mybluemix.net/sample"
+        requestUrl(url)
+        
     }
     
     func setupChatTable()
@@ -103,5 +105,25 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    func requestUrl(urlString:String) ->  Void {
+        let URL = NSURL(string:urlString)
+        let urlRequest = NSURLRequest(URL: URL!)
+        NSURLConnection.sendAsynchronousRequest(urlRequest,queue:NSOperationQueue.mainQueue(),completionHandler:{
+            (response,data,error)-> Void in
+            if error == nil && data?.length > 0{
+                let datastring = String(data:data!, encoding: NSUTF8StringEncoding)
+                    let thatChat =  MessageItem(body:"\(datastring!)", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
+                self.Chats.addObject(thatChat)
+                self.tableView.chatDataSource = self
+                self.tableView.reloadData()
+
+                
+
+            }else{
+             print(error)
+            }
+        })
     }
 }
