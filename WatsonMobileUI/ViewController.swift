@@ -77,23 +77,10 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
         me = UserInfo(name:"Xiaoming" ,logo:("xiaohua.png"))
         Watson  = UserInfo(name:"Xiaohua", logo:("earth.png"))
         
-        
-        let first =  MessageItem(body:"嘿，这张照片咋样，我在泸沽湖拍的呢！", user:me,  date:NSDate(timeIntervalSinceNow:-600), mtype:ChatType.Mine)
-        
-        let second =  MessageItem(image:UIImage(named:"luguhu.jpeg")!,user:me, date:NSDate(timeIntervalSinceNow:-290), mtype:ChatType.Mine)
-        
-        let third =  MessageItem(body:"太赞了，我也想去那看看呢！",user:Watson, date:NSDate(timeIntervalSinceNow:-60), mtype:ChatType.Someone)
-        
-        let fouth =  MessageItem(body:"嗯，下次我们一起去吧！",user:me, date:NSDate(timeIntervalSinceNow:-20), mtype:ChatType.Mine)
-        
-        let fifth =  MessageItem(body:"好的，一定！",user:Watson, date:NSDate(timeIntervalSinceNow:0), mtype:ChatType.Someone)
-        
-        let zero =  MessageItem(body:"最近去哪玩了？", user:Watson,  date:NSDate(timeIntervalSinceNow:-96400), mtype:ChatType.Someone)
-        
-        let zero1 =  MessageItem(body:"去了趟云南，明天发照片给你哈？", user:me,  date:NSDate(timeIntervalSinceNow:-86400), mtype:ChatType.Mine)
+        let zero =  MessageItem(body:"Hi Dear,What can I do for you!", user:Watson,  date:NSDate(timeIntervalSinceNow:0), mtype:ChatType.Someone)
         
         Chats = NSMutableArray()
-        Chats.addObjectsFromArray([first,second, third, fouth, fifth, zero, zero1])
+        Chats.addObjectsFromArray([zero])
         
         //set the chatDataSource
         self.tableView.chatDataSource = self

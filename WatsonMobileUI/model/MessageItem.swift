@@ -45,7 +45,7 @@ class MessageItem
     //文字类型消息
     convenience init(body:NSString, user:UserInfo, date:NSDate, mtype:ChatType)
     {
-        let font =  UIFont.boldSystemFontOfSize(16)
+        let font =  UIFont.systemFontOfSize(16)
         
         let width =  160, height = 10000.0
         

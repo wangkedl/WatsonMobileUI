@@ -60,24 +60,20 @@ class TableView:UITableView,UITableViewDelegate, UITableViewDataSource
             if(count > 0)
             {
                 let bubbleData =  NSMutableArray(capacity:count)
-                
-                for (var i = 0; i < count; i++)
-                {
+                for i in 0..<count{
                     let object =  self.chatDataSource.chatTableView(self, dataForRow:i)
                     bubbleData.addObject(object)
                 }
                 bubbleData.sortUsingComparator(sortDate)
                 
                 var last =  ""
-                
                 var currentSection = NSMutableArray()
                 // 创建一个日期格式器
                 let dformatter = NSDateFormatter()
                 // 为日期格式器设置格式字符串
                 dformatter.dateFormat = "dd"
                 
-                for (var i = 0; i < count; i++)
-                {
+                for i in 0..<count{
                     let data =  bubbleData[i] as! MessageItem
                     // 使用日期格式器格式化日期，日期不同，就新分组
                     let datestr = dformatter.stringFromDate(data.date)
@@ -144,7 +140,6 @@ class TableView:UITableView,UITableViewDelegate, UITableViewDataSource
         if (indexPath.row == 0)
         {
             let cellId = "HeaderCell"
-            
             let hcell =  TableHeaderViewCell(reuseIdentifier:cellId)
             let section =  self.bubbleSection[indexPath.section] as! NSMutableArray
             let data = section[indexPath.row] as! MessageItem
@@ -154,10 +149,8 @@ class TableView:UITableView,UITableViewDelegate, UITableViewDataSource
         }
         // Standard
         let cellId = "ChatCell"
-        
         let section =  self.bubbleSection[indexPath.section] as! NSMutableArray
-        let data = section[indexPath.row - 1] 
-        
+        let data = section[indexPath.row - 1]
         let cell =  TableViewCell(data:data as! MessageItem, reuseIdentifier:cellId)
         
         return cell
