@@ -45,15 +45,12 @@ class MessageItem
     //文字类型消息
     convenience init(body:NSString, user:UserInfo, date:NSDate, mtype:ChatType)
     {
-        let font =  UIFont.systemFontOfSize(16)
+        let font = UIFont.systemFontOfSize(16)
+        let width = 180, height = 10000.0
         
-        let width =  160, height = 10000.0
-        
-        let atts =  [NSFontAttributeName: font]
-        
-        let size =  body.boundingRectWithSize(CGSizeMake(CGFloat(width), CGFloat(height))  ,     options:NSStringDrawingOptions.UsesLineFragmentOrigin, attributes:atts ,     context:nil)
-        
-        let label =  UILabel(frame:CGRectMake(0, 0, size.size.width, size.size.height))
+        let atts = [NSFontAttributeName: font]
+        let size = body.boundingRectWithSize(CGSizeMake(CGFloat(width), CGFloat(height)), options:NSStringDrawingOptions.UsesLineFragmentOrigin, attributes:atts, context:nil)
+        let label = UILabel(frame:CGRectMake(0, 0, size.size.width, size.size.height))
         
         label.numberOfLines = 0
         label.lineBreakMode = NSLineBreakMode.ByWordWrapping
@@ -62,7 +59,6 @@ class MessageItem
         label.backgroundColor = UIColor.clearColor()
         
         let insets:UIEdgeInsets =  (mtype == ChatType.Mine ? MessageItem.getTextInsetsMine() : MessageItem.getTextInsetsSomeone())
-        
         self.init(user:user, date:date, mtype:mtype, view:label, insets:insets)
     }    
     

@@ -21,8 +21,7 @@ class TableView:UITableView,UITableViewDelegate, UITableViewDataSource
     }
     
     override init(frame: CGRect, style: UITableViewStyle) {
-        //the snap interval in seconds implements a headerview to seperate chats
-        self.snapInterval = 60 * 60 * 24; //one day
+        self.snapInterval = 60 * 60 * 24;
         self.typingBubble = ChatBubbleTypingType.Nobody
         self.bubbleSection = NSMutableArray()
         
@@ -35,7 +34,7 @@ class TableView:UITableView,UITableViewDelegate, UITableViewDataSource
         self.dataSource = self
     }
     
-    //按日期排序方法
+    // 按日期排序方法
     func sortDate(m1: AnyObject!, m2: AnyObject!) -> NSComparisonResult {
         if((m1 as! MessageItem).date.timeIntervalSince1970 < (m2 as! MessageItem).date.timeIntervalSince1970)
         {
@@ -90,11 +89,10 @@ class TableView:UITableView,UITableViewDelegate, UITableViewDataSource
         }
         super.reloadData()
         
-        //滑向最后一部分
+        // 滑向最后一部分
         let secno = self.bubbleSection.count - 1
         let indexPath =  NSIndexPath(forRow:self.bubbleSection[secno].count,inSection:secno)
-        
-        self.scrollToRowAtIndexPath(indexPath,                atScrollPosition:UITableViewScrollPosition.Bottom,animated:true)
+        self.scrollToRowAtIndexPath(indexPath, atScrollPosition:UITableViewScrollPosition.Bottom,animated:true)
     }
     
     func numberOfSectionsInTableView(tableView:UITableView)->Int
@@ -118,9 +116,8 @@ class TableView:UITableView,UITableViewDelegate, UITableViewDataSource
         return self.bubbleSection[section].count+1
     }
     
-    func tableView(tableView:UITableView,heightForRowAtIndexPath  indexPath:NSIndexPath) -> CGFloat
+    func tableView(tableView:UITableView, heightForRowAtIndexPath indexPath:NSIndexPath) -> CGFloat
     {
-        // Header
         if (indexPath.row == 0)
         {
             return TableHeaderViewCell.getHeight()
@@ -129,8 +126,7 @@ class TableView:UITableView,UITableViewDelegate, UITableViewDataSource
         let data = section[indexPath.row - 1]
         
         let item =  data as! MessageItem
-        let height  = item.insets.top + max(item.view.frame.size.height , 52) + item.insets.bottom
-        print("height:\(height)")
+        let height  = item.insets.top + max(item.view.frame.size.height, 52) + item.insets.bottom
         return height
     }
     
@@ -149,9 +145,9 @@ class TableView:UITableView,UITableViewDelegate, UITableViewDataSource
         }
         // Standard
         let cellId = "ChatCell"
-        let section =  self.bubbleSection[indexPath.section] as! NSMutableArray
+        let section = self.bubbleSection[indexPath.section] as! NSMutableArray
         let data = section[indexPath.row - 1]
-        let cell =  TableViewCell(data:data as! MessageItem, reuseIdentifier:cellId)
+        let cell = TableViewCell(data:data as! MessageItem, reuseIdentifier:cellId)
         
         return cell
     }

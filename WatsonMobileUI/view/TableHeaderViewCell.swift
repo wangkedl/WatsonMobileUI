@@ -33,16 +33,12 @@ class TableHeaderViewCell:UITableViewCell
         }
         self.selectionStyle = UITableViewCellSelectionStyle.None
         self.label = UILabel(frame:CGRectMake(CGFloat(0), CGFloat(0), self.frame.size.width, height))
-        
         self.label.text = text
         self.label.font = UIFont.boldSystemFontOfSize(12)
-        
         self.label.textAlignment = NSTextAlignment.Center
         self.label.shadowOffset = CGSizeMake(0, 1)
         self.label.shadowColor = UIColor.whiteColor()
-        
         self.label.textColor = UIColor.darkGrayColor()
-        
         self.label.backgroundColor = UIColor.clearColor()
         
         self.addSubview(self.label)

@@ -14,23 +14,24 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
         setupSendPanel()
     }
     
+    
     func setupSendPanel()
     {
         let screenWidth = UIScreen.mainScreen().bounds.width
         let sendView = UIView(frame:CGRectMake(0,self.view.frame.size.height - 56,screenWidth,56))
         
-        sendView.backgroundColor=UIColor(red:0, green:0.1, blue:0.1, alpha:0.1)
-        sendView.layer.cornerRadius = 10.0
+        sendView.backgroundColor = UIColor(red:0, green:0.1, blue:0.1, alpha:0.1)
+        sendView.layer.cornerRadius = 6.0
         
         txtMsg = UITextField(frame:CGRectMake(42,10,screenWidth - 95,36))
         txtMsg.backgroundColor = UIColor.whiteColor()
-        txtMsg.textColor=UIColor.blackColor()
-        txtMsg.font=UIFont.boldSystemFontOfSize(12)
+        txtMsg.textColor = UIColor.blackColor()
+        txtMsg.font = UIFont.boldSystemFontOfSize(12)
+        txtMsg.clearButtonMode = UITextFieldViewMode.WhileEditing
+        txtMsg.keyboardType = UIKeyboardType.ASCIICapable
         txtMsg.layer.cornerRadius = 10.0
         txtMsg.returnKeyType = UIReturnKeyType.Send
-        
-        //Set the delegate so you can respond to user input
-        txtMsg.delegate=self
+        txtMsg.delegate = self
         sendView.addSubview(txtMsg)
         self.view.addSubview(sendView)
         
@@ -49,6 +50,16 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
     
     func textFieldShouldReturn(textField:UITextField) -> Bool
     {
+        let text:String = txtMsg.text!
+     
+        if(text.isEmpty){
+            let alert = UIAlertView();
+            alert.message = String("Please input something.");
+            alert.addButtonWithTitle("OK");
+            alert.show();
+            return false;
+        }
+        
         sendMessage()
         return true
     }
@@ -64,7 +75,6 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
         sender.resignFirstResponder()
         sender.text = ""
         
-        
         let url = "http://watsonserver.mybluemix.net/sample"
         requestUrl(url)
         
@@ -72,9 +82,9 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
     
     func setupChatTable()
     {
-        self.tableView = TableView(frame:CGRectMake(0, 20, self.view.frame.size.width, self.view.frame.size.height - 76), style: .Plain)
+        self.tableView = TableView(frame:CGRectMake(0, 20, self.view.frame.size.width, self.view.frame.size.height - 75), style: .Plain)
         
-        //创建一个重用的单元格
+        // 创建一个重用的单元格
         self.tableView!.registerClass(TableViewCell.self, forCellReuseIdentifier: "ChatCell")
         me = UserInfo(name:"Xiaoming" ,logo:("xiaohua.png"))
         Watson  = UserInfo(name:"Xiaohua", logo:("earth.png"))
@@ -83,13 +93,8 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
         
         Chats = NSMutableArray()
         Chats.addObjectsFromArray([zero])
-        
-        //set the chatDataSource
         self.tableView.chatDataSource = self
-        
-        //call the reloadData, this is actually calling your override method
         self.tableView.reloadData()
-        
         self.view.addSubview(self.tableView)
     }
     
@@ -119,11 +124,11 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
                 self.tableView.chatDataSource = self
                 self.tableView.reloadData()
 
-                
-
             }else{
              print(error)
             }
         })
     }
+    
+    
 }
