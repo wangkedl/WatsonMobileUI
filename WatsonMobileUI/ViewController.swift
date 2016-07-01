@@ -38,13 +38,13 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
         let mircoButton = UIButton(frame:CGRectMake(5,10,40,35))
         mircoButton.addTarget(self, action:#selector(ViewController.sendMessage) ,
                             forControlEvents:UIControlEvents.TouchUpInside)
-        mircoButton.setImage(UIImage(named:"mirco"),forState:UIControlState.Normal)
+        mircoButton.setImage(UIImage(named:"mirco2"),forState:UIControlState.Normal)
         sendView.addSubview(mircoButton)
         
         let addButton = UIButton(frame:CGRectMake(screenWidth - 45,12,33,30))
         addButton.addTarget(self, action:#selector(ViewController.sendMessage) ,
                              forControlEvents:UIControlEvents.TouchUpInside)
-        addButton.setImage(UIImage(named:"add1"),forState:UIControlState.Normal)
+        addButton.setImage(UIImage(named:"add3"),forState:UIControlState.Normal)
         sendView.addSubview(addButton)
     }
     
