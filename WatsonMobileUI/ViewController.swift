@@ -5,6 +5,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
     
     var Chats:NSMutableArray!
     var tableView:TableView!
+    var sendView:UIView!
     var me:UserInfo!
     var Watson:UserInfo!
     var txtMsg:UITextField!
@@ -73,7 +74,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
         MessageView?.removeFromSuperview()
         
         let screenWidth = UIScreen.mainScreen().bounds.width
-        let sendView = UIView(frame:CGRectMake(0,self.view.frame.size.height - 50,screenWidth,50))
+        sendView = UIView(frame:CGRectMake(0,self.view.frame.size.height - 50,screenWidth,50))
         
         sendView.backgroundColor = UIColor(red:0, green:0.1, blue:0.1, alpha:0.1)
         sendView.alpha = 0.5
@@ -98,10 +99,11 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
         sendView.addSubview(mircoButton)
         
         let addButton = UIButton(frame:CGRectMake(screenWidth - 45,9,33,30))
-        addButton.addTarget(self, action:#selector(ViewController.sendMessage) ,
+        addButton.addTarget(self, action:#selector(ViewController.showImageView) ,
                             forControlEvents:UIControlEvents.TouchUpInside)
         addButton.setImage(UIImage(named:"add3"),forState:UIControlState.Normal)
         sendView.addSubview(addButton)
+        
     }
     
     func textFieldShouldReturn(textField:UITextField) -> Bool
@@ -145,25 +147,23 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
         
         let keyBoardButton = UIButton(frame:CGRectMake(5,6,30,38))
         keyBoardButton.addTarget(self, action:#selector(ViewController.setupSendPanel) ,
-                              forControlEvents:UIControlEvents.TouchUpInside)
+                                 forControlEvents:UIControlEvents.TouchUpInside)
         keyBoardButton.setImage(UIImage(named:"keyword"),forState:UIControlState.Normal)
         voiceView.addSubview(keyBoardButton)
         
         let addButton = UIButton(frame:CGRectMake(screenWidth - 45,9,33,30))
-        addButton.addTarget(self, action:#selector(ViewController.sendMessage) ,
+        addButton.addTarget(self, action:#selector(ViewController.showImageView) ,
                             forControlEvents:UIControlEvents.TouchUpInside)
         addButton.setImage(UIImage(named:"add3"),forState:UIControlState.Normal)
         voiceView.addSubview(addButton)
         
-        
-        
     }
-
-        
+    
+    
     
     func holdOnVoiceButton()
     {   print("button down")
-        self.notice("正在录音!", type: NoticeType.success, autoClear: false)
+        self.notice("Recording", type: NoticeType.success, autoClear: false)
         voiceButton.backgroundColor = UIColor.darkGrayColor()
         //初始化录音器
         recorder = try! AVAudioRecorder(URL: NSURL(string: aacPath!)!,
@@ -184,10 +184,10 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
     
     //定时检测录音音量
     func levelTimer(){
-        recorder!.updateMeters() // 刷新音量数据
-        let averageV:Float = recorder!.averagePowerForChannel(0) //获取音量的平均值
-        let maxV:Float = recorder!.peakPowerForChannel(0) //获取音量最大值
-        let lowPassResult:Double = pow(Double(10), Double(0.05*maxV))
+        //recorder!.updateMeters() // 刷新音量数据
+        //let averageV:Float = recorder!.averagePowerForChannel(0) //获取音量的平均值
+        //let maxV:Float = recorder!.peakPowerForChannel(0) //获取音量最大值
+        //let lowPassResult:Double = pow(Double(10), Double(0.05*maxV))
         
     }
     
@@ -226,6 +226,35 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
         requestUrl(url)
         
     }
+    
+    func showImageView()
+    {
+        let tableViewWidth = tableView.frame.size.width;
+        let tableViewHeight = tableView.frame.size.height;
+        let tableViewRect = CGRectMake(0.0, -30,tableViewWidth,tableViewHeight);
+        tableView.frame = tableViewRect
+        
+        let sendViewWidth = sendView.frame.size.width;
+        let sendViewHeight = sendView.frame.size.height;
+        let sendViewRect = CGRectMake(0.0, self.view.frame.size.height - 100,sendViewWidth,sendViewHeight);
+        sendView.frame = sendViewRect
+        
+        
+        let screenWidth = UIScreen.mainScreen().bounds.width
+        let imageView = UIView(frame:CGRectMake(0,self.view.frame.size.height - 50,screenWidth,50))
+        
+        imageView.backgroundColor = UIColor(red:0, green:0.1, blue:0.1, alpha:0.1)
+        imageView.alpha = 0.5
+        imageView.layer.borderWidth = 1
+        self.view.addSubview(imageView)
+   
+    }
+    
+    //override func prefersStatusBarHidden()->Bool{
+    
+     // return true
+    
+    //}
     
     func setupChatTable()
     {
