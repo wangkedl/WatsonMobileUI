@@ -39,6 +39,7 @@
 		7F3086C21D274A5F00BB67DA /* microp7.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F3086C11D274A5F00BB67DA /* microp7.png */; };
 		7F3086C41D27BDC500BB67DA /* b5.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F3086C31D27BDC500BB67DA /* b5.png */; };
 		7F3086C61D27BE8D00BB67DA /* bb2.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F3086C51D27BE8D00BB67DA /* bb2.png */; };
+		7F3086C81D27E8A700BB67DA /* SwiftNotice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3086C71D27E8A700BB67DA /* SwiftNotice.swift */; };
 		7F4007011D266331001C95DC /* message_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F4007001D266331001C95DC /* message_left.png */; };
 		7F4007031D26633F001C95DC /* message_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F4007021D26633F001C95DC /* message_right.png */; };
 		7F87E0241D23BFDF00164F01 /* add1.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F87E0231D23BFDF00164F01 /* add1.png */; };
@@ -100,6 +101,7 @@
 		7F3086C11D274A5F00BB67DA /* microp7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = microp7.png; sourceTree = "<group>"; };
 		7F3086C31D27BDC500BB67DA /* b5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = b5.png; sourceTree = "<group>"; };
 		7F3086C51D27BE8D00BB67DA /* bb2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bb2.png; sourceTree = "<group>"; };
+		7F3086C71D27E8A700BB67DA /* SwiftNotice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftNotice.swift; sourceTree = "<group>"; };
 		7F4007001D266331001C95DC /* message_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = message_left.png; sourceTree = "<group>"; };
 		7F4007021D26633F001C95DC /* message_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = message_right.png; sourceTree = "<group>"; };
 		7F87E0231D23BFDF00164F01 /* add1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add1.png; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				5A35D47B1C47B25600200076 /* Assets.xcassets */,
 				5A35D47D1C47B25600200076 /* LaunchScreen.storyboard */,
 				5A35D4801C47B25600200076 /* Info.plist */,
+				7F3086C71D27E8A700BB67DA /* SwiftNotice.swift */,
 			);
 			path = WatsonMobileUI;
 			sourceTree = "<group>";
@@ -385,6 +388,7 @@
 				5A35D4B41C47B29400200076 /* TableView.swift in Sources */,
 				5A35D4BE1C47B30100200076 /* UserInfo.swift in Sources */,
 				5A35D4751C47B25600200076 /* AppDelegate.swift in Sources */,
+				7F3086C81D27E8A700BB67DA /* SwiftNotice.swift in Sources */,
 				5A35D4BC1C47B2F000200076 /* TableHeaderViewCell.swift in Sources */,
 				5A35D4B91C47B2BD00200076 /* ChatDataSource.swift in Sources */,
 			);

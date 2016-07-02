@@ -1,4 +1,5 @@
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
     
@@ -8,11 +9,36 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
     var Watson:UserInfo!
     var txtMsg:UITextField!
     var voiceButton:UIButton!
+    var recorder:AVAudioRecorder?
+    var player:AVAudioPlayer?
+    var recorderSeetingsDic:[String : AnyObject]?
+    var aacPath:String?
+    var volumeTimer:NSTimer! //定时器线程，循环监测录音的音量大小
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupChatTable()
         setupSendPanel()
+        //初始化录音器
+        let session:AVAudioSession = AVAudioSession.sharedInstance()
+        //设置录音类型
+        try! session.setCategory(AVAudioSessionCategoryPlayAndRecord)
+        //设置支持后台
+        try! session.setActive(true)
+        //获取Document目录
+        let docDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory,
+                                                         .UserDomainMask, true)[0]
+        //组合录音文件路径
+        aacPath = docDir + "/play.aac"
+        //初始化字典并添加设置参数
+        recorderSeetingsDic =
+            [
+                AVFormatIDKey: NSNumber(unsignedInt: kAudioFormatMPEG4AAC),
+                AVNumberOfChannelsKey: 2, //录音的声道数，立体声为双声道
+                AVEncoderAudioQualityKey : AVAudioQuality.Max.rawValue,
+                AVEncoderBitRateKey : 320000,
+                AVSampleRateKey : 44100.0 //录音器每秒采集的录音样本数
+        ]
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -137,12 +163,52 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
     
     func holdOnVoiceButton()
     {   print("button down")
+        self.notice("正在录音!", type: NoticeType.success, autoClear: false)
         voiceButton.backgroundColor = UIColor.darkGrayColor()
+        //初始化录音器
+        recorder = try! AVAudioRecorder(URL: NSURL(string: aacPath!)!,
+                                        settings: recorderSeetingsDic!)
+        if recorder != nil {
+            //开启仪表计数功能
+            recorder!.meteringEnabled = true
+            //准备录音
+            recorder!.prepareToRecord()
+            //开始录音
+            recorder!.record()
+            //启动定时器，定时更新录音音量
+            volumeTimer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self,
+                                                                 selector: #selector(ViewController.levelTimer), userInfo: nil, repeats: true)
+        }
+        
+    }
+    
+    //定时检测录音音量
+    func levelTimer(){
+        recorder!.updateMeters() // 刷新音量数据
+        let averageV:Float = recorder!.averagePowerForChannel(0) //获取音量的平均值
+        let maxV:Float = recorder!.peakPowerForChannel(0) //获取音量最大值
+        let lowPassResult:Double = pow(Double(10), Double(0.05*maxV))
+        
     }
     
     func leftVoiceButton()
     {   print("button up")
+        self.clearAllNotice()
         voiceButton.backgroundColor = UIColor.lightGrayColor()
+        //停止录音
+        recorder?.stop()
+        //录音器释放
+        recorder = nil
+        //暂停定时器
+        volumeTimer.invalidate()
+        volumeTimer = nil
+        //播放
+        player = try! AVAudioPlayer(contentsOfURL: NSURL(string: aacPath!)!)
+        if player == nil {
+            print("播放失败")
+        }else{
+            player?.play()
+        }
     }
     
     func sendMessage()
