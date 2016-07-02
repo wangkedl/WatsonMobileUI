@@ -60,7 +60,7 @@ class MessageItem
         
         let insets:UIEdgeInsets =  (mtype == ChatType.Mine ? MessageItem.getTextInsetsMine() : MessageItem.getTextInsetsSomeone())
         self.init(user:user, date:date, mtype:mtype, view:label, insets:insets)
-    }    
+    }
     
     //图片类型消息
     convenience init(image:UIImage, user:UserInfo,  date:NSDate, mtype:ChatType)

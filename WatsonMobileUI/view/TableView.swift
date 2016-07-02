@@ -131,7 +131,7 @@ class TableView:UITableView,UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
-    {        
+    {
         // Header based on snapInterval
         if (indexPath.row == 0)
         {

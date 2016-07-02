@@ -21,22 +21,14 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
     
     func keyboardWillShow(notification:NSNotification){
         
-        
         if ((notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue()) != nil {
-        //let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
-        //let keyboardheight  = keyboardSize.height as CGFloat
-        //let frame = self.nameInput.frame
-        // frame.origin.y = frame.origin.y - keyboardheight
-        //var offset = 156 as CGFloat
+            let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue()
+            let keyboardheight  = keyboardSize!.height as CGFloat
             
-        let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue()
-        let keyboardheight  = keyboardSize!.height as CGFloat
-
-        
-        let width = self.view.frame.size.width;
-        let height = self.view.frame.size.height;
-        let rect = CGRectMake(0.0, -keyboardheight,width,height);
-        self.view.frame = rect
+            let width = self.view.frame.size.width;
+            let height = self.view.frame.size.height;
+            let rect = CGRectMake(0.0, -keyboardheight,width,height);
+            self.view.frame = rect
         }
     }
     
@@ -70,13 +62,13 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
         
         let mircoButton = UIButton(frame:CGRectMake(5,8,40,35))
         mircoButton.addTarget(self, action:#selector(ViewController.sendMessage) ,
-                            forControlEvents:UIControlEvents.TouchUpInside)
+                              forControlEvents:UIControlEvents.TouchUpInside)
         mircoButton.setImage(UIImage(named:"mirco2"),forState:UIControlState.Normal)
         sendView.addSubview(mircoButton)
         
         let addButton = UIButton(frame:CGRectMake(screenWidth - 45,9,33,30))
         addButton.addTarget(self, action:#selector(ViewController.sendMessage) ,
-                             forControlEvents:UIControlEvents.TouchUpInside)
+                            forControlEvents:UIControlEvents.TouchUpInside)
         addButton.setImage(UIImage(named:"add3"),forState:UIControlState.Normal)
         sendView.addSubview(addButton)
     }
@@ -84,7 +76,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
     func textFieldShouldReturn(textField:UITextField) -> Bool
     {
         let text:String = txtMsg.text!
-     
+        
         if(text.isEmpty){
             let alert = UIAlertView();
             alert.message = String("Please input something.");
@@ -152,13 +144,13 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
             (response,data,error)-> Void in
             if error == nil && data?.length > 0{
                 let datastring = String(data:data!, encoding: NSUTF8StringEncoding)
-                    let thatChat =  MessageItem(body:"\(datastring!)", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
+                let thatChat =  MessageItem(body:"\(datastring!)", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
                 self.Chats.addObject(thatChat)
                 self.tableView.chatDataSource = self
                 self.tableView.reloadData()
-
+                
             }else{
-             print(error)
+                print(error)
             }
         })
     }
