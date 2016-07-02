@@ -250,11 +250,11 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
    
     }
     
-    //override func prefersStatusBarHidden()->Bool{
+    override func prefersStatusBarHidden()->Bool{
     
-     // return true
+      return true
     
-    //}
+    }
     
     func setupChatTable()
     {
