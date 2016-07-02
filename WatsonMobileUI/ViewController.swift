@@ -7,6 +7,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
     var me:UserInfo!
     var Watson:UserInfo!
     var txtMsg:UITextField!
+    var voiceButton:UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +43,9 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
     
     func setupSendPanel()
     {
+        let MessageView = self.view.viewWithTag(101)
+        MessageView?.removeFromSuperview()
+        
         let screenWidth = UIScreen.mainScreen().bounds.width
         let sendView = UIView(frame:CGRectMake(0,self.view.frame.size.height - 50,screenWidth,50))
         
@@ -58,10 +62,11 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
         txtMsg.returnKeyType = UIReturnKeyType.Send
         txtMsg.delegate = self
         sendView.addSubview(txtMsg)
+        sendView.tag = 100
         self.view.addSubview(sendView)
         
         let mircoButton = UIButton(frame:CGRectMake(5,8,40,35))
-        mircoButton.addTarget(self, action:#selector(ViewController.sendMessage) ,
+        mircoButton.addTarget(self, action:#selector(ViewController.changMessageViewToVoiceView) ,
                               forControlEvents:UIControlEvents.TouchUpInside)
         mircoButton.setImage(UIImage(named:"mirco2"),forState:UIControlState.Normal)
         sendView.addSubview(mircoButton)
@@ -87,6 +92,57 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
         
         sendMessage()
         return true
+    }
+    
+    func changMessageViewToVoiceView(){
+        let MessageView = self.view.viewWithTag(100)
+        MessageView?.removeFromSuperview()
+        
+        let screenWidth = UIScreen.mainScreen().bounds.width
+        let voiceView = UIView(frame:CGRectMake(0,self.view.frame.size.height - 50,screenWidth,50))
+        
+        voiceView.backgroundColor = UIColor(red:0, green:0.1, blue:0.1, alpha:0.1)
+        voiceView.alpha = 0.5
+        voiceButton = UIButton(frame: CGRect(x: 44, y: 7, width: screenWidth - 95, height: 36))
+        voiceButton.setTitle("Hold to talk", forState: UIControlState.Normal)
+        voiceButton.backgroundColor = UIColor.lightGrayColor()
+        voiceButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        voiceButton.addTarget(self, action:#selector(ViewController.holdOnVoiceButton) ,
+                              forControlEvents:UIControlEvents.TouchDown)
+        voiceButton.addTarget(self, action:#selector(ViewController.leftVoiceButton) ,
+                              forControlEvents:UIControlEvents.TouchUpInside)
+        voiceButton.alpha = 0.5
+        voiceButton.layer.cornerRadius = 5
+        voiceView.addSubview(voiceButton)
+        voiceView.tag = 101
+        self.view.addSubview(voiceView)
+        
+        let keyBoardButton = UIButton(frame:CGRectMake(5,6,30,38))
+        keyBoardButton.addTarget(self, action:#selector(ViewController.setupSendPanel) ,
+                              forControlEvents:UIControlEvents.TouchUpInside)
+        keyBoardButton.setImage(UIImage(named:"keyword"),forState:UIControlState.Normal)
+        voiceView.addSubview(keyBoardButton)
+        
+        let addButton = UIButton(frame:CGRectMake(screenWidth - 45,9,33,30))
+        addButton.addTarget(self, action:#selector(ViewController.sendMessage) ,
+                            forControlEvents:UIControlEvents.TouchUpInside)
+        addButton.setImage(UIImage(named:"add3"),forState:UIControlState.Normal)
+        voiceView.addSubview(addButton)
+        
+        
+        
+    }
+
+        
+    
+    func holdOnVoiceButton()
+    {   print("button down")
+        voiceButton.backgroundColor = UIColor.darkGrayColor()
+    }
+    
+    func leftVoiceButton()
+    {   print("button up")
+        voiceButton.backgroundColor = UIColor.lightGrayColor()
     }
     
     func sendMessage()
