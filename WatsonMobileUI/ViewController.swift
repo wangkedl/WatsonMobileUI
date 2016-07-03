@@ -241,20 +241,34 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
         
         
         let screenWidth = UIScreen.mainScreen().bounds.width
-        let imageView = UIView(frame:CGRectMake(0,self.view.frame.size.height - 50,screenWidth,50))
+        let imageView = UIView(frame:CGRectMake(0,self.view.frame.size.height - 50,screenWidth,60))
         
         imageView.backgroundColor = UIColor(red:0, green:0.1, blue:0.1, alpha:0.1)
         imageView.alpha = 0.5
-        imageView.layer.borderWidth = 1
+        imageView.layer.borderWidth = 0.5
+        imageView.layer.borderColor = UIColor.lightGrayColor().CGColor
         self.view.addSubview(imageView)
+        
+        
+        let mircoButton = UIButton(frame:CGRectMake(10,6,35,35))
+        mircoButton.addTarget(self, action:#selector(ViewController.changMessageViewToVoiceView) ,
+                              forControlEvents:UIControlEvents.TouchUpInside)
+        mircoButton.setImage(UIImage(named:"red"),forState:UIControlState.Normal)
+        imageView.addSubview(mircoButton)
+        
+        let addButton = UIButton(frame:CGRectMake(70,6,35,35))
+        addButton.addTarget(self, action:#selector(ViewController.showImageView) ,
+                            forControlEvents:UIControlEvents.TouchUpInside)
+        addButton.setImage(UIImage(named:"yellow"),forState:UIControlState.Normal)
+        imageView.addSubview(addButton)
    
     }
     
-    override func prefersStatusBarHidden()->Bool{
+    //override func prefersStatusBarHidden()->Bool{
     
-      return true
+    //  return true
     
-    }
+    //}
     
     func setupChatTable()
     {
