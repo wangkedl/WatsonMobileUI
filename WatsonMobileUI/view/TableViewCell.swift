@@ -30,7 +30,6 @@
             let type =  self.msgItem.mtype
             let width =  self.msgItem.view.frame.size.width
             let height =  self.msgItem.view.frame.size.height
-            print(height)
             
             var x =  (type == ChatType.Someone) ? 0 : self.frame.size.width - width - self.msgItem.insets.left - self.msgItem.insets.right
             var y:CGFloat =  0

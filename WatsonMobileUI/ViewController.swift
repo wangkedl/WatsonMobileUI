@@ -15,8 +15,10 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
     var recorderSeetingsDic:[String : AnyObject]?
     var aacPath:String?
     var volumeTimer:NSTimer! //定时器线程，循环监测录音的音量大小
+    var imageViewFlag:String = "show"
     
     override func viewDidLoad() {
+
         super.viewDidLoad()
         setupChatTable()
         setupSendPanel()
@@ -40,6 +42,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
                 AVEncoderBitRateKey : 320000,
                 AVSampleRateKey : 44100.0 //录音器每秒采集的录音样本数
         ]
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -99,7 +102,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
         sendView.addSubview(mircoButton)
         
         let addButton = UIButton(frame:CGRectMake(screenWidth - 45,9,33,30))
-        addButton.addTarget(self, action:#selector(ViewController.showImageView) ,
+        addButton.addTarget(self, action:#selector(ViewController.showOrHiddenImageView) ,
                             forControlEvents:UIControlEvents.TouchUpInside)
         addButton.setImage(UIImage(named:"add3"),forState:UIControlState.Normal)
         sendView.addSubview(addButton)
@@ -123,7 +126,14 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
     }
     
     func changMessageViewToVoiceView(){
+        
         let MessageView = self.view.viewWithTag(100)
+        
+        //UIView.animateWithDuration(0.1, animations: {
+        //   MessageView?.alpha = 0.0
+        //}, completion: { finished in MessageView?.removeFromSuperview() })
+        
+        
         MessageView?.removeFromSuperview()
         
         let screenWidth = UIScreen.mainScreen().bounds.width
@@ -152,7 +162,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
         voiceView.addSubview(keyBoardButton)
         
         let addButton = UIButton(frame:CGRectMake(screenWidth - 45,9,33,30))
-        addButton.addTarget(self, action:#selector(ViewController.showImageView) ,
+        addButton.addTarget(self, action:#selector(ViewController.showOrHiddenImageView) ,
                             forControlEvents:UIControlEvents.TouchUpInside)
         addButton.setImage(UIImage(named:"add3"),forState:UIControlState.Normal)
         voiceView.addSubview(addButton)
@@ -227,16 +237,29 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
         
     }
     
+    
+    func showOrHiddenImageView()
+    {
+        if(imageViewFlag=="show"){
+            showImageView()
+            imageViewFlag = "hidden"
+        }else{
+            hiddenImageView()
+            imageViewFlag = "show"
+        }
+        
+    }
+    
     func showImageView()
     {
-        let tableViewWidth = tableView.frame.size.width;
-        let tableViewHeight = tableView.frame.size.height;
-        let tableViewRect = CGRectMake(0.0, -30,tableViewWidth,tableViewHeight);
+        let tableViewWidth = tableView.frame.size.width
+        let tableViewHeight = tableView.frame.size.height
+        let tableViewRect = CGRectMake(0.0, -30,tableViewWidth,tableViewHeight)
         tableView.frame = tableViewRect
         
-        let sendViewWidth = sendView.frame.size.width;
-        let sendViewHeight = sendView.frame.size.height;
-        let sendViewRect = CGRectMake(0.0, self.view.frame.size.height - 100,sendViewWidth,sendViewHeight);
+        let sendViewWidth = sendView.frame.size.width
+        let sendViewHeight = sendView.frame.size.height
+        let sendViewRect = CGRectMake(0.0, self.view.frame.size.height - 100,sendViewWidth,sendViewHeight)
         sendView.frame = sendViewRect
         
         
@@ -246,6 +269,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
         imageView.backgroundColor = UIColor(red:0, green:0.1, blue:0.1, alpha:0.1)
         imageView.alpha = 0.5
         imageView.layer.borderWidth = 0.5
+        imageView.tag = 102
         imageView.layer.borderColor = UIColor.lightGrayColor().CGColor
         self.view.addSubview(imageView)
         
@@ -257,22 +281,48 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
         imageView.addSubview(mircoButton)
         
         let addButton = UIButton(frame:CGRectMake(70,6,35,35))
-        addButton.addTarget(self, action:#selector(ViewController.showImageView) ,
+        addButton.addTarget(self, action:#selector(ViewController.showOrHiddenImageView) ,
                             forControlEvents:UIControlEvents.TouchUpInside)
-        addButton.setImage(UIImage(named:"yellow"),forState:UIControlState.Normal)
+        addButton.setImage(UIImage(named:"green"),forState:UIControlState.Normal)
         imageView.addSubview(addButton)
-   
+        
     }
     
-    //override func prefersStatusBarHidden()->Bool{
+    func hiddenImageView()
+    {
+        let imageView = self.view.viewWithTag(102)
+        imageView?.removeFromSuperview()
+        
+        let tableViewWidth = tableView.frame.size.width;
+        let tableViewHeight = tableView.frame.size.height;
+        let tableViewRect = CGRectMake(0.0, 20,tableViewWidth,tableViewHeight);
+        tableView.frame = tableViewRect
+        
+        let sendViewWidth = sendView.frame.size.width;
+        let sendViewHeight = sendView.frame.size.height;
+        let sendViewRect = CGRectMake(0.0, self.view.frame.size.height - 50,sendViewWidth,sendViewHeight)
+        
+        sendView.frame = sendViewRect
+        
+    }
     
-    //  return true
-    
-    //}
+    override func prefersStatusBarHidden()->Bool{
+      return true
+    }
     
     func setupChatTable()
     {
+        
+        let a:UIImageView = UIImageView(image:UIImage(named:"watsonlogo.jpeg"))
+        a.alpha = 0.4
+        //self.view.backgroundView = UIImageView(image:UIImage(named:"watsonlogo.jpeg"))
+        self.view.layer.opaque = false
+        
+        self.view.insertSubview(a, atIndex: 0)
+        
         self.tableView = TableView(frame:CGRectMake(0, 20, self.view.frame.size.width, self.view.frame.size.height - 70), style: .Plain)
+        //self.tableView.backgroundView = UIImageView(image:UIImage(named:"watsonlogo.jpeg"))
+
         
         // 创建一个重用的单元格
         self.tableView!.registerClass(TableViewCell.self, forCellReuseIdentifier: "ChatCell")

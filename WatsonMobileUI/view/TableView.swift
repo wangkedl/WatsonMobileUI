@@ -141,6 +141,7 @@ class TableView:UITableView,UITableViewDelegate, UITableViewDataSource
             let data = section[indexPath.row] as! MessageItem
             
             hcell.setDate(data.date)
+            hcell.backgroundColor = UIColor.clearColor()
             return hcell
         }
         // Standard
@@ -148,6 +149,7 @@ class TableView:UITableView,UITableViewDelegate, UITableViewDataSource
         let section = self.bubbleSection[indexPath.section] as! NSMutableArray
         let data = section[indexPath.row - 1]
         let cell = TableViewCell(data:data as! MessageItem, reuseIdentifier:cellId)
+        cell.backgroundColor = UIColor.clearColor()
         
         return cell
     }

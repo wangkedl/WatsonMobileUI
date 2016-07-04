@@ -50,9 +50,11 @@
 		7F4CD8421D294745009A8E02 /* camera1.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F4CD83E1D294745009A8E02 /* camera1.png */; };
 		7F4CD8431D294745009A8E02 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F4CD83F1D294745009A8E02 /* camera.png */; };
 		7F4CD8451D294B88009A8E02 /* camera3.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F4CD8441D294B88009A8E02 /* camera3.png */; };
+		7F4CD8471D294E25009A8E02 /* green.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F4CD8461D294E25009A8E02 /* green.png */; };
 		7F87E0241D23BFDF00164F01 /* add1.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F87E0231D23BFDF00164F01 /* add1.png */; };
 		7F87E0261D23C30600164F01 /* mirco.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F87E0251D23C30600164F01 /* mirco.png */; };
 		7F87E0281D23DCED00164F01 /* earth.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F87E0271D23DCED00164F01 /* earth.png */; };
+		7FD9CDF71D2A9AAF006D3CD2 /* watsonlogo.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 7FD9CDF61D2A9AAF006D3CD2 /* watsonlogo.jpeg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,9 +122,11 @@
 		7F4CD83E1D294745009A8E02 /* camera1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera1.png; sourceTree = "<group>"; };
 		7F4CD83F1D294745009A8E02 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
 		7F4CD8441D294B88009A8E02 /* camera3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera3.png; sourceTree = "<group>"; };
+		7F4CD8461D294E25009A8E02 /* green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green.png; sourceTree = "<group>"; };
 		7F87E0231D23BFDF00164F01 /* add1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add1.png; sourceTree = "<group>"; };
 		7F87E0251D23C30600164F01 /* mirco.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mirco.png; sourceTree = "<group>"; };
 		7F87E0271D23DCED00164F01 /* earth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = earth.png; sourceTree = "<group>"; };
+		7FD9CDF61D2A9AAF006D3CD2 /* watsonlogo.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = watsonlogo.jpeg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +198,7 @@
 				5A35D4A31C47B27400200076 /* luguhu.jpeg */,
 				7F2DCC8B1D26BAE200CD99EE /* add3.png */,
 				7F3086C31D27BDC500BB67DA /* b5.png */,
+				7FD9CDF61D2A9AAF006D3CD2 /* watsonlogo.jpeg */,
 				5A35D4A41C47B27400200076 /* mebubble.png */,
 				7F3086BD1D2747CB00BB67DA /* keyboard2.png */,
 				7F4CD83C1D294745009A8E02 /* gallery1.png */,
@@ -205,6 +210,7 @@
 				7F4CD83A1D294545009A8E02 /* yellow.png */,
 				7F3086C51D27BE8D00BB67DA /* bb2.png */,
 				7F3086B51D273C0700BB67DA /* rainbow.png */,
+				7F4CD8461D294E25009A8E02 /* green.png */,
 				7F2DCC8D1D26BC1300CD99EE /* mirco2.png */,
 				7F3086BF1D274A3300BB67DA /* cross24.png */,
 				7F3086BB1D27473600BB67DA /* micro6.png */,
@@ -366,12 +372,14 @@
 				7F3086C21D274A5F00BB67DA /* microp7.png in Resources */,
 				7F3086BA1D27460E00BB67DA /* keyword.png in Resources */,
 				7F2DCC861D26B92B00CD99EE /* add2.png in Resources */,
+				7FD9CDF71D2A9AAF006D3CD2 /* watsonlogo.jpeg in Resources */,
 				7F4CD8421D294745009A8E02 /* camera1.png in Resources */,
 				7F87E0261D23C30600164F01 /* mirco.png in Resources */,
 				7F3086BE1D2747CB00BB67DA /* keyboard2.png in Resources */,
 				7F87E0281D23DCED00164F01 /* earth.png in Resources */,
 				7F87E0241D23BFDF00164F01 /* add1.png in Resources */,
 				7F3086B61D273C0700BB67DA /* rainbow.png in Resources */,
+				7F4CD8471D294E25009A8E02 /* green.png in Resources */,
 				7F3086C01D274A3300BB67DA /* cross24.png in Resources */,
 				7F4CD8451D294B88009A8E02 /* camera3.png in Resources */,
 				5A35D4AB1C47B27400200076 /* mebubble.png in Resources */,
