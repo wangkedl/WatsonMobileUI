@@ -219,6 +219,9 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
         }else{
             player?.play()
         }
+        print(aacPath)
+        let url = "http://watsonserver.mybluemix.net/sample"
+        postUrl(url)
     }
     
     func sendMessage()
@@ -313,12 +316,21 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
     func setupChatTable()
     {
         
-        let a:UIImageView = UIImageView(image:UIImage(named:"watsonlogo.jpeg"))
-        a.alpha = 0.4
         //self.view.backgroundView = UIImageView(image:UIImage(named:"watsonlogo.jpeg"))
-        self.view.layer.opaque = false
         
-        self.view.insertSubview(a, atIndex: 0)
+        let backGroundImage:UIImage  = UIImage(named:"watson5.jpg")!
+        
+        let a:UIImageView = UIImageView(image:backGroundImage)
+        
+        a.alpha = 0.4
+        
+       // a.layer.contents = backGroundImage.CGImage
+
+        
+        //self.view.backgroundColor = UIColor(patternImage: backGroundImage)
+        //self.view.layer.contents = backGroundImage.CGImage
+        
+        //self.view.insertSubview(a, atIndex: 0)
         
         self.tableView = TableView(frame:CGRectMake(0, 20, self.view.frame.size.width, self.view.frame.size.height - 70), style: .Plain)
         //self.tableView.backgroundView = UIImageView(image:UIImage(named:"watsonlogo.jpeg"))
@@ -355,6 +367,27 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
     func requestUrl(urlString:String) ->  Void {
         let URL = NSURL(string:urlString)
         let urlRequest = NSURLRequest(URL: URL!)
+        NSURLConnection.sendAsynchronousRequest(urlRequest,queue:NSOperationQueue.mainQueue(),completionHandler:{
+            (response,data,error)-> Void in
+            if error == nil && data?.length > 0{
+                let datastring = String(data:data!, encoding: NSUTF8StringEncoding)
+                let thatChat =  MessageItem(body:"\(datastring!)", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
+                self.Chats.addObject(thatChat)
+                self.tableView.chatDataSource = self
+                self.tableView.reloadData()
+                
+            }else{
+                print(error)
+            }
+        })
+    }
+    
+    func postUrl(urlString:String) ->  Void {
+        let URL = NSURL(string:urlString)
+        let urlRequest = NSMutableURLRequest(URL: URL!)
+        urlRequest.HTTPMethod = "POST"
+        urlRequest.HTTPBodyStream  = NSInputStream.init(fileAtPath: aacPath!)
+        
         NSURLConnection.sendAsynchronousRequest(urlRequest,queue:NSOperationQueue.mainQueue(),completionHandler:{
             (response,data,error)-> Void in
             if error == nil && data?.length > 0{
