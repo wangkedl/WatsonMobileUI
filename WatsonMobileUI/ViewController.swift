@@ -11,6 +11,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
     var txtMsg:UITextField!
     var voiceButton:UIButton!
     var recorder:AVAudioRecorder?
+    var docDir:String!
     var player:AVAudioPlayer?
     var recorderSeetingsDic:[String : AnyObject]?
     var aacPath:String?
@@ -29,10 +30,8 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
         //设置支持后台
         try! session.setActive(true)
         //获取Document目录
-        let docDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory,
+        docDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory,
                                                          .UserDomainMask, true)[0]
-        //组合录音文件路径
-        aacPath = docDir + "/play.aac"
         //初始化字典并添加设置参数
         recorderSeetingsDic =
             [
@@ -95,16 +94,18 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
         sendView.tag = 100
         self.view.addSubview(sendView)
         
-        let mircoButton = UIButton(frame:CGRectMake(5,8,40,35))
+        let mircoButton = UIButton(frame:CGRectMake(5,10,30,30))
+        mircoButton.alpha = 0.8
         mircoButton.addTarget(self, action:#selector(ViewController.changMessageViewToVoiceView) ,
                               forControlEvents:UIControlEvents.TouchUpInside)
-        mircoButton.setImage(UIImage(named:"mirco2"),forState:UIControlState.Normal)
+        mircoButton.setImage(UIImage(named:"wifi75"),forState:UIControlState.Normal)
         sendView.addSubview(mircoButton)
         
-        let addButton = UIButton(frame:CGRectMake(screenWidth - 45,9,33,30))
+        let addButton = UIButton(frame:CGRectMake(screenWidth - 43,10,30,30))
+        addButton.alpha = 0.8
         addButton.addTarget(self, action:#selector(ViewController.showOrHiddenImageView) ,
                             forControlEvents:UIControlEvents.TouchUpInside)
-        addButton.setImage(UIImage(named:"add3"),forState:UIControlState.Normal)
+        addButton.setImage(UIImage(named:"text129"),forState:UIControlState.Normal)
         sendView.addSubview(addButton)
         
     }
@@ -155,16 +156,18 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
         voiceView.tag = 101
         self.view.addSubview(voiceView)
         
-        let keyBoardButton = UIButton(frame:CGRectMake(5,6,30,38))
+        let keyBoardButton = UIButton(frame:CGRectMake(7,5,30,38))
+        keyBoardButton.alpha = 0.9
         keyBoardButton.addTarget(self, action:#selector(ViewController.setupSendPanel) ,
                                  forControlEvents:UIControlEvents.TouchUpInside)
-        keyBoardButton.setImage(UIImage(named:"keyword"),forState:UIControlState.Normal)
+        keyBoardButton.setImage(UIImage(named:"edit"),forState:UIControlState.Normal)
         voiceView.addSubview(keyBoardButton)
         
-        let addButton = UIButton(frame:CGRectMake(screenWidth - 45,9,33,30))
+        let addButton = UIButton(frame:CGRectMake(screenWidth - 43,10,30,30))
+        addButton.alpha = 0.8
         addButton.addTarget(self, action:#selector(ViewController.showOrHiddenImageView) ,
                             forControlEvents:UIControlEvents.TouchUpInside)
-        addButton.setImage(UIImage(named:"add3"),forState:UIControlState.Normal)
+        addButton.setImage(UIImage(named:"text129"),forState:UIControlState.Normal)
         voiceView.addSubview(addButton)
         
     }
@@ -175,6 +178,12 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
     {   print("button down")
         self.notice("Recording", type: NoticeType.success, autoClear: false)
         voiceButton.backgroundColor = UIColor.darkGrayColor()
+        //组合录音文件路径
+        let now = NSDate()
+        let dformatter = NSDateFormatter()
+        dformatter.dateFormat = "HH_mm_ss"
+        aacPath = docDir + "/play_"+dformatter.stringFromDate(now)+".aac"
+        print(aacPath)
         //初始化录音器
         recorder = try! AVAudioRecorder(URL: NSURL(string: aacPath!)!,
                                         settings: recorderSeetingsDic!)
@@ -186,8 +195,8 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
             //开始录音
             recorder!.record()
             //启动定时器，定时更新录音音量
-            volumeTimer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self,
-                                                                 selector: #selector(ViewController.levelTimer), userInfo: nil, repeats: true)
+            //volumeTimer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self,
+                                                               //  selector: #selector(ViewController.levelTimer), userInfo: nil, repeats: true)
         }
         
     }
@@ -210,8 +219,8 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
         //录音器释放
         recorder = nil
         //暂停定时器
-        volumeTimer.invalidate()
-        volumeTimer = nil
+        //volumeTimer.invalidate()
+        //volumeTimer = nil
         //播放
         player = try! AVAudioPlayer(contentsOfURL: NSURL(string: aacPath!)!)
         if player == nil {
@@ -318,7 +327,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
         
         //self.view.backgroundView = UIImageView(image:UIImage(named:"watsonlogo.jpeg"))
         
-        let backGroundImage:UIImage  = UIImage(named:"watson5.jpg")!
+        let backGroundImage:UIImage  = UIImage(named:"watson11.png")!
         
         let a:UIImageView = UIImageView(image:backGroundImage)
         
@@ -327,8 +336,8 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
        // a.layer.contents = backGroundImage.CGImage
 
         
-        //self.view.backgroundColor = UIColor(patternImage: backGroundImage)
-        //self.view.layer.contents = backGroundImage.CGImage
+        self.view.backgroundColor = UIColor(patternImage: backGroundImage)
+        self.view.layer.contents = backGroundImage.CGImage
         
         //self.view.insertSubview(a, atIndex: 0)
         
@@ -392,8 +401,8 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
             (response,data,error)-> Void in
             if error == nil && data?.length > 0{
                 let datastring = String(data:data!, encoding: NSUTF8StringEncoding)
-                let thatChat =  MessageItem(body:"\(datastring!)", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
-                self.Chats.addObject(thatChat)
+                let thisChat =  MessageItem(body:"\(datastring!)", user:self.me, date:NSDate(), mtype:ChatType.Mine)
+                self.Chats.addObject(thisChat)
                 self.tableView.chatDataSource = self
                 self.tableView.reloadData()
                 
