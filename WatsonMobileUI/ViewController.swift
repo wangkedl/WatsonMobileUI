@@ -154,7 +154,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
                               forControlEvents:UIControlEvents.TouchDown)
         voiceButton.addTarget(self, action:#selector(ViewController.leftVoiceButton) ,
                               forControlEvents:UIControlEvents.TouchUpInside)
-        voiceButton.alpha = 0.5
+        voiceButton.alpha = 0.9
         voiceButton.layer.cornerRadius = 5
         sendView.addSubview(voiceButton)
         sendView.tag = 101
@@ -236,7 +236,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
             player?.play()
         }
         print(aacPath)
-        let url = "http://watsonserver.mybluemix.net/sample"
+        let url = "http://123.57.164.21/WeiXin/WatsonDemo2Servlet"
         postUrl(url)
     }
     
