@@ -82,6 +82,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
         sendView.alpha = 0.5
         
         txtMsg = UITextField(frame:CGRectMake(44,7,screenWidth - 95,36))
+        //txtMsg.placeholder = "Please input something."
         txtMsg.backgroundColor = UIColor.whiteColor()
         txtMsg.textColor = UIColor.blackColor()
         txtMsg.font = UIFont.boldSystemFontOfSize(12)
@@ -107,6 +108,9 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
                             forControlEvents:UIControlEvents.TouchUpInside)
         addButton.setImage(UIImage(named:"text129"),forState:UIControlState.Normal)
         sendView.addSubview(addButton)
+        
+        hiddenImageView()
+        imageViewFlag = "show"
         
     }
     
@@ -138,10 +142,10 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
         MessageView?.removeFromSuperview()
         
         let screenWidth = UIScreen.mainScreen().bounds.width
-        let voiceView = UIView(frame:CGRectMake(0,self.view.frame.size.height - 50,screenWidth,50))
+        sendView = UIView(frame:CGRectMake(0,self.view.frame.size.height - 50,screenWidth,50))
         
-        voiceView.backgroundColor = UIColor(red:0, green:0.1, blue:0.1, alpha:0.1)
-        voiceView.alpha = 0.5
+        sendView.backgroundColor = UIColor(red:0, green:0.1, blue:0.1, alpha:0.1)
+        sendView.alpha = 0.5
         voiceButton = UIButton(frame: CGRect(x: 44, y: 7, width: screenWidth - 95, height: 36))
         voiceButton.setTitle("Hold to talk", forState: UIControlState.Normal)
         voiceButton.backgroundColor = UIColor.lightGrayColor()
@@ -152,23 +156,26 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
                               forControlEvents:UIControlEvents.TouchUpInside)
         voiceButton.alpha = 0.5
         voiceButton.layer.cornerRadius = 5
-        voiceView.addSubview(voiceButton)
-        voiceView.tag = 101
-        self.view.addSubview(voiceView)
+        sendView.addSubview(voiceButton)
+        sendView.tag = 101
+        self.view.addSubview(sendView)
         
         let keyBoardButton = UIButton(frame:CGRectMake(7,5,30,38))
         keyBoardButton.alpha = 0.9
         keyBoardButton.addTarget(self, action:#selector(ViewController.setupSendPanel) ,
                                  forControlEvents:UIControlEvents.TouchUpInside)
         keyBoardButton.setImage(UIImage(named:"edit"),forState:UIControlState.Normal)
-        voiceView.addSubview(keyBoardButton)
+        sendView.addSubview(keyBoardButton)
         
         let addButton = UIButton(frame:CGRectMake(screenWidth - 43,10,30,30))
         addButton.alpha = 0.8
         addButton.addTarget(self, action:#selector(ViewController.showOrHiddenImageView) ,
                             forControlEvents:UIControlEvents.TouchUpInside)
         addButton.setImage(UIImage(named:"text129"),forState:UIControlState.Normal)
-        voiceView.addSubview(addButton)
+        sendView.addSubview(addButton)
+        
+        hiddenImageView()
+        imageViewFlag = "show"
         
     }
     
@@ -280,22 +287,24 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
         
         imageView.backgroundColor = UIColor(red:0, green:0.1, blue:0.1, alpha:0.1)
         imageView.alpha = 0.5
-        imageView.layer.borderWidth = 0.5
+        imageView.layer.borderWidth = 1.5
         imageView.tag = 102
         imageView.layer.borderColor = UIColor.lightGrayColor().CGColor
         self.view.addSubview(imageView)
         
         
         let mircoButton = UIButton(frame:CGRectMake(10,6,35,35))
+        mircoButton.alpha = 0.8
         mircoButton.addTarget(self, action:#selector(ViewController.changMessageViewToVoiceView) ,
                               forControlEvents:UIControlEvents.TouchUpInside)
-        mircoButton.setImage(UIImage(named:"red"),forState:UIControlState.Normal)
+        mircoButton.setImage(UIImage(named:"pictures"),forState:UIControlState.Normal)
         imageView.addSubview(mircoButton)
         
         let addButton = UIButton(frame:CGRectMake(70,6,35,35))
+        addButton.alpha = 0.8
         addButton.addTarget(self, action:#selector(ViewController.showOrHiddenImageView) ,
                             forControlEvents:UIControlEvents.TouchUpInside)
-        addButton.setImage(UIImage(named:"green"),forState:UIControlState.Normal)
+        addButton.setImage(UIImage(named:"photo189"),forState:UIControlState.Normal)
         imageView.addSubview(addButton)
         
     }
