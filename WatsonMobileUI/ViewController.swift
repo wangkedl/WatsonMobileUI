@@ -1,7 +1,7 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
+class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMicrophoneDelegate,EZRecorderDelegate {
     
     var Chats:NSMutableArray!
     var tableView:TableView!
@@ -17,12 +17,16 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
     var aacPath:String?
     var volumeTimer:NSTimer! //定时器线程，循环监测录音的音量大小
     var imageViewFlag:String = "show"
+    var microphone: EZMicrophone!
+    var ezRecorder: EZRecorder!
+
     
     override func viewDidLoad() {
 
         super.viewDidLoad()
         setupChatTable()
         setupSendPanel()
+        
         //初始化录音器
         let session:AVAudioSession = AVAudioSession.sharedInstance()
         //设置录音类型
@@ -182,29 +186,41 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
     
     
     func holdOnVoiceButton()
-    {   print("button down")
+    {
+        print("button down")
         self.notice("Recording", type: NoticeType.success, autoClear: false)
         voiceButton.backgroundColor = UIColor.darkGrayColor()
         //组合录音文件路径
         let now = NSDate()
         let dformatter = NSDateFormatter()
         dformatter.dateFormat = "HH_mm_ss"
-        aacPath = docDir + "/play_"+dformatter.stringFromDate(now)+".aac"
+        aacPath = docDir + "/play_"+dformatter.stringFromDate(now)+".wav"
         print(aacPath)
-        //初始化录音器
-        recorder = try! AVAudioRecorder(URL: NSURL(string: aacPath!)!,
-                                        settings: recorderSeetingsDic!)
-        if recorder != nil {
-            //开启仪表计数功能
-            recorder!.meteringEnabled = true
-            //准备录音
-            recorder!.prepareToRecord()
-            //开始录音
-            recorder!.record()
-            //启动定时器，定时更新录音音量
-            //volumeTimer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self,
-                                                               //  selector: #selector(ViewController.levelTimer), userInfo: nil, repeats: true)
-        }
+        
+        
+        microphone = EZMicrophone(delegate: self, startsImmediately: true)
+        
+        ezRecorder = EZRecorder(URL: NSURL(string: aacPath!), clientFormat: self.microphone.audioStreamBasicDescription(), fileType: EZRecorderFileType.WAV, delegate: self)
+        
+        microphone.startFetchingAudio()
+        
+        
+        
+        
+//        //初始化录音器
+//        recorder = try! AVAudioRecorder(URL: NSURL(string: aacPath!)!,
+//                                        settings: recorderSeetingsDic!)
+//        if recorder != nil {
+//            //开启仪表计数功能
+//            recorder!.meteringEnabled = true
+//            //准备录音
+//            recorder!.prepareToRecord()
+//            //开始录音
+//            recorder!.record()
+//            //启动定时器，定时更新录音音量
+//            //volumeTimer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self,
+//                                                               //  selector: #selector(ViewController.levelTimer), userInfo: nil, repeats: true)
+//        }
         
     }
     
@@ -222,14 +238,16 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
         self.clearAllNotice()
         voiceButton.backgroundColor = UIColor.lightGrayColor()
         //停止录音
-        recorder?.stop()
+        //recorder?.stop()
+        
+        microphone.stopFetchingAudio()
         //录音器释放
         recorder = nil
         //暂停定时器
         //volumeTimer.invalidate()
         //volumeTimer = nil
         //播放
-        player = try! AVAudioPlayer(contentsOfURL: NSURL(string: aacPath!)!)
+        //player = try! AVAudioPlayer(contentsOfURL: NSURL(string: aacPath!)!)
         if player == nil {
             print("播放失败")
         }else{

@@ -42,7 +42,7 @@
                 self.avatarImage.layer.masksToBounds = true
                 
                 var avatarX:CGFloat = 2
-                var avatary:CGFloat = 0
+                let avatary:CGFloat = 0
                 // calculate the x position
                 if(type == ChatType.Mine){
                     avatarX = self.frame.size.width - 52
