@@ -236,7 +236,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
             player?.play()
         }
         print(aacPath)
-        let url = "http://123.57.164.21/WeiXin/WatsonDemo2Servlet"
+        let url = "http://watsonserver.mybluemix.net/speech"
         postUrl(url)
     }
     
@@ -381,7 +381,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
+
     func requestUrl(urlString:String) ->  Void {
         let URL = NSURL(string:urlString)
         let urlRequest = NSURLRequest(URL: URL!)
@@ -410,6 +410,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate {
             (response,data,error)-> Void in
             if error == nil && data?.length > 0{
                 let datastring = String(data:data!, encoding: NSUTF8StringEncoding)
+                print(datastring)
                 let thisChat =  MessageItem(body:"\(datastring!)", user:self.me, date:NSDate(), mtype:ChatType.Mine)
                 self.Chats.addObject(thisChat)
                 self.tableView.chatDataSource = self

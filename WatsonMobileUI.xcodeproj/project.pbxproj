@@ -72,6 +72,7 @@
 		7F87E0281D23DCED00164F01 /* earth.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F87E0271D23DCED00164F01 /* earth.png */; };
 		7FD9CDF71D2A9AAF006D3CD2 /* watsonlogo.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 7FD9CDF61D2A9AAF006D3CD2 /* watsonlogo.jpeg */; };
 		7FD9CDF91D2AA740006D3CD2 /* watson1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7FD9CDF81D2AA740006D3CD2 /* watson1.jpg */; };
+		7FEDB5B81D2C9C100039544E /* TableViewGoodsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FEDB5B71D2C9C100039544E /* TableViewGoodsCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -161,6 +162,7 @@
 		7F87E0271D23DCED00164F01 /* earth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = earth.png; sourceTree = "<group>"; };
 		7FD9CDF61D2A9AAF006D3CD2 /* watsonlogo.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = watsonlogo.jpeg; sourceTree = "<group>"; };
 		7FD9CDF81D2AA740006D3CD2 /* watson1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = watson1.jpg; sourceTree = "<group>"; };
+		7FEDB5B71D2C9C100039544E /* TableViewGoodsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewGoodsCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -289,6 +291,7 @@
 				5A35D4B21C47B29400200076 /* TableView.swift */,
 				5A35D4BB1C47B2F000200076 /* TableHeaderViewCell.swift */,
 				5A35D4B31C47B29400200076 /* TableViewCell.swift */,
+				7FEDB5B71D2C9C100039544E /* TableViewGoodsCell.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -494,6 +497,7 @@
 				5A35D4B51C47B29400200076 /* TableViewCell.swift in Sources */,
 				5A35D4BA1C47B2BD00200076 /* MessageItem.swift in Sources */,
 				5A35D4B41C47B29400200076 /* TableView.swift in Sources */,
+				7FEDB5B81D2C9C100039544E /* TableViewGoodsCell.swift in Sources */,
 				5A35D4BE1C47B30100200076 /* UserInfo.swift in Sources */,
 				5A35D4751C47B25600200076 /* AppDelegate.swift in Sources */,
 				7F3086C81D27E8A700BB67DA /* SwiftNotice.swift in Sources */,

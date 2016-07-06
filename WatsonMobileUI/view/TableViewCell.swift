@@ -41,12 +41,16 @@
                 self.avatarImage.layer.cornerRadius = 9.0
                 self.avatarImage.layer.masksToBounds = true
                 
+                var avatarX:CGFloat = 2
+                var avatary:CGFloat = 0
                 // calculate the x position
-                let avatarX =  (type == ChatType.Someone) ? 2 : self.frame.size.width - 52
+                if(type == ChatType.Mine){
+                    avatarX = self.frame.size.width - 52
+                    print(self.msgItem.view.frame.height)
+                }
                 
                 // set the frame correctly
-                self.avatarImage.frame = CGRectMake(avatarX, 0, 50, 50)
-                print(self.avatarImage.frame )
+                self.avatarImage.frame = CGRectMake(avatarX, avatary, 50, 50)
                 self.addSubview(self.avatarImage)
                 
                 let delta =  self.frame.size.height - (self.msgItem.insets.top + self.msgItem.insets.bottom + self.msgItem.view.frame.size.height)

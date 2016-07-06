@@ -144,13 +144,26 @@ class TableView:UITableView,UITableViewDelegate, UITableViewDataSource
             hcell.backgroundColor = UIColor.clearColor()
             return hcell
         }
-        // Standard
-        let cellId = "ChatCell"
         let section = self.bubbleSection[indexPath.section] as! NSMutableArray
-        let data = section[indexPath.row - 1]
-        let cell = TableViewCell(data:data as! MessageItem, reuseIdentifier:cellId)
-        cell.backgroundColor = UIColor.clearColor()
+        let data = section[indexPath.row - 1] as! MessageItem
         
-        return cell
+        if(data.mtype == ChatType.Mine ||  data.mtype == ChatType.Someone){
+            
+            // Standard
+            let cellId = "ChatCell"
+            let cell = TableViewCell(data:data, reuseIdentifier:cellId)
+            cell.backgroundColor = UIColor.clearColor()
+            return cell
+        }else{
+            // Standard
+            let cellId = "ChatCell"
+            let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: cellId)
+            cell.textLabel!.text = "tetst"
+            cell.imageView?.image = UIImage(named: "pictures")
+            
+            
+            return cell
+        }
+        
     }
 }

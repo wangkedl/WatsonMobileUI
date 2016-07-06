@@ -4,6 +4,7 @@ enum ChatType
 {
     case Mine
     case Someone
+    case goodsList
 }
 
 class MessageItem
@@ -46,7 +47,7 @@ class MessageItem
     convenience init(body:NSString, user:UserInfo, date:NSDate, mtype:ChatType)
     {
         let font = UIFont.systemFontOfSize(16)
-        let width = 180, height = 10000.0
+        let width = 200, height = 10000.0
         
         let atts = [NSFontAttributeName: font]
         let size = body.boundingRectWithSize(CGSizeMake(CGFloat(width), CGFloat(height)), options:NSStringDrawingOptions.UsesLineFragmentOrigin, attributes:atts, context:nil)
