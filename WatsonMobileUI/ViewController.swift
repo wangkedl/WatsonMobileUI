@@ -20,6 +20,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     var microphone: EZMicrophone!
     var ezRecorder: EZRecorder!
 
+
     
     override func viewDidLoad() {
 
@@ -197,30 +198,11 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         aacPath = docDir + "/play_"+dformatter.stringFromDate(now)+".wav"
         print(aacPath)
         
-        
         microphone = EZMicrophone(delegate: self, startsImmediately: true)
         
         ezRecorder = EZRecorder(URL: NSURL(string: aacPath!), clientFormat: self.microphone.audioStreamBasicDescription(), fileType: EZRecorderFileType.WAV, delegate: self)
         
         microphone.startFetchingAudio()
-        
-        
-        
-        
-//        //初始化录音器
-//        recorder = try! AVAudioRecorder(URL: NSURL(string: aacPath!)!,
-//                                        settings: recorderSeetingsDic!)
-//        if recorder != nil {
-//            //开启仪表计数功能
-//            recorder!.meteringEnabled = true
-//            //准备录音
-//            recorder!.prepareToRecord()
-//            //开始录音
-//            recorder!.record()
-//            //启动定时器，定时更新录音音量
-//            //volumeTimer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self,
-//                                                               //  selector: #selector(ViewController.levelTimer), userInfo: nil, repeats: true)
-//        }
         
     }
     
@@ -237,24 +219,11 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     {   print("button up")
         self.clearAllNotice()
         voiceButton.backgroundColor = UIColor.lightGrayColor()
-        //停止录音
-        //recorder?.stop()
-        
         microphone.stopFetchingAudio()
-        //录音器释放
-        recorder = nil
-        //暂停定时器
-        //volumeTimer.invalidate()
-        //volumeTimer = nil
-        //播放
-        //player = try! AVAudioPlayer(contentsOfURL: NSURL(string: aacPath!)!)
-        if player == nil {
-            print("播放失败")
-        }else{
-            player?.play()
-        }
+        ezRecorder.closeAudioFile()
         print(aacPath)
-        let url = "http://watsonserver.mybluemix.net/speech"
+        //let url = "http://watsonserver.mybluemix.net/speech"
+         let url = "http://123.57.164.21/WeiXin/WatsonDemo2Servlet"
         postUrl(url)
     }
     
@@ -441,4 +410,9 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     }
     
     
+    
+    func microphone(microphone: EZMicrophone!, hasBufferList bufferList: UnsafeMutablePointer<AudioBufferList>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32) {
+        ezRecorder.appendDataFromBufferList(bufferList, withBufferSize:bufferSize)
+        
+    }
 }

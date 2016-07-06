@@ -288,10 +288,10 @@ BOOL __shouldExitOnCheckResultFail = YES;
 {
     AudioStreamBasicDescription asbd;
     memset(&asbd, 0, sizeof(asbd));
-    asbd.mSampleRate = 8000;            //采样率
+    asbd.mSampleRate = 16000;            //采样率
     asbd.mFormatID = kAudioFormatLinearPCM;
     asbd.mFormatFlags = kLinearPCMFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked;
-    asbd.mChannelsPerFrame = 1;         //单声道
+    asbd.mChannelsPerFrame = 2;         //单声道
     asbd.mFramesPerPacket = 1;          //每一个packet一侦数据
     asbd.mBitsPerChannel = 16;          //每个采样点16bit量化
     asbd.mBytesPerFrame = (asbd.mBitsPerChannel / 8) * asbd.mChannelsPerFrame;
