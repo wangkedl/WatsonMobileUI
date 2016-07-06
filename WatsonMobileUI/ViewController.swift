@@ -222,8 +222,8 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         microphone.stopFetchingAudio()
         ezRecorder.closeAudioFile()
         print(aacPath)
-        //let url = "http://watsonserver.mybluemix.net/speech"
-         let url = "http://123.57.164.21/WeiXin/WatsonDemo2Servlet"
+        let url = "http://watsonserver.mybluemix.net/speech"
+        //let url = "http://123.57.164.21/WeiXin/WatsonDemo2Servlet"
         postUrl(url)
     }
     

@@ -42,11 +42,12 @@
                 self.avatarImage.layer.masksToBounds = true
                 
                 var avatarX:CGFloat = 2
-                let avatary:CGFloat = 0
+                var avatary:CGFloat = 0
                 // calculate the x position
                 if(type == ChatType.Mine){
                     avatarX = self.frame.size.width - 52
-                    print(self.msgItem.view.frame.height)
+                    //print(self.msgItem.view.frame.height)
+                    avatary = self.msgItem.view.frame.height / 2
                 }
                 
                 // set the frame correctly
