@@ -13,14 +13,11 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     var recorder:AVAudioRecorder?
     var docDir:String!
     var player:AVAudioPlayer?
-    var recorderSeetingsDic:[String : AnyObject]?
     var aacPath:String?
-    var volumeTimer:NSTimer! //定时器线程，循环监测录音的音量大小
     var imageViewFlag:String = "show"
     var microphone: EZMicrophone!
     var ezRecorder: EZRecorder!
     var plot: EZAudioPlot!
-
 
     
     override func viewDidLoad() {
@@ -38,16 +35,6 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         //获取Document目录
         docDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory,
                                                          .UserDomainMask, true)[0]
-        //初始化字典并添加设置参数
-        recorderSeetingsDic =
-            [
-                AVFormatIDKey: NSNumber(unsignedInt: kAudioFormatMPEG4AAC),
-                AVNumberOfChannelsKey: 2, //录音的声道数，立体声为双声道
-                AVEncoderAudioQualityKey : AVAudioQuality.Max.rawValue,
-                AVEncoderBitRateKey : 320000,
-                AVSampleRateKey : 44100.0 //录音器每秒采集的录音样本数
-        ]
-        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -146,7 +133,6 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         
         
         MessageView?.removeFromSuperview()
-        
         let screenWidth = UIScreen.mainScreen().bounds.width
         sendView = UIView(frame:CGRectMake(0,self.view.frame.size.height - 50,screenWidth,50))
         
@@ -202,34 +188,25 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         microphone = EZMicrophone(delegate: self, startsImmediately: true)
         
         ezRecorder = EZRecorder(URL: NSURL(string: aacPath!), clientFormat: self.microphone.audioStreamBasicDescription(), fileType: EZRecorderFileType.WAV, delegate: self)
-        
         microphone.startFetchingAudio()
         
         
-        self.plot = EZAudioPlot.init(frame: CGRectMake(100, 100, 100, 100))
+        self.plot = EZAudioPlot.init(frame: CGRectMake(self.view.frame.width/2-40, self.view.frame.height/2-80, 70, 70))
         self.plot.plotType = EZPlotType.Rolling
         self.plot.shouldFill = true
         self.plot.shouldMirror = true
-        self.plot.tag = 102
+        self.plot.alpha = 0.7
+        self.plot.layer.cornerRadius = 10
+        self.plot.waveformLayer.cornerRadius = 10
         self.plot.backgroundColor = UIColor.blackColor()
-        self.plot.waveformLayer.fillColor = UIColor.whiteColor().CGColor
+        self.plot.color = UIColor.whiteColor()
         self.view.addSubview(plot)
-
-        
-    }
-    
-    //定时检测录音音量
-    func levelTimer(){
-        //recorder!.updateMeters() // 刷新音量数据
-        //let averageV:Float = recorder!.averagePowerForChannel(0) //获取音量的平均值
-        //let maxV:Float = recorder!.peakPowerForChannel(0) //获取音量最大值
-        //let lowPassResult:Double = pow(Double(10), Double(0.05*maxV))
         
     }
     
     func leftVoiceButton()
     {   print("button up")
-        self.clearAllNotice()
+        self.plot.removeFromSuperview()
         voiceButton.backgroundColor = UIColor.lightGrayColor()
         microphone.stopFetchingAudio()
         ezRecorder.closeAudioFile()
@@ -388,7 +365,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
             (response,data,error)-> Void in
             if error == nil && data?.length > 0{
                 let datastring = String(data:data!, encoding: NSUTF8StringEncoding)
-                let thatChat =  MessageItem(body:"\(datastring!)", user:self.Watson, date:NSDate(), mtype:ChatType.GoodsList)
+                let thatChat =  MessageItem(body:"\(datastring!)", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
                 self.Chats.addObject(thatChat)
                 self.tableView.chatDataSource = self
                 self.tableView.reloadData()
