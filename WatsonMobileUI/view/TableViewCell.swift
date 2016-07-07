@@ -95,6 +95,8 @@
                 var frame = newFrame
                 frame.size.width = UIScreen.mainScreen().bounds.width
                 super.frame = frame
+                //super.frame = CGRectMake(5,5,5,5)
             }
         }
+        
     }

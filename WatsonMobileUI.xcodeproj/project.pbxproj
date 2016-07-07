@@ -51,6 +51,7 @@
 		7F4CD8431D294745009A8E02 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F4CD83F1D294745009A8E02 /* camera.png */; };
 		7F4CD8451D294B88009A8E02 /* camera3.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F4CD8441D294B88009A8E02 /* camera3.png */; };
 		7F4CD8471D294E25009A8E02 /* green.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F4CD8461D294E25009A8E02 /* green.png */; };
+		7F5F7C801D2DF4B6005FE5E8 /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F5F7C7F1D2DF4B6005FE5E8 /* add.png */; };
 		7F7226641D2B4AA2007CDD2C /* watson3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7F7226631D2B4AA2007CDD2C /* watson3.jpg */; };
 		7F7226661D2B5988007CDD2C /* Watson4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7F7226651D2B5988007CDD2C /* Watson4.jpg */; };
 		7F7226681D2B5BC2007CDD2C /* watson5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7F7226671D2B5BC2007CDD2C /* watson5.jpg */; };
@@ -157,6 +158,7 @@
 		7F4CD83F1D294745009A8E02 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
 		7F4CD8441D294B88009A8E02 /* camera3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera3.png; sourceTree = "<group>"; };
 		7F4CD8461D294E25009A8E02 /* green.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = green.png; sourceTree = "<group>"; };
+		7F5F7C7F1D2DF4B6005FE5E8 /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add.png; sourceTree = "<group>"; };
 		7F7226631D2B4AA2007CDD2C /* watson3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = watson3.jpg; sourceTree = "<group>"; };
 		7F7226651D2B5988007CDD2C /* Watson4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Watson4.jpg; sourceTree = "<group>"; };
 		7F7226671D2B5BC2007CDD2C /* watson5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = watson5.jpg; sourceTree = "<group>"; };
@@ -289,6 +291,7 @@
 				7F72267F1D2B980F007CDD2C /* pictures.png */,
 				7F7226811D2B98D1007CDD2C /* photo189.png */,
 				7F72267D1D2B969D007CDD2C /* edit.png */,
+				7F5F7C7F1D2DF4B6005FE5E8 /* add.png */,
 				7F3086C31D27BDC500BB67DA /* b5.png */,
 				7F72266D1D2B858A007CDD2C /* watson9.jpg */,
 				7FD9CDF61D2A9AAF006D3CD2 /* watsonlogo.jpeg */,
@@ -555,6 +558,7 @@
 				7F7226801D2B980F007CDD2C /* pictures.png in Resources */,
 				7F4CD83B1D294545009A8E02 /* yellow.png in Resources */,
 				7F2DCC8C1D26BAE200CD99EE /* add3.png in Resources */,
+				7F5F7C801D2DF4B6005FE5E8 /* add.png in Resources */,
 				7F4CD8371D28EF56009A8E02 /* coverage.png in Resources */,
 				7F7226681D2B5BC2007CDD2C /* watson5.jpg in Resources */,
 				7F7226641D2B4AA2007CDD2C /* watson3.jpg in Resources */,

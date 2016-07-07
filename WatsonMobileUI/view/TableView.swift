@@ -157,10 +157,14 @@ class TableView:UITableView,UITableViewDelegate, UITableViewDataSource
         }else{
             // Standard
             let cellId = "ChatCell"
-            let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: cellId)
+            let cell = TableViewGoodsCell(data:data, reuseIdentifier: cellId)
+            cell.backgroundColor = UIColor.whiteColor()
+            cell.layer.borderWidth = 1
+            cell.contentView.alpha = 0.6
+            cell.layer.borderColor = UIColor.lightGrayColor().CGColor
+            cell.contentView.frame = CGRectMake(50, 50, 50, 30)
             cell.textLabel!.text = "tetst"
             cell.imageView?.image = UIImage(named: "pictures")
-            
             
             return cell
         }

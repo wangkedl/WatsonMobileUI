@@ -111,7 +111,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         addButton.alpha = 0.8
         addButton.addTarget(self, action:#selector(ViewController.showOrHiddenImageView) ,
                             forControlEvents:UIControlEvents.TouchUpInside)
-        addButton.setImage(UIImage(named:"text129"),forState:UIControlState.Normal)
+        addButton.setImage(UIImage(named:"add"),forState:UIControlState.Normal)
         sendView.addSubview(addButton)
         
         hiddenImageView()
@@ -176,7 +176,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         addButton.alpha = 0.8
         addButton.addTarget(self, action:#selector(ViewController.showOrHiddenImageView) ,
                             forControlEvents:UIControlEvents.TouchUpInside)
-        addButton.setImage(UIImage(named:"text129"),forState:UIControlState.Normal)
+        addButton.setImage(UIImage(named:"add"),forState:UIControlState.Normal)
         sendView.addSubview(addButton)
         
         hiddenImageView()
@@ -376,7 +376,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
             (response,data,error)-> Void in
             if error == nil && data?.length > 0{
                 let datastring = String(data:data!, encoding: NSUTF8StringEncoding)
-                let thatChat =  MessageItem(body:"\(datastring!)", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
+                let thatChat =  MessageItem(body:"\(datastring!)", user:self.Watson, date:NSDate(), mtype:ChatType.GoodsList)
                 self.Chats.addObject(thatChat)
                 self.tableView.chatDataSource = self
                 self.tableView.reloadData()
@@ -397,7 +397,6 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
             (response,data,error)-> Void in
             if error == nil && data?.length > 0{
                 let datastring = String(data:data!, encoding: NSUTF8StringEncoding)
-                print(datastring)
                 let thisChat =  MessageItem(body:"\(datastring!)", user:self.me, date:NSDate(), mtype:ChatType.Mine)
                 self.Chats.addObject(thisChat)
                 self.tableView.chatDataSource = self

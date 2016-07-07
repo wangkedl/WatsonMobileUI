@@ -4,7 +4,7 @@ enum ChatType
 {
     case Mine
     case Someone
-    case goodsList
+    case GoodsList
 }
 
 class MessageItem

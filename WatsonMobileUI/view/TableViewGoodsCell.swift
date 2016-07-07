@@ -32,7 +32,7 @@ class TableViewGoodsCell: UITableViewCell {
         set (newFrame) {
             var frame = newFrame
             frame.size.width = UIScreen.mainScreen().bounds.width
-            super.frame = frame
+            super.frame = CGRectMake(30,200,250,50)
         }
     }
 
