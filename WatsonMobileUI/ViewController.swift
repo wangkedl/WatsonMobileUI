@@ -19,6 +19,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     var imageViewFlag:String = "show"
     var microphone: EZMicrophone!
     var ezRecorder: EZRecorder!
+    var plot: EZAudioPlot!
 
 
     
@@ -189,7 +190,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     func holdOnVoiceButton()
     {
         print("button down")
-        self.notice("Recording", type: NoticeType.success, autoClear: false)
+        //self.notice("Recording", type: NoticeType.success, autoClear: false)
         voiceButton.backgroundColor = UIColor.darkGrayColor()
         //组合录音文件路径
         let now = NSDate()
@@ -203,6 +204,17 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         ezRecorder = EZRecorder(URL: NSURL(string: aacPath!), clientFormat: self.microphone.audioStreamBasicDescription(), fileType: EZRecorderFileType.WAV, delegate: self)
         
         microphone.startFetchingAudio()
+        
+        
+        self.plot = EZAudioPlot.init(frame: CGRectMake(100, 100, 100, 100))
+        self.plot.plotType = EZPlotType.Rolling
+        self.plot.shouldFill = true
+        self.plot.shouldMirror = true
+        self.plot.tag = 102
+        self.plot.backgroundColor = UIColor.blackColor()
+        self.plot.waveformLayer.fillColor = UIColor.whiteColor().CGColor
+        self.view.addSubview(plot)
+
         
     }
     
@@ -414,4 +426,11 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         ezRecorder.appendDataFromBufferList(bufferList, withBufferSize:bufferSize)
         
     }
+    
+    func microphone(microphone: EZMicrophone!, hasAudioReceived buffer: UnsafeMutablePointer<UnsafeMutablePointer<Float>>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32) {
+        self.plot.updateBuffer(buffer[0], withBufferSize: bufferSize)
+    }
+    
+    
+    
 }
