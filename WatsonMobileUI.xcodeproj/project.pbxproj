@@ -40,6 +40,12 @@
 		7F3086C41D27BDC500BB67DA /* b5.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F3086C31D27BDC500BB67DA /* b5.png */; };
 		7F3086C61D27BE8D00BB67DA /* bb2.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F3086C51D27BE8D00BB67DA /* bb2.png */; };
 		7F3086C81D27E8A700BB67DA /* SwiftNotice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F3086C71D27E8A700BB67DA /* SwiftNotice.swift */; };
+		7F39DBAB1D2E9A04004133C4 /* Reddit-80.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F39DBAA1D2E9A04004133C4 /* Reddit-80.png */; };
+		7F39DBAD1D2E9A23004133C4 /* Police.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F39DBAC1D2E9A23004133C4 /* Police.png */; };
+		7F39DBAF1D2E9A3A004133C4 /* UserFemale.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F39DBAE1D2E9A3A004133C4 /* UserFemale.png */; };
+		7F39DBB11D2E9CA3004133C4 /* Robot 3-80.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F39DBB01D2E9CA3004133C4 /* Robot 3-80.png */; };
+		7F39DBB31D2E9D58004133C4 /* Robot 3-100-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F39DBB21D2E9D58004133C4 /* Robot 3-100-2.png */; };
+		7F39DBB51D2EA043004133C4 /* User Female-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F39DBB41D2EA043004133C4 /* User Female-100.png */; };
 		7F4007011D266331001C95DC /* message_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F4007001D266331001C95DC /* message_left.png */; };
 		7F4007031D26633F001C95DC /* message_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F4007021D26633F001C95DC /* message_right.png */; };
 		7F4CD8371D28EF56009A8E02 /* coverage.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F4CD8361D28EF56009A8E02 /* coverage.png */; };
@@ -147,6 +153,12 @@
 		7F3086C31D27BDC500BB67DA /* b5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = b5.png; sourceTree = "<group>"; };
 		7F3086C51D27BE8D00BB67DA /* bb2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bb2.png; sourceTree = "<group>"; };
 		7F3086C71D27E8A700BB67DA /* SwiftNotice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftNotice.swift; sourceTree = "<group>"; };
+		7F39DBAA1D2E9A04004133C4 /* Reddit-80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Reddit-80.png"; sourceTree = "<group>"; };
+		7F39DBAC1D2E9A23004133C4 /* Police.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Police.png; sourceTree = "<group>"; };
+		7F39DBAE1D2E9A3A004133C4 /* UserFemale.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UserFemale.png; sourceTree = "<group>"; };
+		7F39DBB01D2E9CA3004133C4 /* Robot 3-80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Robot 3-80.png"; sourceTree = "<group>"; };
+		7F39DBB21D2E9D58004133C4 /* Robot 3-100-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Robot 3-100-2.png"; sourceTree = "<group>"; };
+		7F39DBB41D2EA043004133C4 /* User Female-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "User Female-100.png"; sourceTree = "<group>"; };
 		7F4007001D266331001C95DC /* message_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = message_left.png; sourceTree = "<group>"; };
 		7F4007021D26633F001C95DC /* message_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = message_right.png; sourceTree = "<group>"; };
 		7F4CD8361D28EF56009A8E02 /* coverage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coverage.png; sourceTree = "<group>"; };
@@ -288,10 +300,16 @@
 				7F87E0231D23BFDF00164F01 /* add1.png */,
 				5A35D4A31C47B27400200076 /* luguhu.jpeg */,
 				7F2DCC8B1D26BAE200CD99EE /* add3.png */,
+				7F39DBAC1D2E9A23004133C4 /* Police.png */,
 				7F72267F1D2B980F007CDD2C /* pictures.png */,
 				7F7226811D2B98D1007CDD2C /* photo189.png */,
+				7F39DBAA1D2E9A04004133C4 /* Reddit-80.png */,
+				7F39DBAE1D2E9A3A004133C4 /* UserFemale.png */,
+				7F39DBB01D2E9CA3004133C4 /* Robot 3-80.png */,
 				7F72267D1D2B969D007CDD2C /* edit.png */,
 				7F5F7C7F1D2DF4B6005FE5E8 /* add.png */,
+				7F39DBB41D2EA043004133C4 /* User Female-100.png */,
+				7F39DBB21D2E9D58004133C4 /* Robot 3-100-2.png */,
 				7F3086C31D27BDC500BB67DA /* b5.png */,
 				7F72266D1D2B858A007CDD2C /* watson9.jpg */,
 				7FD9CDF61D2A9AAF006D3CD2 /* watsonlogo.jpeg */,
@@ -511,6 +529,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F3086C41D27BDC500BB67DA /* b5.png in Resources */,
+				7F39DBAB1D2E9A04004133C4 /* Reddit-80.png in Resources */,
 				7F4007011D266331001C95DC /* message_left.png in Resources */,
 				5A35D4AF1C47B27400200076 /* yoububble.png in Resources */,
 				5A35D47F1C47B25600200076 /* LaunchScreen.storyboard in Resources */,
@@ -527,12 +546,16 @@
 				7FD9CDF71D2A9AAF006D3CD2 /* watsonlogo.jpeg in Resources */,
 				7F7226661D2B5988007CDD2C /* Watson4.jpg in Resources */,
 				7F4CD8421D294745009A8E02 /* camera1.png in Resources */,
+				7F39DBAF1D2E9A3A004133C4 /* UserFemale.png in Resources */,
 				7F87E0261D23C30600164F01 /* mirco.png in Resources */,
 				7F7226711D2B879D007CDD2C /* watson10.jpg in Resources */,
 				7F72266A1D2B7BCE007CDD2C /* watson7.jpg in Resources */,
+				7F39DBB51D2EA043004133C4 /* User Female-100.png in Resources */,
+				7F39DBAD1D2E9A23004133C4 /* Police.png in Resources */,
 				7F3086BE1D2747CB00BB67DA /* keyboard2.png in Resources */,
 				7F87E0281D23DCED00164F01 /* earth.png in Resources */,
 				7F87E0241D23BFDF00164F01 /* add1.png in Resources */,
+				7F39DBB31D2E9D58004133C4 /* Robot 3-100-2.png in Resources */,
 				7F3086B61D273C0700BB67DA /* rainbow.png in Resources */,
 				7F4CD8471D294E25009A8E02 /* green.png in Resources */,
 				7F3086C01D274A3300BB67DA /* cross24.png in Resources */,
@@ -553,6 +576,7 @@
 				7F4007031D26633F001C95DC /* message_right.png in Resources */,
 				5A35D4AD1C47B27400200076 /* xiaohua.png in Resources */,
 				5A35D4B01C47B27400200076 /* yoububble@2x.png in Resources */,
+				7F39DBB11D2E9CA3004133C4 /* Robot 3-80.png in Resources */,
 				7F7226761D2B8920007CDD2C /* wifi75.png in Resources */,
 				7F7226741D2B884D007CDD2C /* more16.png in Resources */,
 				7F7226801D2B980F007CDD2C /* pictures.png in Resources */,
@@ -761,7 +785,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/WatsonMobileUI/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ibm.watson.demo2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ibm.watson.demo;
 				PRODUCT_NAME = WatsonMobileUI;
 				SWIFT_OBJC_BRIDGING_HEADER = "WatsonMobileUI/WatsonMobileUI-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -778,7 +802,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/WatsonMobileUI/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.ibm.watson.demo2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ibm.watson.demo;
 				PRODUCT_NAME = WatsonMobileUI;
 				SWIFT_OBJC_BRIDGING_HEADER = "WatsonMobileUI/WatsonMobileUI-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;

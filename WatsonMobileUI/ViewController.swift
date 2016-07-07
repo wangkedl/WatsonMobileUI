@@ -18,10 +18,10 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     var microphone: EZMicrophone!
     var ezRecorder: EZRecorder!
     var plot: EZAudioPlot!
-
+    
     
     override func viewDidLoad() {
-
+        
         super.viewDidLoad()
         setupChatTable()
         setupSendPanel()
@@ -34,7 +34,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         try! session.setActive(true)
         //获取Document目录
         docDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory,
-                                                         .UserDomainMask, true)[0]
+                                                     .UserDomainMask, true)[0]
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -78,7 +78,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         //txtMsg.placeholder = "Please input something."
         txtMsg.backgroundColor = UIColor.whiteColor()
         txtMsg.textColor = UIColor.blackColor()
-        txtMsg.font = UIFont.boldSystemFontOfSize(12)
+        txtMsg.font = UIFont.boldSystemFontOfSize(15)
         txtMsg.clearButtonMode = UITextFieldViewMode.WhileEditing
         txtMsg.keyboardType = UIKeyboardType.ASCIICapable
         txtMsg.layer.cornerRadius = 5.0
@@ -177,7 +177,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     {
         print("button down")
         //self.notice("Recording", type: NoticeType.success, autoClear: false)
-        voiceButton.backgroundColor = UIColor.darkGrayColor()
+        self.voiceButton.backgroundColor = UIColor.darkGrayColor()
         //组合录音文件路径
         let now = NSDate()
         let dformatter = NSDateFormatter()
@@ -191,7 +191,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         microphone.startFetchingAudio()
         
         
-        self.plot = EZAudioPlot.init(frame: CGRectMake(self.view.frame.width/2-40, self.view.frame.height/2-80, 70, 70))
+        self.plot = EZAudioPlot.init(frame: CGRectMake(self.view.frame.width/2-35, self.view.frame.height/2-70, 70, 70))
         self.plot.plotType = EZPlotType.Rolling
         self.plot.shouldFill = true
         self.plot.shouldMirror = true
@@ -200,12 +200,18 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         self.plot.waveformLayer.cornerRadius = 10
         self.plot.backgroundColor = UIColor.blackColor()
         self.plot.color = UIColor.whiteColor()
+        
+        let recordlable:UILabel = UILabel.init(frame: CGRectMake(14, 35, 60, 60))
+        recordlable.text = "Recording"
+        recordlable.font = UIFont.boldSystemFontOfSize(8)
+        recordlable.textColor = UIColor.whiteColor()
+        self.plot.addSubview(recordlable)
         self.view.addSubview(plot)
         
     }
     
     func leftVoiceButton()
-    {   print("button up")
+    {
         self.plot.removeFromSuperview()
         voiceButton.backgroundColor = UIColor.lightGrayColor()
         microphone.stopFetchingAudio()
@@ -214,6 +220,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         let url = "http://watsonserver.mybluemix.net/speech"
         //let url = "http://123.57.164.21/WeiXin/WatsonDemo2Servlet"
         postUrl(url)
+        
     }
     
     func sendMessage()
@@ -235,7 +242,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     
     func showOrHiddenImageView()
     {
-        if(imageViewFlag=="show"){
+        if(imageViewFlag == "show"){
             showImageView()
             imageViewFlag = "hidden"
         }else{
@@ -275,6 +282,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
                               forControlEvents:UIControlEvents.TouchUpInside)
         mircoButton.setImage(UIImage(named:"pictures"),forState:UIControlState.Normal)
         imageView.addSubview(mircoButton)
+        mircoButton.enabled = false
         
         let addButton = UIButton(frame:CGRectMake(70,6,35,35))
         addButton.alpha = 0.8
@@ -282,6 +290,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
                             forControlEvents:UIControlEvents.TouchUpInside)
         addButton.setImage(UIImage(named:"photo189"),forState:UIControlState.Normal)
         imageView.addSubview(addButton)
+        addButton.enabled = false
         
     }
     
@@ -304,7 +313,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     }
     
     override func prefersStatusBarHidden()->Bool{
-      return true
+        return true
     }
     
     func setupChatTable()
@@ -313,27 +322,22 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         //self.view.backgroundView = UIImageView(image:UIImage(named:"watsonlogo.jpeg"))
         
         let backGroundImage:UIImage  = UIImage(named:"watson11.png")!
-        
         let a:UIImageView = UIImageView(image:backGroundImage)
-        
         a.alpha = 0.4
+        // a.layer.contents = backGroundImage.CGImage
         
-       // a.layer.contents = backGroundImage.CGImage
-
         
         self.view.backgroundColor = UIColor(patternImage: backGroundImage)
         self.view.layer.contents = backGroundImage.CGImage
-        
         //self.view.insertSubview(a, atIndex: 0)
         
         self.tableView = TableView(frame:CGRectMake(0, 20, self.view.frame.size.width, self.view.frame.size.height - 70), style: .Plain)
         //self.tableView.backgroundView = UIImageView(image:UIImage(named:"watsonlogo.jpeg"))
-
         
         // 创建一个重用的单元格
         self.tableView!.registerClass(TableViewCell.self, forCellReuseIdentifier: "ChatCell")
-        me = UserInfo(name:"user" ,logo:("femail.png"))
-        Watson  = UserInfo(name:"watson", logo:("rainbow.png"))
+        me = UserInfo(name:"user" ,logo:("UserFemale.png"))
+        Watson  = UserInfo(name:"watson", logo:("Robot 3-80.png"))
         
         let zero =  MessageItem(body:"Hi Dear,I'm watson,What can I do for you!", user:Watson,  date:NSDate(timeIntervalSinceNow:0), mtype:ChatType.Someone)
         
@@ -357,7 +361,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
+    
     func requestUrl(urlString:String) ->  Void {
         let URL = NSURL(string:urlString)
         let urlRequest = NSURLRequest(URL: URL!)
@@ -392,7 +396,8 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
                 self.tableView.reloadData()
                 
             }else{
-                print(error)
+                if(data?.length == 0){
+                }
             }
         })
     }
@@ -401,7 +406,6 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     
     func microphone(microphone: EZMicrophone!, hasBufferList bufferList: UnsafeMutablePointer<AudioBufferList>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32) {
         ezRecorder.appendDataFromBufferList(bufferList, withBufferSize:bufferSize)
-        
     }
     
     func microphone(microphone: EZMicrophone!, hasAudioReceived buffer: UnsafeMutablePointer<UnsafeMutablePointer<Float>>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32) {
