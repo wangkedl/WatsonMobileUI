@@ -1,7 +1,7 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMicrophoneDelegate,EZRecorderDelegate {
+class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMicrophoneDelegate,EZRecorderDelegate, UIPickerViewDelegate, UIPickerViewDataSource{
     
     var Chats:NSMutableArray!
     var tableView:TableView!
@@ -18,6 +18,8 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     var microphone: EZMicrophone!
     var ezRecorder: EZRecorder!
     var plot: EZAudioPlot!
+    var pickerView: UIPickerView!
+    var itemlist: NSArray!
     
     
     override func viewDidLoad() {
@@ -383,19 +385,50 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
                     self.tableView.reloadData()
                 }
                 if(type == "itemlist"){
-                    let itemlist: NSArray = jsonData.objectForKey("value")! as! NSArray
+                    self.itemlist = jsonData.objectForKey("value")! as! NSArray
                     let thatChat =  MessageItem(body:"\("You may want to say:")", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
                     self.Chats.addObject(thatChat)
                     
-                    for i in 0..<itemlist.count{
-                        let jsonItemData:AnyObject = itemlist[i]
-                        let itemText =  jsonItemData.objectForKey("text") as! String
-                        let item =  MessageItem(body:"\(itemText)", date:NSDate(), mtype:ChatType.ItemList)
-                        self.Chats.addObject(item)
- 
-                    }
-                    self.tableView.chatDataSource = self
-                    self.tableView.reloadData()
+//                    for i in 0..<itemlist.count{
+//                        let jsonItemData:AnyObject = itemlist[i]
+//                        let itemText =  jsonItemData.objectForKey("text") as! String
+//                        let item =  MessageItem(body:"\(itemText)", date:NSDate(), mtype:ChatType.ItemList)
+//                        self.Chats.addObject(item)
+// 
+//                    }
+//                    self.tableView.chatDataSource = self
+//                    self.tableView.reloadData()
+                    
+                    let screenWidth = UIScreen.mainScreen().bounds.width
+                    self.pickerView = UIPickerView(frame: CGRectMake(0,self.view.frame.size.height - 100,screenWidth,100))
+                    self.pickerView.dataSource = self
+                    self.pickerView.delegate = self
+                    self.pickerView.showsSelectionIndicator = true
+                    self.pickerView.reloadAllComponents()
+                    self.view.addSubview(self.pickerView)
+                    
+                    let okView:UIView = UIView(frame:CGRectMake(0, self.view.frame.size.height - 140, screenWidth,40))
+                    
+                    okView.backgroundColor = UIColor(red:0, green:0.1, blue:0.1, alpha:0.1)
+                    okView.layer.borderWidth = 0.5
+                    okView.layer.borderColor = UIColor.lightGrayColor().CGColor
+                    okView.alpha = 0.5
+                    self.view.addSubview(okView)
+                    
+                    let okButton = UIButton(frame:CGRectMake(screenWidth - 43, 1, 38, 38))
+                    okButton.alpha = 0.8
+                    okButton.addTarget(self, action:#selector(ViewController.showOrHiddenImageView) ,
+                        forControlEvents:UIControlEvents.TouchUpInside)
+                    okButton.setImage(UIImage(named:"Ok-96.png"),forState:UIControlState.Normal)
+                    okView.addSubview(okButton)
+                    
+                    self.sendView.removeFromSuperview()
+                    
+                    
+                    let tableViewWidth = self.tableView.frame.size.width;
+                    let tableViewHeight = self.tableView.frame.size.height;
+                    let tableViewRect = CGRectMake(0.0, -75,tableViewWidth,tableViewHeight)
+                    self.tableView.frame = tableViewRect
                     
                 }
                 
@@ -439,6 +472,25 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         self.plot.updateBuffer(buffer[0], withBufferSize: bufferSize)
     }
     
+    
+    // 设置选择框的列数为
+    func numberOfComponentsInPickerView( pickerView: UIPickerView) -> Int{
+        return 1
+    }
+    
+    // 设置选择框的行数为
+    func pickerView(pickerView: UIPickerView,numberOfRowsInComponent component: Int) -> Int{
+        return itemlist.count
+    }
+    
+    // 设置选择框各选项的内容
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int)
+        -> String? {
+            
+            let contenObject:AnyObject = itemlist[row]
+            let itemText:String =  contenObject.objectForKey("text") as! String
+            return itemText
+    }
     
     
 }
