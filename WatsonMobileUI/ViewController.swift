@@ -19,6 +19,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     var ezRecorder: EZRecorder!
     var plot: EZAudioPlot!
     var pickerView: UIPickerView!
+    var okView: UIView!
     var itemlist: NSArray!
     
     
@@ -407,27 +408,27 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
                     self.pickerView.reloadAllComponents()
                     self.view.addSubview(self.pickerView)
                     
-                    let okView:UIView = UIView(frame:CGRectMake(0, self.view.frame.size.height - 140, screenWidth,40))
+                    self.okView = UIView(frame:CGRectMake(0, self.view.frame.size.height - 135, screenWidth,40))
                     
-                    okView.backgroundColor = UIColor(red:0, green:0.1, blue:0.1, alpha:0.1)
-                    okView.layer.borderWidth = 0.5
-                    okView.layer.borderColor = UIColor.lightGrayColor().CGColor
-                    okView.alpha = 0.5
-                    self.view.addSubview(okView)
+                    self.okView.backgroundColor = UIColor(red:0, green:0.1, blue:0.1, alpha:0.1)
+                    self.okView.layer.borderWidth = 0.5
+                    self.okView.layer.borderColor = UIColor.lightGrayColor().CGColor
+                    self.okView.alpha = 0.5
+                    self.view.addSubview(self.okView)
                     
                     let okButton = UIButton(frame:CGRectMake(screenWidth - 43, 1, 38, 38))
                     okButton.alpha = 0.8
-                    okButton.addTarget(self, action:#selector(ViewController.showOrHiddenImageView) ,
+                    okButton.addTarget(self, action:#selector(ViewController.getSelectItem) ,
                         forControlEvents:UIControlEvents.TouchUpInside)
                     okButton.setImage(UIImage(named:"Ok-96.png"),forState:UIControlState.Normal)
-                    okView.addSubview(okButton)
+                    self.okView.addSubview(okButton)
                     
                     self.sendView.removeFromSuperview()
                     
                     
                     let tableViewWidth = self.tableView.frame.size.width;
                     let tableViewHeight = self.tableView.frame.size.height;
-                    let tableViewRect = CGRectMake(0.0, -75,tableViewWidth,tableViewHeight)
+                    let tableViewRect = CGRectMake(0.0, -70,tableViewWidth,tableViewHeight)
                     self.tableView.frame = tableViewRect
                     
                 }
@@ -490,6 +491,19 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
             let contenObject:AnyObject = itemlist[row]
             let itemText:String =  contenObject.objectForKey("text") as! String
             return itemText
+    }
+    
+    // 取得提示list选中的值
+    func getSelectItem()
+    {
+        let selectInt:Int  = pickerView.selectedRowInComponent(0)
+        let contenObject:AnyObject = itemlist[selectInt]
+        let itemText:String =  contenObject.objectForKey("text") as! String
+        print(itemText)
+        self.okView.removeFromSuperview()
+        self.pickerView.removeFromSuperview()
+        setupSendPanel()
+        
     }
     
     
