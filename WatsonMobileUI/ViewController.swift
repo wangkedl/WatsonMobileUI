@@ -337,7 +337,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         // 创建一个重用的单元格
         self.tableView!.registerClass(TableViewCell.self, forCellReuseIdentifier: "ChatCell")
         me = UserInfo(name:"user" ,logo:("UserFemale.png"))
-        Watson  = UserInfo(name:"watson", logo:("Robot 3-80.png"))
+        Watson  = UserInfo(name:"watson", logo:("rainbow.png"))
         
         let zero =  MessageItem(body:"Hi Dear,I'm watson,What can I do for you!", user:Watson,  date:NSDate(timeIntervalSinceNow:0), mtype:ChatType.Someone)
         

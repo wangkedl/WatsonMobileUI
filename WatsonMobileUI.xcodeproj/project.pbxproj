@@ -46,6 +46,7 @@
 		7F39DBB11D2E9CA3004133C4 /* Robot 3-80.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F39DBB01D2E9CA3004133C4 /* Robot 3-80.png */; };
 		7F39DBB31D2E9D58004133C4 /* Robot 3-100-2.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F39DBB21D2E9D58004133C4 /* Robot 3-100-2.png */; };
 		7F39DBB51D2EA043004133C4 /* User Female-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F39DBB41D2EA043004133C4 /* User Female-100.png */; };
+		7F39DBB71D2EA1D0004133C4 /* Robot 3 Filled-100.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F39DBB61D2EA1D0004133C4 /* Robot 3 Filled-100.png */; };
 		7F4007011D266331001C95DC /* message_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F4007001D266331001C95DC /* message_left.png */; };
 		7F4007031D26633F001C95DC /* message_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F4007021D26633F001C95DC /* message_right.png */; };
 		7F4CD8371D28EF56009A8E02 /* coverage.png in Resources */ = {isa = PBXBuildFile; fileRef = 7F4CD8361D28EF56009A8E02 /* coverage.png */; };
@@ -159,6 +160,7 @@
 		7F39DBB01D2E9CA3004133C4 /* Robot 3-80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Robot 3-80.png"; sourceTree = "<group>"; };
 		7F39DBB21D2E9D58004133C4 /* Robot 3-100-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Robot 3-100-2.png"; sourceTree = "<group>"; };
 		7F39DBB41D2EA043004133C4 /* User Female-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "User Female-100.png"; sourceTree = "<group>"; };
+		7F39DBB61D2EA1D0004133C4 /* Robot 3 Filled-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Robot 3 Filled-100.png"; sourceTree = "<group>"; };
 		7F4007001D266331001C95DC /* message_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = message_left.png; sourceTree = "<group>"; };
 		7F4007021D26633F001C95DC /* message_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = message_right.png; sourceTree = "<group>"; };
 		7F4CD8361D28EF56009A8E02 /* coverage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coverage.png; sourceTree = "<group>"; };
@@ -343,6 +345,7 @@
 				5A35D4A61C47B27400200076 /* xiaohua.png */,
 				7F3086C11D274A5F00BB67DA /* microp7.png */,
 				7F7226731D2B884D007CDD2C /* more16.png */,
+				7F39DBB61D2EA1D0004133C4 /* Robot 3 Filled-100.png */,
 				7F2DCC851D26B92B00CD99EE /* add2.png */,
 				7F3086B91D27460E00BB67DA /* keyword.png */,
 				7F3086B71D273DC400BB67DA /* femail.png */,
@@ -544,6 +547,7 @@
 				7F3086BA1D27460E00BB67DA /* keyword.png in Resources */,
 				7F2DCC861D26B92B00CD99EE /* add2.png in Resources */,
 				7FD9CDF71D2A9AAF006D3CD2 /* watsonlogo.jpeg in Resources */,
+				7F39DBB71D2EA1D0004133C4 /* Robot 3 Filled-100.png in Resources */,
 				7F7226661D2B5988007CDD2C /* Watson4.jpg in Resources */,
 				7F4CD8421D294745009A8E02 /* camera1.png in Resources */,
 				7F39DBAF1D2E9A3A004133C4 /* UserFemale.png in Resources */,
