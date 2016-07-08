@@ -389,6 +389,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
                     self.itemlist = jsonData.objectForKey("value")! as! NSArray
                     let thatChat =  MessageItem(body:"\("You may want to say:")", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
                     self.Chats.addObject(thatChat)
+                    self.tableView.reloadData()
                     
 //                    for i in 0..<itemlist.count{
 //                        let jsonItemData:AnyObject = itemlist[i]
@@ -424,7 +425,6 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
                     self.okView.addSubview(okButton)
                     
                     self.sendView.removeFromSuperview()
-                    
                     
                     let tableViewWidth = self.tableView.frame.size.width;
                     let tableViewHeight = self.tableView.frame.size.height;
