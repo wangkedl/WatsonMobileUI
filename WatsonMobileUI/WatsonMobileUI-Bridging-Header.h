@@ -3,3 +3,4 @@
 //
 
 #import "EZAudio.h"
+#import "JSONKit.h"

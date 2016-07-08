@@ -26,28 +26,29 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         setupChatTable()
         setupSendPanel()
         
-        //初始化录音器
+        // 初始化录音器
         let session:AVAudioSession = AVAudioSession.sharedInstance()
-        //设置录音类型
+        // 设置录音类型
         try! session.setCategory(AVAudioSessionCategoryPlayAndRecord)
-        //设置支持后台
+        // 设置支持后台
         try! session.setActive(true)
-        //获取Document目录
+        // 获取Document目录
         docDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory,
                                                      .UserDomainMask, true)[0]
     }
     
+    // 绑定键盘事件
     override func viewWillAppear(animated: Bool) {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
     }
     
+    // 键盘显示事件view上移
     func keyboardWillShow(notification:NSNotification){
         
         if ((notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue()) != nil {
             let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue()
             let keyboardheight  = keyboardSize!.height as CGFloat
-            
             let width = self.view.frame.size.width;
             let height = self.view.frame.size.height;
             let rect = CGRectMake(0.0, -keyboardheight,width,height);
@@ -55,6 +56,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         }
     }
     
+    // 键盘显示事件view下移复位
     func keyboardWillHide(notification:NSNotification){
         let width = self.view.frame.size.width;
         let height = self.view.frame.size.height;
@@ -62,7 +64,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         self.view.frame = rect
     }
     
-    
+    // view初期表示
     func setupSendPanel()
     {
         let MessageView = self.view.viewWithTag(101)
@@ -176,9 +178,9 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     func holdOnVoiceButton()
     {
         print("button down")
-        //self.notice("Recording", type: NoticeType.success, autoClear: false)
+        // self.notice("Recording", type: NoticeType.success, autoClear: false)
         self.voiceButton.backgroundColor = UIColor.darkGrayColor()
-        //组合录音文件路径
+        // 组合录音文件路径
         let now = NSDate()
         let dformatter = NSDateFormatter()
         dformatter.dateFormat = "HH_mm_ss"
@@ -228,14 +230,14 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         let sender = txtMsg
         let thisChat =  MessageItem(body:sender.text!, user:me, date:NSDate(), mtype:ChatType.Mine)
         
+        let url = "http://123.57.164.21/WeiXin/WatsonDemo2Servlet?text="+sender.text!
+        requestUrl(url)
+        
         Chats.addObject(thisChat)
         self.tableView.chatDataSource = self
         self.tableView.reloadData()
         sender.resignFirstResponder()
         sender.text = ""
-        
-        let url = "http://watsonserver.mybluemix.net/sample"
-        requestUrl(url)
         
     }
     
@@ -369,13 +371,37 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
             (response,data,error)-> Void in
             if error == nil && data?.length > 0{
                 let datastring = String(data:data!, encoding: NSUTF8StringEncoding)
-                let thatChat =  MessageItem(body:"\(datastring!)", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
-                self.Chats.addObject(thatChat)
-                self.tableView.chatDataSource = self
-                self.tableView.reloadData()
+                print(datastring)
+                let jsonData:AnyObject = (data?.objectFromJSONData())!
+                let type: String = jsonData.objectForKey("type") as! String
+                
+                if(type == "text"){
+                    let text: String = jsonData.objectForKey("value") as! String
+                    let thatChat =  MessageItem(body:"\(text)", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
+                    self.Chats.addObject(thatChat)
+                    self.tableView.chatDataSource = self
+                    self.tableView.reloadData()
+                }
+                if(type == "itemlist"){
+                    let itemlist: NSArray = jsonData.objectForKey("value")! as! NSArray
+                    let thatChat =  MessageItem(body:"\("You may want to say:")", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
+                    self.Chats.addObject(thatChat)
+                    
+                    for i in 0..<itemlist.count{
+                        let jsonItemData:AnyObject = itemlist[i]
+                        let itemText =  jsonItemData.objectForKey("text") as! String
+                        let item =  MessageItem(body:"\(itemText)", date:NSDate(), mtype:ChatType.ItemList)
+                        self.Chats.addObject(item)
+ 
+                    }
+                    self.tableView.chatDataSource = self
+                    self.tableView.reloadData()
+                    
+                }
                 
             }else{
-                print(error)
+                
+                
             }
         })
     }
@@ -403,11 +429,12 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     }
     
     
-    
+    // 实时抓取音轨Buffer
     func microphone(microphone: EZMicrophone!, hasBufferList bufferList: UnsafeMutablePointer<AudioBufferList>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32) {
         ezRecorder.appendDataFromBufferList(bufferList, withBufferSize:bufferSize)
     }
     
+    // 根据音轨计算出波形图
     func microphone(microphone: EZMicrophone!, hasAudioReceived buffer: UnsafeMutablePointer<UnsafeMutablePointer<Float>>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32) {
         self.plot.updateBuffer(buffer[0], withBufferSize: bufferSize)
     }

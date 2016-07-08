@@ -26,9 +26,7 @@ class TableView:UITableView,UITableViewDelegate, UITableViewDataSource
         self.bubbleSection = NSMutableArray()
         
         super.init(frame:frame, style:style)
-        
         self.backgroundColor = UIColor.clearColor()
-        
         self.separatorStyle = UITableViewCellSeparatorStyle.None
         self.delegate = self
         self.dataSource = self
@@ -46,6 +44,7 @@ class TableView:UITableView,UITableViewDelegate, UITableViewDataSource
         }
     }
     
+    // 重新刷新TableView
     override func reloadData()
     {
         self.showsVerticalScrollIndicator = false
@@ -55,7 +54,6 @@ class TableView:UITableView,UITableViewDelegate, UITableViewDataSource
         if ((self.chatDataSource != nil))
         {
             count = self.chatDataSource.rowsForChatTable(self)
-            
             if(count > 0)
             {
                 let bubbleData =  NSMutableArray(capacity:count)
@@ -64,7 +62,6 @@ class TableView:UITableView,UITableViewDelegate, UITableViewDataSource
                     bubbleData.addObject(object)
                 }
                 bubbleData.sortUsingComparator(sortDate)
-                
                 var last =  ""
                 var currentSection = NSMutableArray()
                 // 创建一个日期格式器
@@ -126,13 +123,16 @@ class TableView:UITableView,UITableViewDelegate, UITableViewDataSource
         let data = section[indexPath.row - 1]
         
         let item =  data as! MessageItem
-        let height  = item.insets.top + max(item.view.frame.size.height, 52) + item.insets.bottom
+        var height:CGFloat = 40
+        if(item.mtype == ChatType.Mine ||  item.mtype == ChatType.Someone){
+            height  = item.insets.top + max(item.view.frame.size.height, 52) + item.insets.bottom
+        }
         return height
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        // Header based on snapInterval
+        // 创建HeaderCell
         if (indexPath.row == 0)
         {
             let cellId = "HeaderCell"
@@ -147,15 +147,20 @@ class TableView:UITableView,UITableViewDelegate, UITableViewDataSource
         let section = self.bubbleSection[indexPath.section] as! NSMutableArray
         let data = section[indexPath.row - 1] as! MessageItem
         
+        // 标准聊天Cell
         if(data.mtype == ChatType.Mine ||  data.mtype == ChatType.Someone){
-            
-            // Standard
             let cellId = "ChatCell"
             let cell = TableViewCell(data:data, reuseIdentifier:cellId)
             cell.backgroundColor = UIColor.clearColor()
             return cell
+        }
+        // 标准选择一览Cell
+        else if(data.mtype == ChatType.ItemList){
+            let cellId = "ItemCell"
+            let cell = TableViewItemCell(data:data, reuseIdentifier: cellId)
+            return cell
+        // 标准商品一览Cell
         }else{
-            // Standard
             let cellId = "ChatCell"
             let cell = TableViewGoodsCell(data:data, reuseIdentifier: cellId)
             cell.backgroundColor = UIColor.whiteColor()
@@ -165,7 +170,6 @@ class TableView:UITableView,UITableViewDelegate, UITableViewDataSource
             cell.contentView.frame = CGRectMake(50, 50, 50, 30)
             cell.textLabel!.text = "tetst"
             cell.imageView?.image = UIImage(named: "pictures")
-            
             return cell
         }
         

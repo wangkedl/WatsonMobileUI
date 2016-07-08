@@ -1,4 +1,4 @@
-    import UIKit
+import UIKit
     
     class TableViewCell:UITableViewCell
     {
@@ -34,10 +34,10 @@
             var x =  (type == ChatType.Someone) ? 0 : self.frame.size.width - width - self.msgItem.insets.left - self.msgItem.insets.right
             var y:CGFloat =  0
             
-            if (self.msgItem.user.username != "")
+            if (self.msgItem.user!.username != "")
             {
                 let thisUser =  self.msgItem.user
-                self.avatarImage = UIImageView(image:UIImage(named:(thisUser.avatar != "" ? thisUser.avatar : "noAvatar.png")))
+                self.avatarImage = UIImageView(image:UIImage(named:(thisUser!.avatar != "" ? thisUser!.avatar : "noAvatar.png")))
                 self.avatarImage.layer.cornerRadius = 9.0
                 self.avatarImage.layer.masksToBounds = true
                 
@@ -95,7 +95,6 @@
                 var frame = newFrame
                 frame.size.width = UIScreen.mainScreen().bounds.width
                 super.frame = frame
-                //super.frame = CGRectMake(5,5,5,5)
             }
         }
         

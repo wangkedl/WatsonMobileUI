@@ -5,11 +5,13 @@ enum ChatType
     case Mine
     case Someone
     case GoodsList
+    case ItemList
 }
 
 class MessageItem
 {
-    var user:UserInfo
+    var user:UserInfo?
+    var text:String?
     var date:NSDate
     var mtype:ChatType
     var view:UIView
@@ -17,6 +19,11 @@ class MessageItem
     
     
     class func getTextInsetsMine() -> UIEdgeInsets
+    {
+        return UIEdgeInsets(top:5, left:10, bottom:11, right:17)
+    }
+    
+    class func getTextInsetsItemList() -> UIEdgeInsets
     {
         return UIEdgeInsets(top:5, left:10, bottom:11, right:17)
     }
@@ -34,16 +41,18 @@ class MessageItem
         return UIEdgeInsets(top:11, left:13, bottom:16, right:22)
     }
     
-    init(user:UserInfo, date:NSDate, mtype:ChatType, view:UIView, insets:UIEdgeInsets)
+    init(user:UserInfo?, date:NSDate, mtype:ChatType, view:UIView, insets:UIEdgeInsets, text:String?)
     {
         self.view = view
         self.user = user
         self.date = date
         self.mtype = mtype
         self.insets = insets
+        self.text = text
     }
+
     
-    //文字类型消息
+    // 文字类型消息
     convenience init(body:NSString, user:UserInfo, date:NSDate, mtype:ChatType)
     {
         let font = UIFont.systemFontOfSize(16)
@@ -60,10 +69,10 @@ class MessageItem
         label.backgroundColor = UIColor.clearColor()
         
         let insets:UIEdgeInsets =  (mtype == ChatType.Mine ? MessageItem.getTextInsetsMine() : MessageItem.getTextInsetsSomeone())
-        self.init(user:user, date:date, mtype:mtype, view:label, insets:insets)
+        self.init(user:user, date:date, mtype:mtype, view:label, insets:insets, text:nil)
     }
     
-    //图片类型消息
+    // 图片类型消息
     convenience init(image:UIImage, user:UserInfo,  date:NSDate, mtype:ChatType)
     {
         var size = image.size
@@ -80,6 +89,22 @@ class MessageItem
         
         let insets:UIEdgeInsets =  (mtype == ChatType.Mine ? MessageItem.getImageInsetsMine() : MessageItem.getImageInsetsSomeone())
         
-        self.init(user:user,  date:date, mtype:mtype, view:imageView, insets:insets)
+        self.init(user:user,  date:date, mtype:mtype, view:imageView, insets:insets, text:nil)
+    }
+    
+    // 选择一览消息
+    convenience init(body:NSString, date:NSDate, mtype:ChatType)
+    {
+        let font = UIFont.systemFontOfSize(16)
+        let label = UILabel(frame:CGRectMake(50, 5, 70, 30))
+        
+        let text:String = (body.length != 0 ? body as String : "")
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        label.text = text
+        label.font = font
+        
+        let insets:UIEdgeInsets = MessageItem.getTextInsetsItemList()
+        self.init(user:nil, date:date, mtype:mtype, view:label, insets:insets, text:text)
     }
 }
