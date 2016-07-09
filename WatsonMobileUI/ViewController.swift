@@ -21,6 +21,8 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     var pickerView: UIPickerView!
     var okView: UIView!
     var itemlist: NSArray!
+    var timer:NSTimer!
+    var times:Int!
     
     override func viewDidLoad() {
         
@@ -451,27 +453,10 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         let urlRequest = NSMutableURLRequest(URL: URL!)
         urlRequest.HTTPMethod = "POST"
         urlRequest.HTTPBodyStream  = NSInputStream.init(fileAtPath: aacPath!)
-        
-        let msgItem = MessageItem(body:"\("...")", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
-        
-        self.Chats[0] = msgItem
-        
-       let index = NSIndexPath.init(forRow: 0, inSection: 0);
-//        let cell1:TableViewCell = self.tableView.cellForRowAtIndexPath(index)! as! TableViewCell
-//
-//        cell1.customView.removeFromSuperview()
-//        cell1.msgItem = MessageItem(body:"\("...")", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
-//
-//        cell1.rebuildUserInterface()
-        
-        
-
-        
-//        self.tableView.reloadRowsAtIndexPaths([index], withRowAnimation: UITableViewRowAnimation.None)
-        self.tableView.reloadDataForWaitCell()
-        
-        self.tableView.chatDataSource = self
-        
+        self.times = 1
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(1,
+                                                            target:self,selector:#selector(ViewController.timerWait),
+                                                            userInfo:nil,repeats:true)
         
         NSURLConnection.sendAsynchronousRequest(urlRequest,queue:NSOperationQueue.mainQueue(),completionHandler:{
             (response,data,error)-> Void in
@@ -479,8 +464,8 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
                 let datastring = String(data:data!, encoding: NSUTF8StringEncoding)
                 let thisChat =  MessageItem(body:"\(datastring!)", user:self.me, date:NSDate(), mtype:ChatType.Mine)
                 self.Chats.addObject(thisChat)
-//                self.tableView.chatDataSource = self
-//                self.tableView.reloadData()
+                //                self.tableView.chatDataSource = self
+                //                self.tableView.reloadData()
                 
             }else{
                 if(data?.length == 0){
@@ -530,6 +515,36 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         self.okView.removeFromSuperview()
         self.pickerView.removeFromSuperview()
         setupSendPanel()
+        
+    }
+    
+    // 等待Waston Api执行结果
+    func timerWait()
+    {
+        var timeSting:String = "."
+        if(self.times == 1){
+            timeSting = "."
+            self.times = 2
+        }else if(self.times == 2){
+            timeSting = ".."
+            self.times = 3
+        }else if(self.times == 3){
+            timeSting = "..."
+            self.times = 4
+        }else if(self.times == 4){
+            timeSting = "...."
+            self.times = 5
+        }else if(self.times == 5){
+            timeSting = "....."
+            self.times = 6
+        }else{
+            timeSting = "......"
+            self.times = 1
+        }
+        let msgItem = MessageItem(body:"\(timeSting)", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
+        self.Chats[0] = msgItem
+        self.tableView.reloadDataForWaitCell()
+        self.tableView.chatDataSource = self
         
     }
     
