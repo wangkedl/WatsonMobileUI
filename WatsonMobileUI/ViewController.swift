@@ -1,7 +1,5 @@
 import UIKit
 import AVFoundation
-import SpeechToTextV1
-
 
 class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMicrophoneDelegate,EZRecorderDelegate, UIPickerViewDelegate, UIPickerViewDataSource{
     
@@ -23,7 +21,6 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     var pickerView: UIPickerView!
     var okView: UIView!
     var itemlist: NSArray!
-    var sTot: SpeechToText?
     
     override func viewDidLoad() {
         
@@ -190,7 +187,6 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     func holdOnVoiceButton()
     {
         print("button down")
-        // self.notice("Recording", type: NoticeType.success, autoClear: false)
         self.voiceButton.backgroundColor = UIColor.darkGrayColor()
         // 组合录音文件路径
         let now = NSDate()
@@ -333,8 +329,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     func setupChatTable()
     {
         
-        //self.view.backgroundView = UIImageView(image:UIImage(named:"watsonlogo.jpeg"))
-        
+        // self.view.backgroundView = UIImageView(image:UIImage(named:"watsonlogo.jpeg"))
         let backGroundImage:UIImage  = UIImage(named:"watson11.png")!
         let a:UIImageView = UIImageView(image:backGroundImage)
         a.alpha = 0.4
@@ -343,10 +338,10 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         
         self.view.backgroundColor = UIColor(patternImage: backGroundImage)
         self.view.layer.contents = backGroundImage.CGImage
-        //self.view.insertSubview(a, atIndex: 0)
+        // self.view.insertSubview(a, atIndex: 0)
         
         self.tableView = TableView(frame:CGRectMake(0, 20, self.view.frame.size.width, self.view.frame.size.height - 70), style: .Plain)
-        //self.tableView.backgroundView = UIImageView(image:UIImage(named:"watsonlogo.jpeg"))
+        // self.tableView.backgroundView = UIImageView(image:UIImage(named:"watsonlogo.jpeg"))
         
         // 创建一个重用的单元格
         self.tableView!.registerClass(TableViewCell.self, forCellReuseIdentifier: "ChatCell")
@@ -399,6 +394,8 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
                     let thatChat =  MessageItem(body:"\("You may want to say:")", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
                     self.Chats.addObject(thatChat)
                     self.tableView.reloadData()
+                    
+                    
                     
                     //                    for i in 0..<itemlist.count{
                     //                        let jsonItemData:AnyObject = itemlist[i]
@@ -454,6 +451,19 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         let urlRequest = NSMutableURLRequest(URL: URL!)
         urlRequest.HTTPMethod = "POST"
         urlRequest.HTTPBodyStream  = NSInputStream.init(fileAtPath: aacPath!)
+        //let thisChat =  MessageItem(body:"\("")", user:self.me, date:NSDate(), mtype:ChatType.Mine)
+        
+        
+//        let cell1:UITableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath.init(forRow: 1, inSection: 1))!
+//        
+//        let cell:TableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath(index: 0))! as! TableViewCell
+//        
+//        cell.customView = MessageItem(body:"\("...")", user:self.me, date:NSDate(), mtype:ChatType.Mine).view
+//        
+//        self.tableView.reloadRowsAtIndexPaths([NSIndexPath.init(index: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+        
+        self.tableView.chatDataSource = self
+        
         
         NSURLConnection.sendAsynchronousRequest(urlRequest,queue:NSOperationQueue.mainQueue(),completionHandler:{
             (response,data,error)-> Void in

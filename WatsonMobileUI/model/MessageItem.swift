@@ -6,6 +6,7 @@ enum ChatType
     case Someone
     case GoodsList
     case ItemList
+    case Wait
 }
 
 class MessageItem
