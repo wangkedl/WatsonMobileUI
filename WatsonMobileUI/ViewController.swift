@@ -9,7 +9,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     var me:UserInfo!
     var Watson:UserInfo!
     var txtMsg:UITextField!
-    var voiceButton:UIButton!
+    var voiceButton:UIButton?
     var recorder:AVAudioRecorder?
     var docDir:String!
     var player:AVAudioPlayer?
@@ -23,6 +23,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     var itemlist: NSArray!
     var timer:NSTimer!
     var times:Int!
+    var callWebServiceFlag:String!
     
     override func viewDidLoad() {
         
@@ -140,11 +141,6 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         
         let MessageView = self.view.viewWithTag(100)
         
-        //UIView.animateWithDuration(0.1, animations: {
-        //   MessageView?.alpha = 0.0
-        //}, completion: { finished in MessageView?.removeFromSuperview() })
-        
-        
         MessageView?.removeFromSuperview()
         let screenWidth = UIScreen.mainScreen().bounds.width
         sendView = UIView(frame:CGRectMake(0,self.view.frame.size.height - 50,screenWidth,50))
@@ -152,16 +148,16 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         sendView.backgroundColor = UIColor(red:0, green:0.1, blue:0.1, alpha:0.1)
         sendView.alpha = 0.5
         voiceButton = UIButton(frame: CGRect(x: 44, y: 7, width: screenWidth - 95, height: 36))
-        voiceButton.setTitle("Hold to talk", forState: UIControlState.Normal)
-        voiceButton.backgroundColor = UIColor.lightGrayColor()
-        voiceButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        voiceButton.addTarget(self, action:#selector(ViewController.holdOnVoiceButton) ,
+        voiceButton!.setTitle("Hold to talk", forState: UIControlState.Normal)
+        voiceButton!.backgroundColor = UIColor.lightGrayColor()
+        voiceButton!.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        voiceButton!.addTarget(self, action:#selector(ViewController.holdOnVoiceButton) ,
                               forControlEvents:UIControlEvents.TouchDown)
-        voiceButton.addTarget(self, action:#selector(ViewController.leftVoiceButton) ,
+        voiceButton!.addTarget(self, action:#selector(ViewController.leftVoiceButton) ,
                               forControlEvents:UIControlEvents.TouchUpInside)
-        voiceButton.alpha = 0.9
-        voiceButton.layer.cornerRadius = 5
-        sendView.addSubview(voiceButton)
+        voiceButton!.alpha = 0.9
+        voiceButton!.layer.cornerRadius = 5
+        sendView.addSubview(voiceButton!)
         sendView.tag = 101
         self.view.addSubview(sendView)
         
@@ -189,7 +185,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     func holdOnVoiceButton()
     {
         print("button down")
-        self.voiceButton.backgroundColor = UIColor.darkGrayColor()
+        self.voiceButton!.backgroundColor = UIColor.darkGrayColor()
         // 组合录音文件路径
         let now = NSDate()
         let dformatter = NSDateFormatter()
@@ -225,10 +221,9 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     func leftVoiceButton()
     {
         self.plot.removeFromSuperview()
-        voiceButton.backgroundColor = UIColor.lightGrayColor()
+        voiceButton!.backgroundColor = UIColor.lightGrayColor()
         microphone.stopFetchingAudio()
         ezRecorder.closeAudioFile()
-        print(aacPath)
         let url = "http://watsonserver.mybluemix.net/speech"
         //let url = "http://123.57.164.21/WeiXin/WatsonDemo2Servlet"
         postUrl(url)
@@ -374,10 +369,14 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     }
     
     func requestUrl(urlString:String) ->  Void {
+        self.callWebServiceFlag = "sending"
+        disableOrEnableAllsendButton()
         let URL = NSURL(string:urlString)
         let urlRequest = NSURLRequest(URL: URL!)
         NSURLConnection.sendAsynchronousRequest(urlRequest,queue:NSOperationQueue.mainQueue(),completionHandler:{
             (response,data,error)-> Void in
+            self.callWebServiceFlag = "end"
+            self.disableOrEnableAllsendButton()
             if error == nil && data?.length > 0{
                 let datastring = String(data:data!, encoding: NSUTF8StringEncoding)
                 print(datastring)
@@ -449,6 +448,8 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     }
     
     func postUrl(urlString:String) ->  Void {
+        self.callWebServiceFlag = "sending"
+        disableOrEnableAllsendButton()
         let URL = NSURL(string:urlString)
         let urlRequest = NSMutableURLRequest(URL: URL!)
         urlRequest.HTTPMethod = "POST"
@@ -460,6 +461,9 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         
         NSURLConnection.sendAsynchronousRequest(urlRequest,queue:NSOperationQueue.mainQueue(),completionHandler:{
             (response,data,error)-> Void in
+            self.callWebServiceFlag = "end"
+            self.disableOrEnableAllsendButton()
+            self.timer.invalidate()
             if error == nil && data?.length > 0{
                 let datastring = String(data:data!, encoding: NSUTF8StringEncoding)
                 let thisChat =  MessageItem(body:"\(datastring!)", user:self.me, date:NSDate(), mtype:ChatType.Mine)
@@ -517,6 +521,25 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         setupSendPanel()
         
     }
+    
+    // 非活性or活性所有送信按钮
+    func disableOrEnableAllsendButton()
+    {
+        if(self.callWebServiceFlag == "sending"){
+            if self.voiceButton != nil {
+                self.voiceButton!.enabled = false
+            }
+            self.txtMsg.enabled = false
+        }else{
+            if self.voiceButton != nil {
+                self.voiceButton!.enabled = true
+            }
+            self.txtMsg.enabled = true
+        }
+        
+    }
+    
+ 
     
     // 等待Waston Api执行结果
     func timerWait()
