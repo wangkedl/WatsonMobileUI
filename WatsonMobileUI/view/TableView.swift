@@ -45,6 +45,12 @@ class TableView:UITableView,UITableViewDelegate, UITableViewDataSource
         self.scrollToRowAtIndexPath(indexPath, atScrollPosition:UITableViewScrollPosition.Bottom,animated:true)
     }
     
+    // 重新刷新TableView
+    func reloadDataForWaitCell()
+    {
+        super.reloadData()
+    }
+    
     func numberOfSectionsInTableView(tableView:UITableView)->Int
     {
 

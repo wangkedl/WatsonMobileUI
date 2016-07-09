@@ -451,16 +451,24 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         let urlRequest = NSMutableURLRequest(URL: URL!)
         urlRequest.HTTPMethod = "POST"
         urlRequest.HTTPBodyStream  = NSInputStream.init(fileAtPath: aacPath!)
-        //let thisChat =  MessageItem(body:"\("")", user:self.me, date:NSDate(), mtype:ChatType.Mine)
+        
+        let msgItem = MessageItem(body:"\("...")", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
+        
+        self.Chats[0] = msgItem
+        
+       let index = NSIndexPath.init(forRow: 0, inSection: 0);
+//        let cell1:TableViewCell = self.tableView.cellForRowAtIndexPath(index)! as! TableViewCell
+//
+//        cell1.customView.removeFromSuperview()
+//        cell1.msgItem = MessageItem(body:"\("...")", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
+//
+//        cell1.rebuildUserInterface()
         
         
-//        let cell1:UITableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath.init(forRow: 1, inSection: 1))!
-//        
-//        let cell:TableViewCell = self.tableView.cellForRowAtIndexPath(NSIndexPath(index: 0))! as! TableViewCell
-//        
-//        cell.customView = MessageItem(body:"\("...")", user:self.me, date:NSDate(), mtype:ChatType.Mine).view
-//        
-//        self.tableView.reloadRowsAtIndexPaths([NSIndexPath.init(index: 0)], withRowAnimation: UITableViewRowAnimation.Automatic)
+
+        
+//        self.tableView.reloadRowsAtIndexPaths([index], withRowAnimation: UITableViewRowAnimation.None)
+        self.tableView.reloadDataForWaitCell()
         
         self.tableView.chatDataSource = self
         
@@ -471,8 +479,8 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
                 let datastring = String(data:data!, encoding: NSUTF8StringEncoding)
                 let thisChat =  MessageItem(body:"\(datastring!)", user:self.me, date:NSDate(), mtype:ChatType.Mine)
                 self.Chats.addObject(thisChat)
-                self.tableView.chatDataSource = self
-                self.tableView.reloadData()
+//                self.tableView.chatDataSource = self
+//                self.tableView.reloadData()
                 
             }else{
                 if(data?.length == 0){
