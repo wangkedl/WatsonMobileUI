@@ -1,0 +1,13 @@
+language: objective-c
+osx_image: xcode7.3
+branches:
+  only:
+  - master
+before_install:
+- openssl aes-256-cbc -K $encrypted_04b48cd88949_key -iv $encrypted_04b48cd88949_iv -in Source/SupportingFiles/Credentials.plist.enc -out Source/SupportingFiles/Credentials.plist -d
+before_script:
+- carthage update --platform iOS
+after_success:
+- bash <(curl -s https://codecov.io/bash)
+script:
+- xcodebuild clean build test -scheme 'All Services' -destination 'platform=iOS Simulator,name=iPhone 6,OS=9.3' -enableCodeCoverage YES | egrep '^(/.+:[0-9+:[0-9]+:.(error|warning):|fatal|CompileSwift|Test|Build|===)'

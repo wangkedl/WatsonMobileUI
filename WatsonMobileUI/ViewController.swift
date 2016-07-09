@@ -1,5 +1,7 @@
 import UIKit
 import AVFoundation
+import SpeechToTextV1
+
 
 class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMicrophoneDelegate,EZRecorderDelegate, UIPickerViewDelegate, UIPickerViewDataSource{
     
@@ -21,7 +23,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     var pickerView: UIPickerView!
     var okView: UIView!
     var itemlist: NSArray!
-    
+    var sTot: SpeechToText?
     
     override func viewDidLoad() {
         
@@ -117,10 +119,17 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         let text:String = txtMsg.text!
         
         if(text.isEmpty){
-            let alert = UIAlertView();
-            alert.message = String("Please input something.");
-            alert.addButtonWithTitle("OK");
-            alert.show();
+            let alertController = UIAlertController(title: "",
+                                                    message: "Please input something.", preferredStyle: .Alert)
+            
+            let okAction = UIAlertAction(title: "OK", style: .Default,
+                                         handler: {
+                                            action in
+                                            
+            })
+            
+            alertController.addAction(okAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
             return false;
         }
         
@@ -391,15 +400,15 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
                     self.Chats.addObject(thatChat)
                     self.tableView.reloadData()
                     
-//                    for i in 0..<itemlist.count{
-//                        let jsonItemData:AnyObject = itemlist[i]
-//                        let itemText =  jsonItemData.objectForKey("text") as! String
-//                        let item =  MessageItem(body:"\(itemText)", date:NSDate(), mtype:ChatType.ItemList)
-//                        self.Chats.addObject(item)
-// 
-//                    }
-//                    self.tableView.chatDataSource = self
-//                    self.tableView.reloadData()
+                    //                    for i in 0..<itemlist.count{
+                    //                        let jsonItemData:AnyObject = itemlist[i]
+                    //                        let itemText =  jsonItemData.objectForKey("text") as! String
+                    //                        let item =  MessageItem(body:"\(itemText)", date:NSDate(), mtype:ChatType.ItemList)
+                    //                        self.Chats.addObject(item)
+                    //
+                    //                    }
+                    //                    self.tableView.chatDataSource = self
+                    //                    self.tableView.reloadData()
                     
                     let screenWidth = UIScreen.mainScreen().bounds.width
                     self.pickerView = UIPickerView(frame: CGRectMake(0,self.view.frame.size.height - 100,screenWidth,100))
