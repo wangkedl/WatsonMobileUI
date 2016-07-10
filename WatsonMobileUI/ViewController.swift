@@ -10,6 +10,9 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     var Watson:UserInfo!
     var txtMsg:UITextField!
     var voiceButton:UIButton?
+    var keyBoardButton:UIButton?
+    var microButton:UIButton!
+    var addButton:UIButton!
     var recorder:AVAudioRecorder?
     var docDir:String!
     var player:AVAudioPlayer?
@@ -24,6 +27,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     var timer:NSTimer!
     var times:Int!
     var callWebServiceFlag:String!
+    var currentIndex:Int!
     
     override func viewDidLoad() {
         
@@ -82,7 +86,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         sendView.alpha = 0.5
         
         txtMsg = UITextField(frame:CGRectMake(44,7,screenWidth - 95,36))
-        //txtMsg.placeholder = "Please input something."
+        txtMsg.placeholder = "Input words here."
         txtMsg.backgroundColor = UIColor.whiteColor()
         txtMsg.textColor = UIColor.blackColor()
         txtMsg.font = UIFont.boldSystemFontOfSize(15)
@@ -95,19 +99,19 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         sendView.tag = 100
         self.view.addSubview(sendView)
         
-        let mircoButton = UIButton(frame:CGRectMake(5,10,30,30))
-        mircoButton.alpha = 0.8
-        mircoButton.addTarget(self, action:#selector(ViewController.changMessageViewToVoiceView) ,
-                              forControlEvents:UIControlEvents.TouchUpInside)
-        mircoButton.setImage(UIImage(named:"wifi75"),forState:UIControlState.Normal)
-        sendView.addSubview(mircoButton)
+        self.microButton = UIButton(frame:CGRectMake(5,10,30,30))
+        self.microButton.alpha = 0.8
+        self.microButton.addTarget(self, action:#selector(ViewController.changMessageViewToVoiceView) ,
+                                   forControlEvents:UIControlEvents.TouchUpInside)
+        self.microButton.setImage(UIImage(named:"wifi75"),forState:UIControlState.Normal)
+        sendView.addSubview(self.microButton)
         
-        let addButton = UIButton(frame:CGRectMake(screenWidth - 43,10,30,30))
-        addButton.alpha = 0.8
-        addButton.addTarget(self, action:#selector(ViewController.showOrHiddenImageView) ,
-                            forControlEvents:UIControlEvents.TouchUpInside)
-        addButton.setImage(UIImage(named:"add"),forState:UIControlState.Normal)
-        sendView.addSubview(addButton)
+        self.addButton = UIButton(frame:CGRectMake(screenWidth - 43,10,30,30))
+        self.addButton.alpha = 0.8
+        self.addButton.addTarget(self, action:#selector(ViewController.showOrHiddenImageView) ,
+                                 forControlEvents:UIControlEvents.TouchUpInside)
+        self.addButton.setImage(UIImage(named:"add"),forState:UIControlState.Normal)
+        sendView.addSubview(self.addButton)
         
         hiddenImageView()
         imageViewFlag = "show"
@@ -152,28 +156,28 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         voiceButton!.backgroundColor = UIColor.lightGrayColor()
         voiceButton!.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         voiceButton!.addTarget(self, action:#selector(ViewController.holdOnVoiceButton) ,
-                              forControlEvents:UIControlEvents.TouchDown)
+                               forControlEvents:UIControlEvents.TouchDown)
         voiceButton!.addTarget(self, action:#selector(ViewController.leftVoiceButton) ,
-                              forControlEvents:UIControlEvents.TouchUpInside)
+                               forControlEvents:UIControlEvents.TouchUpInside)
         voiceButton!.alpha = 0.9
         voiceButton!.layer.cornerRadius = 5
         sendView.addSubview(voiceButton!)
         sendView.tag = 101
         self.view.addSubview(sendView)
         
-        let keyBoardButton = UIButton(frame:CGRectMake(7,5,30,38))
-        keyBoardButton.alpha = 0.9
-        keyBoardButton.addTarget(self, action:#selector(ViewController.setupSendPanel) ,
-                                 forControlEvents:UIControlEvents.TouchUpInside)
-        keyBoardButton.setImage(UIImage(named:"edit"),forState:UIControlState.Normal)
-        sendView.addSubview(keyBoardButton)
+        self.keyBoardButton = UIButton(frame:CGRectMake(7,5,30,38))
+        self.keyBoardButton!.alpha = 0.9
+        self.keyBoardButton!.addTarget(self, action:#selector(ViewController.setupSendPanel) ,
+                                       forControlEvents:UIControlEvents.TouchUpInside)
+        self.keyBoardButton!.setImage(UIImage(named:"edit"),forState:UIControlState.Normal)
+        sendView.addSubview(self.keyBoardButton!)
         
-        let addButton = UIButton(frame:CGRectMake(screenWidth - 43,10,30,30))
-        addButton.alpha = 0.8
-        addButton.addTarget(self, action:#selector(ViewController.showOrHiddenImageView) ,
-                            forControlEvents:UIControlEvents.TouchUpInside)
-        addButton.setImage(UIImage(named:"add"),forState:UIControlState.Normal)
-        sendView.addSubview(addButton)
+        self.addButton = UIButton(frame:CGRectMake(screenWidth - 43,10,30,30))
+        self.addButton.alpha = 0.8
+        self.addButton.addTarget(self, action:#selector(ViewController.showOrHiddenImageView) ,
+                                 forControlEvents:UIControlEvents.TouchUpInside)
+        self.addButton.setImage(UIImage(named:"add"),forState:UIControlState.Normal)
+        sendView.addSubview(self.addButton)
         
         hiddenImageView()
         imageViewFlag = "show"
@@ -184,17 +188,13 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     
     func holdOnVoiceButton()
     {
-        print("button down")
         self.voiceButton!.backgroundColor = UIColor.darkGrayColor()
         // 组合录音文件路径
         let now = NSDate()
         let dformatter = NSDateFormatter()
         dformatter.dateFormat = "HH_mm_ss"
         aacPath = docDir + "/play_"+dformatter.stringFromDate(now)+".wav"
-        print(aacPath)
-        
         microphone = EZMicrophone(delegate: self, startsImmediately: true)
-        
         ezRecorder = EZRecorder(URL: NSURL(string: aacPath!), clientFormat: self.microphone.audioStreamBasicDescription(), fileType: EZRecorderFileType.WAV, delegate: self)
         microphone.startFetchingAudio()
         
@@ -230,12 +230,13 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         
     }
     
+    // WebService发送文本消息
     func sendMessage()
     {
         let sender = txtMsg
         let thisChat =  MessageItem(body:sender.text!, user:me, date:NSDate(), mtype:ChatType.Mine)
         
-        let url = "http://123.57.164.21/WeiXin/WatsonDemo2Servlet?text="+sender.text!
+        let url = "http://123.57.164.21/WeiXin/WatsonDemo2Servlet?text=" + sender.text!
         requestUrl(url)
         
         Chats.addObject(thisChat)
@@ -454,9 +455,15 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         let urlRequest = NSMutableURLRequest(URL: URL!)
         urlRequest.HTTPMethod = "POST"
         urlRequest.HTTPBodyStream  = NSInputStream.init(fileAtPath: aacPath!)
+        
+        let thisChat =  MessageItem(body:"\("......")", user:self.me, date:NSDate(), mtype:ChatType.Mine)
+        self.Chats.addObject(thisChat)
+        self.tableView.reloadData()
+        self.currentIndex = self.rowsForChatTable(self.tableView)
+        
         self.times = 1
         self.timer = NSTimer.scheduledTimerWithTimeInterval(1,
-                                                            target:self,selector:#selector(ViewController.timerWait),
+                                                            target:self,selector:#selector(ViewController.timerWaitCustomer),
                                                             userInfo:nil,repeats:true)
         
         NSURLConnection.sendAsynchronousRequest(urlRequest,queue:NSOperationQueue.mainQueue(),completionHandler:{
@@ -466,10 +473,9 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
             self.timer.invalidate()
             if error == nil && data?.length > 0{
                 let datastring = String(data:data!, encoding: NSUTF8StringEncoding)
-                let thisChat =  MessageItem(body:"\(datastring!)", user:self.me, date:NSDate(), mtype:ChatType.Mine)
-                self.Chats.addObject(thisChat)
-                //                self.tableView.chatDataSource = self
-                //                self.tableView.reloadData()
+                self.Chats[self.currentIndex - 1] =  MessageItem(body:"\(datastring!)", user:self.me, date:NSDate(), mtype:ChatType.Mine)
+                self.tableView.chatDataSource = self
+                self.tableView.reloadData()
                 
             }else{
                 if(data?.length == 0){
@@ -529,20 +535,39 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
             if self.voiceButton != nil {
                 self.voiceButton!.enabled = false
             }
+            if self.keyBoardButton != nil {
+                self.keyBoardButton!.enabled = false
+            }
+            if self.addButton != nil {
+                self.addButton!.enabled = false
+            }
+            if self.microButton != nil {
+                self.microButton!.enabled = false
+            }
             self.txtMsg.enabled = false
         }else{
             if self.voiceButton != nil {
                 self.voiceButton!.enabled = true
             }
+            if self.keyBoardButton != nil {
+                self.keyBoardButton!.enabled = true
+            }
+            if self.addButton != nil {
+                self.addButton!.enabled = true
+            }
+            if self.microButton != nil {
+                self.microButton!.enabled = true
+            }
+            
             self.txtMsg.enabled = true
         }
         
     }
     
- 
+    
     
     // 等待Waston Api执行结果
-    func timerWait()
+    func timerWaitCustomer()
     {
         var timeSting:String = "."
         if(self.times == 1){
@@ -564,8 +589,8 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
             timeSting = "......"
             self.times = 1
         }
-        let msgItem = MessageItem(body:"\(timeSting)", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
-        self.Chats[0] = msgItem
+        let msgItem = MessageItem(body:"\(timeSting)", user:self.me, date:NSDate(), mtype:ChatType.Mine)
+        self.Chats[self.currentIndex - 1] = msgItem
         self.tableView.reloadDataForWaitCell()
         self.tableView.chatDataSource = self
         
