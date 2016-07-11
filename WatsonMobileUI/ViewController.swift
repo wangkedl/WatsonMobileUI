@@ -34,7 +34,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         
         super.viewDidLoad()
         initChatTableView()
-        initSendTextMessageView()
+        setupSendPanel()
         
         // 初始化录音器
         let session:AVAudioSession = AVAudioSession.sharedInstance()
@@ -75,7 +75,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     }
     
     // 文本消息view初期表示
-    func initSendTextMessageView()
+    func setupSendPanel()
     {
         // 移除语音View
         let VoiceView = self.view.viewWithTag(101)
@@ -102,7 +102,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         
         self.microButton = UIButton(frame:CGRectMake(5,10,30,30))
         self.microButton.alpha = 0.8
-        self.microButton.addTarget(self, action:#selector(ViewController.initSendVoiceMessageView) ,
+        self.microButton.addTarget(self, action:#selector(ViewController.changMessageViewToVoiceView) ,
                                    forControlEvents:UIControlEvents.TouchUpInside)
         self.microButton.setImage(UIImage(named:"wifi75"),forState:UIControlState.Normal)
         self.sendView.addSubview(self.microButton)
@@ -125,14 +125,14 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
                                                 message: messageContent, preferredStyle: .Alert)
         
         let confirmAction = UIAlertAction(title: "OK", style: .Default,
-                                     handler: {
-                                        action in
-                                        
+                                          handler: {
+                                            action in
+                                            
         })
         
         alertController.addAction(confirmAction)
         self.presentViewController(alertController, animated: true, completion: nil)
-    
+        
     }
     
     func textFieldShouldReturn(textField:UITextField) -> Bool
@@ -142,7 +142,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
             showAlertMessage("Please input something.")
             return false;
         }
-
+        
         let sender = txtMsg
         let mineChat =  MessageItem(body:sender.text!, user:me, date:NSDate(), mtype:ChatType.Mine)
         self.Chats.addObject(mineChat)
@@ -156,7 +156,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         return true
     }
     
-    func initSendVoiceMessageView(){
+    func changMessageViewToVoiceView(){
         
         let MessageView = self.view.viewWithTag(100)
         MessageView?.removeFromSuperview()
@@ -170,9 +170,9 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         self.voiceButton!.backgroundColor = UIColor.lightGrayColor()
         self.voiceButton!.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         self.voiceButton!.addTarget(self, action:#selector(ViewController.holdOnVoiceButton) ,
-                               forControlEvents:UIControlEvents.TouchDown)
+                                    forControlEvents:UIControlEvents.TouchDown)
         self.voiceButton!.addTarget(self, action:#selector(ViewController.leftVoiceButton) ,
-                               forControlEvents:UIControlEvents.TouchUpInside)
+                                    forControlEvents:UIControlEvents.TouchUpInside)
         self.voiceButton!.alpha = 0.9
         self.voiceButton!.layer.cornerRadius = 5
         self.sendView.addSubview(voiceButton!)
@@ -181,7 +181,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         
         self.keyBoardButton = UIButton(frame:CGRectMake(7,5,30,38))
         self.keyBoardButton!.alpha = 0.9
-        self.keyBoardButton!.addTarget(self, action:#selector(ViewController.initSendTextMessageView) ,
+        self.keyBoardButton!.addTarget(self, action:#selector(ViewController.setupSendPanel) ,
                                        forControlEvents:UIControlEvents.TouchUpInside)
         self.keyBoardButton!.setImage(UIImage(named:"edit"),forState:UIControlState.Normal)
         self.sendView.addSubview(self.keyBoardButton!)
@@ -290,8 +290,8 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         
         let localImageButton = UIButton(frame:CGRectMake(10,6,35,35))
         localImageButton.alpha = 0.8
-        localImageButton.addTarget(self, action:#selector(ViewController.initSendVoiceMessageView) ,
-                              forControlEvents:UIControlEvents.TouchUpInside)
+        localImageButton.addTarget(self, action:#selector(ViewController.changMessageViewToVoiceView) ,
+                                   forControlEvents:UIControlEvents.TouchUpInside)
         localImageButton.setImage(UIImage(named:"pictures"),forState:UIControlState.Normal)
         imageSelectView.addSubview(localImageButton)
         localImageButton.enabled = false
@@ -299,7 +299,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         let cameraButton = UIButton(frame:CGRectMake(70,6,35,35))
         cameraButton.alpha = 0.8
         cameraButton.addTarget(self, action:#selector(ViewController.showOrHiddenImageSelectView) ,
-                            forControlEvents:UIControlEvents.TouchUpInside)
+                               forControlEvents:UIControlEvents.TouchUpInside)
         cameraButton.setImage(UIImage(named:"photo189"),forState:UIControlState.Normal)
         imageSelectView.addSubview(cameraButton)
         cameraButton.enabled = false
@@ -478,10 +478,10 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
                 self.sendTextMessage(url)
             }else{
                 if(data?.length == 0){
-                  self.Chats.removeObjectAtIndex(self.currentIndex - 1)
-                  self.tableView.chatDataSource = self
-                  self.tableView.reloadData()
-                  self.showAlertMessage("Sorry, I can't get what you said, please try again.")
+                    self.Chats.removeObjectAtIndex(self.currentIndex - 1)
+                    self.tableView.chatDataSource = self
+                    self.tableView.reloadData()
+                    self.showAlertMessage("Sorry, I can't get what you said, please try again.")
                 }
             }
         })
@@ -526,9 +526,9 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         self.confirmView.removeFromSuperview()
         self.pickerView.removeFromSuperview()
         if self.currentViewName == "sendTextMessageView"{
-            initSendTextMessageView()
+            setupSendPanel()
         }else{
-            initSendVoiceMessageView()
+            changMessageViewToVoiceView()
         }
         
         let mineChat =  MessageItem(body:itemSelectText, user:me, date:NSDate(), mtype:ChatType.Mine)
@@ -574,7 +574,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         }
         
     }
-
+    
     // 等待Waston Api执行结果
     func timerWaitCustomer()
     {
