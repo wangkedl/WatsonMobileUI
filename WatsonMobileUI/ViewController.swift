@@ -193,11 +193,16 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         let dformatter = NSDateFormatter()
         dformatter.dateFormat = "HH_mm_ss"
         aacPath = docDir + "/play_"+dformatter.stringFromDate(now)+".wav"
+        
+        // 初始化麦克风
         microphone = EZMicrophone(delegate: self, startsImmediately: true)
-        ezRecorder = EZRecorder(URL: NSURL(string: aacPath!), clientFormat: self.microphone.audioStreamBasicDescription(), fileType: EZRecorderFileType.WAV, delegate: self)
         microphone.startFetchingAudio()
         
+        // 初始化recorder
+        ezRecorder = EZRecorder(URL: NSURL(string: aacPath!)!, clientFormat: microphone.self.audioStreamBasicDescription(), fileType: EZRecorderFileType.WAV, delegate: self)
         
+        
+        // 初始化波形图view
         self.plot = EZAudioPlot.init(frame: CGRectMake(self.view.frame.width/2-35, self.view.frame.height/2-70, 70, 70))
         self.plot.plotType = EZPlotType.Rolling
         self.plot.shouldFill = true
@@ -207,7 +212,6 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         self.plot.waveformLayer.cornerRadius = 10
         self.plot.backgroundColor = UIColor.blackColor()
         self.plot.color = UIColor.whiteColor()
-        
         let recordlable:UILabel = UILabel.init(frame: CGRectMake(14, 35, 60, 60))
         recordlable.text = "Recording"
         recordlable.font = UIFont.boldSystemFontOfSize(8)
