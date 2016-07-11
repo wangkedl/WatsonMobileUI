@@ -96,9 +96,9 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         self.txtMsg.layer.cornerRadius = 5.0
         self.txtMsg.returnKeyType = UIReturnKeyType.Send
         self.txtMsg.delegate = self
-        self.sendView.addSubview(txtMsg)
+        self.sendView.addSubview(self.txtMsg)
         self.sendView.tag = 100
-        self.view.addSubview(sendView)
+        self.view.addSubview(self.sendView)
         
         self.microButton = UIButton(frame:CGRectMake(5,10,30,30))
         self.microButton.alpha = 0.8
@@ -330,11 +330,9 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     
     func initChatTableView()
     {
-        
         let backGroundImage:UIImage  = UIImage(named:"watson11.png")!
         let backGroundImageView:UIImageView = UIImageView(image:backGroundImage)
         backGroundImageView.alpha = 0.4
-        
         
         self.view.backgroundColor = UIColor(patternImage: backGroundImage)
         self.view.layer.contents = backGroundImage.CGImage
@@ -373,10 +371,22 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         disableOrEnableAllsendButton()
         let URL = NSURL(string:urlString)
         let urlRequest = NSURLRequest(URL: URL!)
+        
+        let watsonChat =  MessageItem(body:"\("......")", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
+        self.Chats.addObject(watsonChat)
+        self.tableView.reloadData()
+        self.currentIndex = self.rowsForChatTable(self.tableView)
+        
+        self.times = 1
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(0.5,
+                                                            target:self,selector:#selector(ViewController.timerWaitWatson),
+                                                            userInfo:nil,repeats:true)
+        
         NSURLConnection.sendAsynchronousRequest(urlRequest,queue:NSOperationQueue.mainQueue(),completionHandler:{
             (response,data,error)-> Void in
             self.callWebServiceFlag = "end"
             self.disableOrEnableAllsendButton()
+            self.timer.invalidate()
             if error == nil && data?.length > 0{
                 let datastring = String(data:data!, encoding: NSUTF8StringEncoding)
                 print(datastring)
@@ -385,17 +395,15 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
                 
                 if(type == "text"){
                     let text: String = jsonData.objectForKey("value") as! String
-                    let watsonChat =  MessageItem(body:"\(text)", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
-                    self.Chats.addObject(watsonChat)
+                    self.Chats[self.currentIndex - 1] =  MessageItem(body:"\(text)", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
                     self.tableView.chatDataSource = self
-                    self.tableView.reloadData()
+                    self.tableView.reloadDataForWaitCell()
                 }
                 if(type == "itemlist"){
                     self.itemlist = jsonData.objectForKey("value")! as! NSArray
                     let title:String = jsonData.objectForKey("title")! as! String
-                    let watsonChat =  MessageItem(body:"\(title)", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
-                    self.Chats.addObject(watsonChat)
-                    self.tableView.reloadData()
+                    self.Chats[self.currentIndex - 1] =  MessageItem(body:"\(title)", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
+                    self.tableView.reloadDataForWaitCell()
                     
                     //                    for i in 0..<itemlist.count{
                     //                        let jsonItemData:AnyObject = itemlist[i]
@@ -473,7 +481,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
                 let datastring = String(data:data!, encoding: NSUTF8StringEncoding)
                 self.Chats[self.currentIndex - 1] =  MessageItem(body:"\(datastring!)", user:self.me, date:NSDate(), mtype:ChatType.Mine)
                 self.tableView.chatDataSource = self
-                self.tableView.reloadData()
+                self.tableView.reloadDataForWaitCell()
                 let url = "http://watsonserver.mybluemix.net/sample?text=" + datastring!
                 self.sendTextMessage(url)
             }else{
@@ -599,6 +607,36 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
             self.times = 1
         }
         let msgItem = MessageItem(body:"\(timeSting)", user:self.me, date:NSDate(), mtype:ChatType.Mine)
+        self.Chats[self.currentIndex - 1] = msgItem
+        self.tableView.reloadDataForWaitCell()
+        self.tableView.chatDataSource = self
+        
+    }
+    
+    // 等待Waston Api执行结果
+    func timerWaitWatson()
+    {
+        var timeSting:String = "."
+        if(self.times == 1){
+            timeSting = "."
+            self.times = 2
+        }else if(self.times == 2){
+            timeSting = ".."
+            self.times = 3
+        }else if(self.times == 3){
+            timeSting = "..."
+            self.times = 4
+        }else if(self.times == 4){
+            timeSting = "...."
+            self.times = 5
+        }else if(self.times == 5){
+            timeSting = "....."
+            self.times = 6
+        }else{
+            timeSting = "......"
+            self.times = 1
+        }
+        let msgItem = MessageItem(body:"\(timeSting)", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
         self.Chats[self.currentIndex - 1] = msgItem
         self.tableView.reloadDataForWaitCell()
         self.tableView.chatDataSource = self
