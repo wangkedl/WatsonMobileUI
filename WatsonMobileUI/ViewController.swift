@@ -99,6 +99,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         self.sendView.addSubview(txtMsg)
         self.sendView.tag = 100
         self.view.addSubview(sendView)
+        
         self.microButton = UIButton(frame:CGRectMake(5,10,30,30))
         self.microButton.alpha = 0.8
         self.microButton.addTarget(self, action:#selector(ViewController.initSendVoiceMessageView) ,
@@ -118,26 +119,40 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         
     }
     
+    func showAlertMessage(messageContent:String) ->Void{
+        
+        let alertController = UIAlertController(title: "",
+                                                message: messageContent, preferredStyle: .Alert)
+        
+        let confirmAction = UIAlertAction(title: "OK", style: .Default,
+                                     handler: {
+                                        action in
+                                        
+        })
+        
+        alertController.addAction(confirmAction)
+        self.presentViewController(alertController, animated: true, completion: nil)
+    
+    }
+    
     func textFieldShouldReturn(textField:UITextField) -> Bool
     {
         let text:String = txtMsg.text!
-        
         if(text.isEmpty){
-            let alertController = UIAlertController(title: "",
-                                                    message: "Please input something.", preferredStyle: .Alert)
-            
-            let okAction = UIAlertAction(title: "OK", style: .Default,
-                                         handler: {
-                                            action in
-                                            
-            })
-            
-            alertController.addAction(okAction)
-            self.presentViewController(alertController, animated: true, completion: nil)
+            showAlertMessage("Please input something.")
             return false;
         }
-        
-        sendMessage()
+
+        let sender = txtMsg
+        let mineChat =  MessageItem(body:sender.text!, user:me, date:NSDate(), mtype:ChatType.Mine)
+        self.Chats.addObject(mineChat)
+        self.tableView.chatDataSource = self
+        self.tableView.reloadData()
+        // let url = "http://123.57.164.21/WeiXin/WatsonDemo2Servlet?text=" + sender.text!
+        let url = "http://watsonserver.mybluemix.net/sample?text=" + sender.text!
+        sendTextMessage(url)
+        sender.resignFirstResponder()
+        sender.text = ""
         return true
     }
     
@@ -232,22 +247,6 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         let url = "http://watsonserver.mybluemix.net/speech"
         //let url = "http://123.57.164.21/WeiXin/WatsonDemo2Servlet"
         sendVoiceMessage(url)
-        
-    }
-    
-    // WebService发送文本消息
-    func sendMessage()
-    {
-        let sender = txtMsg
-        let mineChat =  MessageItem(body:sender.text!, user:me, date:NSDate(), mtype:ChatType.Mine)
-        self.Chats.addObject(mineChat)
-        self.tableView.chatDataSource = self
-        self.tableView.reloadData()
-        sender.resignFirstResponder()
-        sender.text = ""
-        // let url = "http://123.57.164.21/WeiXin/WatsonDemo2Servlet?text=" + sender.text!
-        let url = "http://watsonserver.mybluemix.net/sample?text=" + sender.text!
-        sendTextMessage(url)
         
     }
     
@@ -474,9 +473,15 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
                 let datastring = String(data:data!, encoding: NSUTF8StringEncoding)
                 self.Chats[self.currentIndex - 1] =  MessageItem(body:"\(datastring!)", user:self.me, date:NSDate(), mtype:ChatType.Mine)
                 self.tableView.chatDataSource = self
-                self.tableView.reloadDataForWaitCell()
+                self.tableView.reloadData()
+                let url = "http://watsonserver.mybluemix.net/sample?text=" + datastring!
+                self.sendTextMessage(url)
             }else{
                 if(data?.length == 0){
+                  self.Chats.removeObjectAtIndex(self.currentIndex - 1)
+                  self.tableView.chatDataSource = self
+                  self.tableView.reloadData()
+                  self.showAlertMessage("Sorry, I can't get what you said, please try again.")
                 }
             }
         })
