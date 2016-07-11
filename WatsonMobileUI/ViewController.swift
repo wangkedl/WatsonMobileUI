@@ -17,23 +17,24 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     var docDir:String!
     var player:AVAudioPlayer?
     var aacPath:String?
-    var imageViewFlag:String = "show"
+    var imageSelectViewFlag:String = "show"
     var microphone: EZMicrophone!
     var ezRecorder: EZRecorder!
     var plot: EZAudioPlot!
     var pickerView: UIPickerView!
-    var okView: UIView!
+    var confirmView: UIView!
     var itemlist: NSArray!
     var timer:NSTimer!
     var times:Int!
     var callWebServiceFlag:String!
     var currentIndex:Int!
+    var currentViewName:String!
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        setupChatTable()
-        setupSendPanel()
+        initChatTableView()
+        initSendTextMessageView()
         
         // 初始化录音器
         let session:AVAudioSession = AVAudioSession.sharedInstance()
@@ -73,47 +74,47 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         self.view.frame = rect
     }
     
-    // view初期表示
-    func setupSendPanel()
+    // 文本消息view初期表示
+    func initSendTextMessageView()
     {
-        let MessageView = self.view.viewWithTag(101)
-        MessageView?.removeFromSuperview()
+        // 移除语音View
+        let VoiceView = self.view.viewWithTag(101)
+        VoiceView?.removeFromSuperview()
         
         let screenWidth = UIScreen.mainScreen().bounds.width
-        sendView = UIView(frame:CGRectMake(0,self.view.frame.size.height - 50,screenWidth,50))
-        sendView.backgroundColor = UIColor(red:0, green:0.1, blue:0.1, alpha:0.1)
-        sendView.alpha = 0.5
+        self.sendView = UIView(frame:CGRectMake(0,self.view.frame.size.height - 50,screenWidth,50))
+        self.sendView.backgroundColor = UIColor(red:0, green:0.1, blue:0.1, alpha:0.1)
+        self.sendView.alpha = 0.5
         
-        txtMsg = UITextField(frame:CGRectMake(44,7,screenWidth - 95,36))
-        txtMsg.placeholder = "Input words here."
-        txtMsg.backgroundColor = UIColor.whiteColor()
-        txtMsg.textColor = UIColor.blackColor()
-        txtMsg.font = UIFont.boldSystemFontOfSize(15)
-        txtMsg.clearButtonMode = UITextFieldViewMode.WhileEditing
-        txtMsg.keyboardType = UIKeyboardType.ASCIICapable
-        txtMsg.layer.cornerRadius = 5.0
-        txtMsg.returnKeyType = UIReturnKeyType.Send
-        txtMsg.delegate = self
-        sendView.addSubview(txtMsg)
-        sendView.tag = 100
+        self.txtMsg = UITextField(frame:CGRectMake(44,7,screenWidth - 95,36))
+        self.txtMsg.placeholder = "Input words here."
+        self.txtMsg.backgroundColor = UIColor.whiteColor()
+        self.txtMsg.textColor = UIColor.blackColor()
+        self.txtMsg.font = UIFont.boldSystemFontOfSize(15)
+        self.txtMsg.clearButtonMode = UITextFieldViewMode.WhileEditing
+        self.txtMsg.keyboardType = UIKeyboardType.ASCIICapable
+        self.txtMsg.layer.cornerRadius = 5.0
+        self.txtMsg.returnKeyType = UIReturnKeyType.Send
+        self.txtMsg.delegate = self
+        self.sendView.addSubview(txtMsg)
+        self.sendView.tag = 100
         self.view.addSubview(sendView)
-        
         self.microButton = UIButton(frame:CGRectMake(5,10,30,30))
         self.microButton.alpha = 0.8
-        self.microButton.addTarget(self, action:#selector(ViewController.changMessageViewToVoiceView) ,
+        self.microButton.addTarget(self, action:#selector(ViewController.initSendVoiceMessageView) ,
                                    forControlEvents:UIControlEvents.TouchUpInside)
         self.microButton.setImage(UIImage(named:"wifi75"),forState:UIControlState.Normal)
-        sendView.addSubview(self.microButton)
+        self.sendView.addSubview(self.microButton)
         
         self.addButton = UIButton(frame:CGRectMake(screenWidth - 43,10,30,30))
         self.addButton.alpha = 0.8
-        self.addButton.addTarget(self, action:#selector(ViewController.showOrHiddenImageView) ,
+        self.addButton.addTarget(self, action:#selector(ViewController.showOrHiddenImageSelectView) ,
                                  forControlEvents:UIControlEvents.TouchUpInside)
         self.addButton.setImage(UIImage(named:"add"),forState:UIControlState.Normal)
-        sendView.addSubview(self.addButton)
-        
-        hiddenImageView()
-        imageViewFlag = "show"
+        self.sendView.addSubview(self.addButton)
+        hiddenImageSelectView()
+        self.imageSelectViewFlag = "show"
+        self.currentViewName = "sendTextMessageView"
         
     }
     
@@ -140,51 +141,51 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         return true
     }
     
-    func changMessageViewToVoiceView(){
+    func initSendVoiceMessageView(){
         
         let MessageView = self.view.viewWithTag(100)
-        
         MessageView?.removeFromSuperview()
         let screenWidth = UIScreen.mainScreen().bounds.width
-        sendView = UIView(frame:CGRectMake(0,self.view.frame.size.height - 50,screenWidth,50))
+        self.sendView = UIView(frame:CGRectMake(0,self.view.frame.size.height - 50,screenWidth,50))
         
-        sendView.backgroundColor = UIColor(red:0, green:0.1, blue:0.1, alpha:0.1)
-        sendView.alpha = 0.5
-        voiceButton = UIButton(frame: CGRect(x: 44, y: 7, width: screenWidth - 95, height: 36))
-        voiceButton!.setTitle("Hold to talk", forState: UIControlState.Normal)
-        voiceButton!.backgroundColor = UIColor.lightGrayColor()
-        voiceButton!.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        voiceButton!.addTarget(self, action:#selector(ViewController.holdOnVoiceButton) ,
+        self.sendView.backgroundColor = UIColor(red:0, green:0.1, blue:0.1, alpha:0.1)
+        self.sendView.alpha = 0.5
+        self.voiceButton = UIButton(frame: CGRect(x: 44, y: 7, width: screenWidth - 95, height: 36))
+        self.voiceButton!.setTitle("Hold to talk", forState: UIControlState.Normal)
+        self.voiceButton!.backgroundColor = UIColor.lightGrayColor()
+        self.voiceButton!.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        self.voiceButton!.addTarget(self, action:#selector(ViewController.holdOnVoiceButton) ,
                                forControlEvents:UIControlEvents.TouchDown)
-        voiceButton!.addTarget(self, action:#selector(ViewController.leftVoiceButton) ,
+        self.voiceButton!.addTarget(self, action:#selector(ViewController.leftVoiceButton) ,
                                forControlEvents:UIControlEvents.TouchUpInside)
-        voiceButton!.alpha = 0.9
-        voiceButton!.layer.cornerRadius = 5
-        sendView.addSubview(voiceButton!)
-        sendView.tag = 101
+        self.voiceButton!.alpha = 0.9
+        self.voiceButton!.layer.cornerRadius = 5
+        self.sendView.addSubview(voiceButton!)
+        self.sendView.tag = 101
         self.view.addSubview(sendView)
         
         self.keyBoardButton = UIButton(frame:CGRectMake(7,5,30,38))
         self.keyBoardButton!.alpha = 0.9
-        self.keyBoardButton!.addTarget(self, action:#selector(ViewController.setupSendPanel) ,
+        self.keyBoardButton!.addTarget(self, action:#selector(ViewController.initSendTextMessageView) ,
                                        forControlEvents:UIControlEvents.TouchUpInside)
         self.keyBoardButton!.setImage(UIImage(named:"edit"),forState:UIControlState.Normal)
-        sendView.addSubview(self.keyBoardButton!)
+        self.sendView.addSubview(self.keyBoardButton!)
         
         self.addButton = UIButton(frame:CGRectMake(screenWidth - 43,10,30,30))
         self.addButton.alpha = 0.8
-        self.addButton.addTarget(self, action:#selector(ViewController.showOrHiddenImageView) ,
+        self.addButton.addTarget(self, action:#selector(ViewController.showOrHiddenImageSelectView) ,
                                  forControlEvents:UIControlEvents.TouchUpInside)
         self.addButton.setImage(UIImage(named:"add"),forState:UIControlState.Normal)
-        sendView.addSubview(self.addButton)
+        self.sendView.addSubview(self.addButton)
         
-        hiddenImageView()
-        imageViewFlag = "show"
+        hiddenImageSelectView()
+        self.imageSelectViewFlag = "show"
+        self.currentViewName = "sendVoiceMessageView"
         
     }
     
     
-    
+    // 录音按钮Hold事件
     func holdOnVoiceButton()
     {
         self.voiceButton!.backgroundColor = UIColor.darkGrayColor()
@@ -192,14 +193,14 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         let now = NSDate()
         let dformatter = NSDateFormatter()
         dformatter.dateFormat = "HH_mm_ss"
-        aacPath = docDir + "/play_"+dformatter.stringFromDate(now)+".wav"
+        self.aacPath = docDir + "/play_"+dformatter.stringFromDate(now)+".wav"
         
         // 初始化麦克风
-        microphone = EZMicrophone(delegate: self, startsImmediately: true)
-        microphone.startFetchingAudio()
+        self.microphone = EZMicrophone(delegate: self, startsImmediately: true)
+        self.microphone.startFetchingAudio()
         
         // 初始化recorder
-        ezRecorder = EZRecorder(URL: NSURL(string: aacPath!)!, clientFormat: microphone.self.audioStreamBasicDescription(), fileType: EZRecorderFileType.WAV, delegate: self)
+        self.ezRecorder = EZRecorder(URL: NSURL(string: aacPath!)!, clientFormat: microphone.self.audioStreamBasicDescription(), fileType: EZRecorderFileType.WAV, delegate: self)
         
         
         // 初始化波形图view
@@ -221,15 +222,16 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         
     }
     
+    // 录音按钮松开事件
     func leftVoiceButton()
     {
         self.plot.removeFromSuperview()
-        voiceButton!.backgroundColor = UIColor.lightGrayColor()
-        microphone.stopFetchingAudio()
-        ezRecorder.closeAudioFile()
+        self.voiceButton!.backgroundColor = UIColor.lightGrayColor()
+        self.microphone.stopFetchingAudio()
+        self.ezRecorder.closeAudioFile()
         let url = "http://watsonserver.mybluemix.net/speech"
         //let url = "http://123.57.164.21/WeiXin/WatsonDemo2Servlet"
-        postUrl(url)
+        sendVoiceMessage(url)
         
     }
     
@@ -237,90 +239,89 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     func sendMessage()
     {
         let sender = txtMsg
-        let thisChat =  MessageItem(body:sender.text!, user:me, date:NSDate(), mtype:ChatType.Mine)
-        
-        // let url = "http://123.57.164.21/WeiXin/WatsonDemo2Servlet?text=" + sender.text!
-        let url = "http://watsonserver.mybluemix.net/sample?text=" + sender.text!
-        requestUrl(url)
-        
-        Chats.addObject(thisChat)
+        let mineChat =  MessageItem(body:sender.text!, user:me, date:NSDate(), mtype:ChatType.Mine)
+        self.Chats.addObject(mineChat)
         self.tableView.chatDataSource = self
         self.tableView.reloadData()
         sender.resignFirstResponder()
         sender.text = ""
+        // let url = "http://123.57.164.21/WeiXin/WatsonDemo2Servlet?text=" + sender.text!
+        let url = "http://watsonserver.mybluemix.net/sample?text=" + sender.text!
+        sendTextMessage(url)
         
     }
     
-    
-    func showOrHiddenImageView()
+    // 显示或者隐藏图片选择View
+    func showOrHiddenImageSelectView()
     {
-        if(imageViewFlag == "show"){
-            showImageView()
-            imageViewFlag = "hidden"
+        if(self.imageSelectViewFlag == "show"){
+            showImageSelectView()
+            self.imageSelectViewFlag = "hidden"
         }else{
-            hiddenImageView()
-            imageViewFlag = "show"
+            hiddenImageSelectView()
+            self.imageSelectViewFlag = "show"
         }
         
     }
     
-    func showImageView()
+    // 显示图片选择View
+    func showImageSelectView()
     {
         let tableViewWidth = tableView.frame.size.width
         let tableViewHeight = tableView.frame.size.height
         let tableViewRect = CGRectMake(0.0, -30,tableViewWidth,tableViewHeight)
-        tableView.frame = tableViewRect
+        self.tableView.frame = tableViewRect
         
         let sendViewWidth = sendView.frame.size.width
         let sendViewHeight = sendView.frame.size.height
         let sendViewRect = CGRectMake(0.0, self.view.frame.size.height - 100,sendViewWidth,sendViewHeight)
-        sendView.frame = sendViewRect
+        self.sendView.frame = sendViewRect
         
         
         let screenWidth = UIScreen.mainScreen().bounds.width
-        let imageView = UIView(frame:CGRectMake(0,self.view.frame.size.height - 50,screenWidth,60))
+        let imageSelectView = UIView(frame:CGRectMake(0,self.view.frame.size.height - 50,screenWidth,60))
         
-        imageView.backgroundColor = UIColor(red:0, green:0.1, blue:0.1, alpha:0.1)
-        imageView.alpha = 0.5
-        imageView.layer.borderWidth = 1.5
-        imageView.tag = 102
-        imageView.layer.borderColor = UIColor.lightGrayColor().CGColor
-        self.view.addSubview(imageView)
+        imageSelectView.backgroundColor = UIColor(red:0, green:0.1, blue:0.1, alpha:0.1)
+        imageSelectView.alpha = 0.5
+        imageSelectView.layer.borderWidth = 1.5
+        imageSelectView.tag = 102
+        imageSelectView.layer.borderColor = UIColor.lightGrayColor().CGColor
+        self.view.addSubview(imageSelectView)
         
         
-        let mircoButton = UIButton(frame:CGRectMake(10,6,35,35))
-        mircoButton.alpha = 0.8
-        mircoButton.addTarget(self, action:#selector(ViewController.changMessageViewToVoiceView) ,
+        let localImageButton = UIButton(frame:CGRectMake(10,6,35,35))
+        localImageButton.alpha = 0.8
+        localImageButton.addTarget(self, action:#selector(ViewController.initSendVoiceMessageView) ,
                               forControlEvents:UIControlEvents.TouchUpInside)
-        mircoButton.setImage(UIImage(named:"pictures"),forState:UIControlState.Normal)
-        imageView.addSubview(mircoButton)
-        mircoButton.enabled = false
+        localImageButton.setImage(UIImage(named:"pictures"),forState:UIControlState.Normal)
+        imageSelectView.addSubview(localImageButton)
+        localImageButton.enabled = false
         
-        let addButton = UIButton(frame:CGRectMake(70,6,35,35))
-        addButton.alpha = 0.8
-        addButton.addTarget(self, action:#selector(ViewController.showOrHiddenImageView) ,
+        let cameraButton = UIButton(frame:CGRectMake(70,6,35,35))
+        cameraButton.alpha = 0.8
+        cameraButton.addTarget(self, action:#selector(ViewController.showOrHiddenImageSelectView) ,
                             forControlEvents:UIControlEvents.TouchUpInside)
-        addButton.setImage(UIImage(named:"photo189"),forState:UIControlState.Normal)
-        imageView.addSubview(addButton)
-        addButton.enabled = false
+        cameraButton.setImage(UIImage(named:"photo189"),forState:UIControlState.Normal)
+        imageSelectView.addSubview(cameraButton)
+        cameraButton.enabled = false
         
     }
     
-    func hiddenImageView()
+    // 隐藏图片选择View
+    func hiddenImageSelectView()
     {
-        let imageView = self.view.viewWithTag(102)
-        imageView?.removeFromSuperview()
+        let imageSelectView = self.view.viewWithTag(102)
+        imageSelectView?.removeFromSuperview()
         
         let tableViewWidth = tableView.frame.size.width;
         let tableViewHeight = tableView.frame.size.height;
         let tableViewRect = CGRectMake(0.0, 20,tableViewWidth,tableViewHeight);
-        tableView.frame = tableViewRect
+        self.tableView.frame = tableViewRect
         
         let sendViewWidth = sendView.frame.size.width;
         let sendViewHeight = sendView.frame.size.height;
         let sendViewRect = CGRectMake(0.0, self.view.frame.size.height - 50,sendViewWidth,sendViewHeight)
-        
-        sendView.frame = sendViewRect
+        self.sendView.frame = sendViewRect
         
     }
     
@@ -328,32 +329,27 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         return true
     }
     
-    func setupChatTable()
+    func initChatTableView()
     {
         
-        // self.view.backgroundView = UIImageView(image:UIImage(named:"watsonlogo.jpeg"))
         let backGroundImage:UIImage  = UIImage(named:"watson11.png")!
-        let a:UIImageView = UIImageView(image:backGroundImage)
-        a.alpha = 0.4
-        // a.layer.contents = backGroundImage.CGImage
+        let backGroundImageView:UIImageView = UIImageView(image:backGroundImage)
+        backGroundImageView.alpha = 0.4
         
         
         self.view.backgroundColor = UIColor(patternImage: backGroundImage)
         self.view.layer.contents = backGroundImage.CGImage
-        // self.view.insertSubview(a, atIndex: 0)
-        
         self.tableView = TableView(frame:CGRectMake(0, 20, self.view.frame.size.width, self.view.frame.size.height - 70), style: .Plain)
-        // self.tableView.backgroundView = UIImageView(image:UIImage(named:"watsonlogo.jpeg"))
         
         // 创建一个重用的单元格
         self.tableView!.registerClass(TableViewCell.self, forCellReuseIdentifier: "ChatCell")
-        me = UserInfo(name:"user" ,logo:("UserFemale.png"))
-        Watson  = UserInfo(name:"watson", logo:("rainbow.png"))
+        self.me = UserInfo(name:"user" ,logo:("UserFemale.png"))
+        self.Watson  = UserInfo(name:"watson", logo:("rainbow.png"))
         
         let zero =  MessageItem(body:"Hi Dear,I'm watson,What can I do for you!", user:Watson,  date:NSDate(timeIntervalSinceNow:0), mtype:ChatType.Someone)
         
-        Chats = NSMutableArray()
-        Chats.addObjectsFromArray([zero])
+        self.Chats = NSMutableArray()
+        self.Chats.addObjectsFromArray([zero])
         self.tableView.chatDataSource = self
         self.tableView.reloadData()
         self.view.addSubview(self.tableView)
@@ -366,14 +362,14 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     
     func chatTableView(tableView:TableView, dataForRow row:Int) -> MessageItem
     {
-        return Chats[row] as! MessageItem
+        return self.Chats[row] as! MessageItem
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
     
-    func requestUrl(urlString:String) ->  Void {
+    func sendTextMessage(urlString:String) ->  Void {
         self.callWebServiceFlag = "sending"
         disableOrEnableAllsendButton()
         let URL = NSURL(string:urlString)
@@ -390,19 +386,17 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
                 
                 if(type == "text"){
                     let text: String = jsonData.objectForKey("value") as! String
-                    let thatChat =  MessageItem(body:"\(text)", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
-                    self.Chats.addObject(thatChat)
+                    let watsonChat =  MessageItem(body:"\(text)", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
+                    self.Chats.addObject(watsonChat)
                     self.tableView.chatDataSource = self
                     self.tableView.reloadData()
                 }
                 if(type == "itemlist"){
                     self.itemlist = jsonData.objectForKey("value")! as! NSArray
                     let title:String = jsonData.objectForKey("title")! as! String
-                    let thatChat =  MessageItem(body:"\(title)", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
-                    self.Chats.addObject(thatChat)
+                    let watsonChat =  MessageItem(body:"\(title)", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
+                    self.Chats.addObject(watsonChat)
                     self.tableView.reloadData()
-                    
-                    
                     
                     //                    for i in 0..<itemlist.count{
                     //                        let jsonItemData:AnyObject = itemlist[i]
@@ -422,20 +416,20 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
                     self.pickerView.reloadAllComponents()
                     self.view.addSubview(self.pickerView)
                     
-                    self.okView = UIView(frame:CGRectMake(0, self.view.frame.size.height - 135, screenWidth,40))
+                    self.confirmView = UIView(frame:CGRectMake(0, self.view.frame.size.height - 135, screenWidth,40))
                     
-                    self.okView.backgroundColor = UIColor(red:0, green:0.1, blue:0.1, alpha:0.1)
-                    self.okView.layer.borderWidth = 0.5
-                    self.okView.layer.borderColor = UIColor.lightGrayColor().CGColor
-                    self.okView.alpha = 0.5
-                    self.view.addSubview(self.okView)
+                    self.confirmView.backgroundColor = UIColor(red:0, green:0.1, blue:0.1, alpha:0.1)
+                    self.confirmView.layer.borderWidth = 0.5
+                    self.confirmView.layer.borderColor = UIColor.lightGrayColor().CGColor
+                    self.confirmView.alpha = 0.5
+                    self.view.addSubview(self.confirmView)
                     
-                    let okButton = UIButton(frame:CGRectMake(screenWidth - 43, 1, 38, 38))
-                    okButton.alpha = 0.8
-                    okButton.addTarget(self, action:#selector(ViewController.getSelectItem) ,
+                    let confirmButton = UIButton(frame:CGRectMake(screenWidth - 43, 1, 38, 38))
+                    confirmButton.alpha = 0.8
+                    confirmButton.addTarget(self, action:#selector(ViewController.getSelectItem) ,
                         forControlEvents:UIControlEvents.TouchUpInside)
-                    okButton.setImage(UIImage(named:"Ok-96.png"),forState:UIControlState.Normal)
-                    self.okView.addSubview(okButton)
+                    confirmButton.setImage(UIImage(named:"Ok-96.png"),forState:UIControlState.Normal)
+                    self.confirmView.addSubview(confirmButton)
                     
                     self.sendView.removeFromSuperview()
                     
@@ -453,7 +447,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         })
     }
     
-    func postUrl(urlString:String) ->  Void {
+    func sendVoiceMessage(urlString:String) ->  Void {
         self.callWebServiceFlag = "sending"
         disableOrEnableAllsendButton()
         let URL = NSURL(string:urlString)
@@ -461,8 +455,8 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         urlRequest.HTTPMethod = "POST"
         urlRequest.HTTPBodyStream  = NSInputStream.init(fileAtPath: aacPath!)
         
-        let thisChat =  MessageItem(body:"\("......")", user:self.me, date:NSDate(), mtype:ChatType.Mine)
-        self.Chats.addObject(thisChat)
+        let mineChat =  MessageItem(body:"\("......")", user:self.me, date:NSDate(), mtype:ChatType.Mine)
+        self.Chats.addObject(mineChat)
         self.tableView.reloadData()
         self.currentIndex = self.rowsForChatTable(self.tableView)
         
@@ -491,7 +485,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     
     // 实时抓取音轨Buffer
     func microphone(microphone: EZMicrophone!, hasBufferList bufferList: UnsafeMutablePointer<AudioBufferList>, withBufferSize bufferSize: UInt32, withNumberOfChannels numberOfChannels: UInt32) {
-        ezRecorder.appendDataFromBufferList(bufferList, withBufferSize:bufferSize)
+        self.ezRecorder.appendDataFromBufferList(bufferList, withBufferSize:bufferSize)
     }
     
     // 根据音轨计算出波形图
@@ -507,13 +501,12 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     
     // 设置选择框的行数为
     func pickerView(pickerView: UIPickerView,numberOfRowsInComponent component: Int) -> Int{
-        return itemlist.count
+        return self.itemlist.count
     }
     
     // 设置选择框各选项的内容
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int)
         -> String? {
-            
             let contenObject:AnyObject = itemlist[row]
             let itemText:String =  contenObject.objectForKey("text") as! String
             return itemText
@@ -523,13 +516,22 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     func getSelectItem()
     {
         let selectInt:Int  = pickerView.selectedRowInComponent(0)
-        let contenObject:AnyObject = itemlist[selectInt]
-        let itemText:String =  contenObject.objectForKey("text") as! String
-        print(itemText)
-        self.okView.removeFromSuperview()
+        let itemSelectObject:AnyObject = itemlist[selectInt]
+        let itemSelectText:String =  itemSelectObject.objectForKey("text") as! String
+        self.confirmView.removeFromSuperview()
         self.pickerView.removeFromSuperview()
-        setupSendPanel()
+        if self.currentViewName == "sendTextMessageView"{
+            initSendTextMessageView()
+        }else{
+            initSendVoiceMessageView()
+        }
         
+        let mineChat =  MessageItem(body:itemSelectText, user:me, date:NSDate(), mtype:ChatType.Mine)
+        self.Chats.addObject(mineChat)
+        self.tableView.chatDataSource = self
+        self.tableView.reloadData()
+        let url = "http://watsonserver.mybluemix.net/sample?text=" + itemSelectText
+        sendTextMessage(url)
     }
     
     // 非活性or活性所有送信按钮
@@ -567,9 +569,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         }
         
     }
-    
-    
-    
+
     // 等待Waston Api执行结果
     func timerWaitCustomer()
     {
