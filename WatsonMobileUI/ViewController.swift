@@ -81,7 +81,6 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         
         let screenWidth = UIScreen.mainScreen().bounds.width
         sendView = UIView(frame:CGRectMake(0,self.view.frame.size.height - 50,screenWidth,50))
-        
         sendView.backgroundColor = UIColor(red:0, green:0.1, blue:0.1, alpha:0.1)
         sendView.alpha = 0.5
         
@@ -236,7 +235,8 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         let sender = txtMsg
         let thisChat =  MessageItem(body:sender.text!, user:me, date:NSDate(), mtype:ChatType.Mine)
         
-        let url = "http://123.57.164.21/WeiXin/WatsonDemo2Servlet?text=" + sender.text!
+        // let url = "http://123.57.164.21/WeiXin/WatsonDemo2Servlet?text=" + sender.text!
+        let url = "http://watsonserver.mybluemix.net/sample?text=" + sender.text!
         requestUrl(url)
         
         Chats.addObject(thisChat)
@@ -393,7 +393,8 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
                 }
                 if(type == "itemlist"){
                     self.itemlist = jsonData.objectForKey("value")! as! NSArray
-                    let thatChat =  MessageItem(body:"\("You may want to say:")", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
+                    let title:String = jsonData.objectForKey("title")! as! String
+                    let thatChat =  MessageItem(body:"\(title)", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
                     self.Chats.addObject(thatChat)
                     self.tableView.reloadData()
                     
@@ -462,7 +463,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         self.currentIndex = self.rowsForChatTable(self.tableView)
         
         self.times = 1
-        self.timer = NSTimer.scheduledTimerWithTimeInterval(1,
+        self.timer = NSTimer.scheduledTimerWithTimeInterval(0.5,
                                                             target:self,selector:#selector(ViewController.timerWaitCustomer),
                                                             userInfo:nil,repeats:true)
         
@@ -475,8 +476,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
                 let datastring = String(data:data!, encoding: NSUTF8StringEncoding)
                 self.Chats[self.currentIndex - 1] =  MessageItem(body:"\(datastring!)", user:self.me, date:NSDate(), mtype:ChatType.Mine)
                 self.tableView.chatDataSource = self
-                self.tableView.reloadData()
-                
+                self.tableView.reloadDataForWaitCell()
             }else{
                 if(data?.length == 0){
                 }
