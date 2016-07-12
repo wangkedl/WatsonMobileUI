@@ -5,7 +5,6 @@ enum ChatType
     case Mine
     case Someone
     case GoodsList
-    case Wait
 }
 
 class MessageItem
@@ -105,10 +104,4 @@ class MessageItem
         
         self.init(user:user, mtype:mtype, view:imageView, insets:insets, text:nil)
     }
-    
-    // 商品一览
-//    convenience init(date:NSDate, mtype:ChatType)
-//    {
-//       
-//    }
 }

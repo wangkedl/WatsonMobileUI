@@ -91,13 +91,18 @@ class TableView:UITableView,UITableViewDelegate, UITableViewDataSource
         else{
             let cellId = "GoodsCell"
             let cell = TableViewGoodsCell(data:data, reuseIdentifier: cellId)
+            let goods:Goods = data.goods!
             cell.backgroundColor = UIColor.whiteColor()
             cell.layer.borderWidth = 1
             cell.contentView.alpha = 0.6
             cell.layer.borderColor = UIColor.lightGrayColor().CGColor
             cell.contentView.frame = CGRectMake(50, 50, 50, 30)
-            cell.textLabel!.text = "tetst"
-            cell.imageView?.image = UIImage(named: "pictures")
+            cell.textLabel!.text = goods.name
+            cell.detailTextLabel?.text = goods.details
+
+            let pictures =  NSData(contentsOfURL: NSURL.init(string: goods.imgurl)!)
+            let img = UIImage(data: pictures!,scale:1.5)
+            cell.imageView?.image = img
             return cell
         }
         

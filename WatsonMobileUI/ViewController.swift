@@ -429,17 +429,22 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
                 }else{
                     self.goodslist = jsonData.objectForKey("value")! as! NSArray
                     let title:String = jsonData.objectForKey("title")! as! String
+                    print(self.goodslist)
                     let wasonChat:MessageItem =  MessageItem(body:"\(title)", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
                     self.Chats.addObject(wasonChat)
                     
                     for i in 0..<self.goodslist.count{
                         let jsonGoodsData:AnyObject = self.goodslist[i]
+                        let id =  jsonGoodsData.objectForKey("id") as! String
+                        let details =  jsonGoodsData.objectForKey("details") as! String
                         let name =  jsonGoodsData.objectForKey("title") as! String
                         let price =  jsonGoodsData.objectForKey("price") as! String
                         let imgurl = jsonGoodsData.objectForKey("imgurl") as! String
                         
+                        let goods:Goods = Goods.init(id: id, name: name, price: price, details: details, imgurl: imgurl)
                         
-                        //self.Chats.addObject(item)
+                        let goodsItem:MessageItem =  MessageItem.init(goods: goods, mtype: ChatType.GoodsList)
+                        self.Chats.addObject(goodsItem)
                         
                     }
                     self.tableView.chatDataSource = self
