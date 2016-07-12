@@ -10,6 +10,7 @@ enum ChatBubbleTypingType
 class TableView:UITableView,UITableViewDelegate, UITableViewDataSource
 {
     
+    var thumbQueue = NSOperationQueue()
     var bubbleSection:NSMutableArray!
     var chatDataSource:ChatDataSource!
     
@@ -93,16 +94,27 @@ class TableView:UITableView,UITableViewDelegate, UITableViewDataSource
             let cell = TableViewGoodsCell(data:data, reuseIdentifier: cellId)
             let goods:Goods = data.goods!
             cell.backgroundColor = UIColor.whiteColor()
-            cell.layer.borderWidth = 1
-            cell.contentView.alpha = 0.6
+            cell.layer.borderWidth = 0.5
             cell.layer.borderColor = UIColor.lightGrayColor().CGColor
-            cell.contentView.frame = CGRectMake(50, 50, 50, 30)
             cell.textLabel!.text = goods.name
-            cell.detailTextLabel?.text = goods.details
-
-            let pictures =  NSData(contentsOfURL: NSURL.init(string: goods.imgurl)!)
-            let img = UIImage(data: pictures!,scale:1.5)
-            cell.imageView?.image = img
+            cell.detailTextLabel?.text = goods.price
+            cell.detailTextLabel?.textColor = UIColor.redColor()
+            
+            cell.imageView!.contentMode = UIViewContentMode.ScaleAspectFill
+            cell.imageView!.image = UIImage(named :"loading1")
+            
+            let request = NSURLRequest(URL:NSURL.init(string: goods.imgurl)!)
+            NSURLConnection.sendAsynchronousRequest(request, queue: thumbQueue, completionHandler: { response, data, error in
+                if (error != nil) {
+                    print(error)
+                    
+                } else {
+                    let image = UIImage.init(data :data!)
+                    dispatch_async(dispatch_get_main_queue(), {
+                        cell.imageView!.image = image
+                    })
+                }
+            })
             return cell
         }
         

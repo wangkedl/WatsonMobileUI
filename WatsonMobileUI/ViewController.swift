@@ -149,8 +149,9 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         self.Chats.addObject(mineChat)
         self.tableView.chatDataSource = self
         self.tableView.reloadData()
-        // let url = "http://123.57.164.21/WeiXin/WatsonDemo2Servlet?text=" + sender.text!
-        let url = "http://watsonserver.mybluemix.net/sample?text=" + sender.text!
+        let escapedString = sender.text!.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
+        // let url = "http://123.57.164.21/WeiXin/WatsonDemo2Servlet?text=" + escapedString!
+        let url = "http://watsonserver.mybluemix.net/sample?text=" + escapedString!
         sendTextMessage(url)
         sender.resignFirstResponder()
         sender.text = ""
@@ -369,6 +370,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     func sendTextMessage(urlString:String) ->  Void {
         self.callWebServiceFlag = "sending"
         disableOrEnableAllsendButton()
+        
         let URL = NSURL(string:urlString)
         let urlRequest = NSURLRequest(URL: URL!)
         
@@ -449,9 +451,6 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
                     }
                     self.tableView.chatDataSource = self
                     self.tableView.reloadData()
-                    
-                    
-                    
                 }
                 
             }else{
@@ -489,7 +488,8 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
                 self.Chats[self.currentIndex - 1] =  MessageItem(body:"\(datastring!)", user:self.me, date:NSDate(), mtype:ChatType.Mine)
                 self.tableView.chatDataSource = self
                 self.tableView.reloadDataForWaitCell()
-                let url = "http://watsonserver.mybluemix.net/sample?text=" + datastring!
+                let escapedString = datastring!.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
+                let url = "http://watsonserver.mybluemix.net/sample?text=" + escapedString!
                 self.sendTextMessage(url)
             }else{
                 if(data?.length == 0){
@@ -550,7 +550,8 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         self.Chats.addObject(mineChat)
         self.tableView.chatDataSource = self
         self.tableView.reloadData()
-        let url = "http://watsonserver.mybluemix.net/sample?text=" + itemSelectText
+        let escapedString = itemSelectText.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
+        let url = "http://watsonserver.mybluemix.net/sample?text=" + escapedString!
         sendTextMessage(url)
     }
     

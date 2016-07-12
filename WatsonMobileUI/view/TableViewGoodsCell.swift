@@ -12,16 +12,11 @@ class TableViewGoodsCell: UITableViewCell {
     
     init(data:MessageItem, reuseIdentifier cellId:String)
     {
-        super.init(style: UITableViewCellStyle.Default, reuseIdentifier:cellId)
+        super.init(style: UITableViewCellStyle.Subtitle, reuseIdentifier:cellId)
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-    }
-    
-    func rebuildUserInterface()
-    {
-       
     }
     
     // 让单元格宽度始终为屏幕宽
@@ -32,8 +27,8 @@ class TableViewGoodsCell: UITableViewCell {
         set (newFrame) {
             var frame = newFrame
             frame.size.width = UIScreen.mainScreen().bounds.width
-            super.frame = CGRectMake(30,200,250,50)
+            super.frame = CGRectMake(frame.origin.x + 40,frame.origin.y,250,frame.height)
         }
     }
-
+    
 }
