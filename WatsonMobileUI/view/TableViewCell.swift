@@ -28,10 +28,10 @@ import UIKit
             }
             
             let type =  self.msgItem.mtype
-            let width =  self.msgItem.view.frame.size.width
-            let height =  self.msgItem.view.frame.size.height
+            let width =  self.msgItem.view!.frame.size.width
+            let height =  self.msgItem.view!.frame.size.height
             
-            var x =  (type == ChatType.Someone) ? 0 : self.frame.size.width - width - self.msgItem.insets.left - self.msgItem.insets.right
+            var x =  (type == ChatType.Someone) ? 0 : self.frame.size.width - width - self.msgItem.insets!.left - self.msgItem.insets!.right
             var y:CGFloat =  0
             
             if (self.msgItem.user!.username != "")
@@ -47,14 +47,14 @@ import UIKit
                 if(type == ChatType.Mine){
                     avatarX = self.frame.size.width - 52
                     //print(self.msgItem.view.frame.height)
-                    avatary = self.msgItem.view.frame.height / 2
+                    avatary = self.msgItem.view!.frame.height / 2
                 }
                 
                 // set the frame correctly
                 self.avatarImage.frame = CGRectMake(avatarX, avatary, 50, 50)
                 self.addSubview(self.avatarImage)
                 
-                let delta =  self.frame.size.height - (self.msgItem.insets.top + self.msgItem.insets.bottom + self.msgItem.view.frame.size.height)
+                let delta =  self.frame.size.height - (self.msgItem.insets!.top + self.msgItem.insets!.bottom + self.msgItem.view!.frame.size.height)
                 if (delta > 0)
                 {
                     y = delta
@@ -71,7 +71,7 @@ import UIKit
             
             
             self.customView = self.msgItem.view
-            self.customView.frame = CGRectMake(x + self.msgItem.insets.left, y + self.msgItem.insets.top, width, height)
+            self.customView.frame = CGRectMake(x + self.msgItem.insets!.left, y + self.msgItem.insets!.top, width, height)
             self.addSubview(self.customView)
             
             // depending on the ChatType a bubble image on the left or right
@@ -83,7 +83,7 @@ import UIKit
             else {
                 self.bubbleImage.image = UIImage(named:"message_right.png")!.stretchableImageWithLeftCapWidth(15, topCapHeight:14)
             }
-            self.bubbleImage.frame = CGRectMake(x, y, width + self.msgItem.insets.left + self.msgItem.insets.right, height + self.msgItem.insets.top + self.msgItem.insets.bottom)
+            self.bubbleImage.frame = CGRectMake(x, y, width + self.msgItem.insets!.left + self.msgItem.insets!.right, height + self.msgItem.insets!.top + self.msgItem.insets!.bottom)
         }
         
         // 让单元格宽度始终为屏幕宽

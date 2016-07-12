@@ -25,7 +25,7 @@ class TableViewItemCell: UITableViewCell {
     
     func rebuildUserInterface()
     {
-        let cellView:UIView = self.msgItem.view
+        let cellView:UIView = self.msgItem.view!
 
         self.addSubview(cellView)
         self.layer.borderWidth = 1

@@ -24,6 +24,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
     var pickerView: UIPickerView!
     var confirmView: UIView!
     var itemlist: NSArray!
+    var goodslist: NSArray!
     var timer:NSTimer!
     var times:Int!
     var callWebServiceFlag:String!
@@ -215,8 +216,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         self.microphone.startFetchingAudio()
         
         // 初始化recorder
-        self.ezRecorder = EZRecorder(URL: NSURL(string: aacPath!)!, clientFormat: microphone.self.audioStreamBasicDescription(), fileType: EZRecorderFileType.WAV, delegate: self)
-        
+        self.ezRecorder = EZRecorder(URL: NSURL(string: self.aacPath!)!, clientFormat: microphone.self.audioStreamBasicDescription(), fileType: EZRecorderFileType.WAV, delegate: self)
         
         // 初始化波形图view
         self.plot = EZAudioPlot.init(frame: CGRectMake(self.view.frame.width/2-35, self.view.frame.height/2-70, 70, 70))
@@ -389,23 +389,12 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
                     self.Chats.addObject(wasonChat)
                     self.tableView.chatDataSource = self
                     self.tableView.reloadData()
-                }
-                if(type == "itemlist"){
+                }else if(type == "itemlist"){
                     self.itemlist = jsonData.objectForKey("value")! as! NSArray
                     let title:String = jsonData.objectForKey("title")! as! String
                     let wasonChat:MessageItem =  MessageItem(body:"\(title)", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
                     self.Chats.addObject(wasonChat)
                     self.tableView.reloadData()
-                    
-                    //                    for i in 0..<itemlist.count{
-                    //                        let jsonItemData:AnyObject = itemlist[i]
-                    //                        let itemText =  jsonItemData.objectForKey("text") as! String
-                    //                        let item =  MessageItem(body:"\(itemText)", date:NSDate(), mtype:ChatType.ItemList)
-                    //                        self.Chats.addObject(item)
-                    //
-                    //                    }
-                    //                    self.tableView.chatDataSource = self
-                    //                    self.tableView.reloadData()
                     
                     let screenWidth = UIScreen.mainScreen().bounds.width
                     self.pickerView = UIPickerView(frame: CGRectMake(0,self.view.frame.size.height - 100,screenWidth,100))
@@ -437,10 +426,31 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
                     let tableViewRect = CGRectMake(0.0, -70,tableViewWidth,tableViewHeight)
                     self.tableView.frame = tableViewRect
                     
+                }else{
+                    self.goodslist = jsonData.objectForKey("value")! as! NSArray
+                    let title:String = jsonData.objectForKey("title")! as! String
+                    let wasonChat:MessageItem =  MessageItem(body:"\(title)", user:self.Watson, date:NSDate(), mtype:ChatType.Someone)
+                    self.Chats.addObject(wasonChat)
+                    
+                    for i in 0..<self.goodslist.count{
+                        let jsonGoodsData:AnyObject = self.goodslist[i]
+                        let name =  jsonGoodsData.objectForKey("title") as! String
+                        let price =  jsonGoodsData.objectForKey("price") as! String
+                        let imgurl = jsonGoodsData.objectForKey("imgurl") as! String
+                        
+                        
+                        //self.Chats.addObject(item)
+                        
+                    }
+                    self.tableView.chatDataSource = self
+                    self.tableView.reloadData()
+                    
+                    
+                    
                 }
                 
             }else{
-                
+                // 服务器挂了
                 
             }
         })
@@ -452,7 +462,7 @@ class ViewController: UIViewController, ChatDataSource,UITextFieldDelegate,EZMic
         let URL = NSURL(string:urlString)
         let urlRequest = NSMutableURLRequest(URL: URL!)
         urlRequest.HTTPMethod = "POST"
-        urlRequest.HTTPBodyStream  = NSInputStream.init(fileAtPath: aacPath!)
+        urlRequest.HTTPBodyStream  = NSInputStream.init(fileAtPath: self.aacPath!)
         
         let mineChat =  MessageItem(body:"\("......")", user:self.me, date:NSDate(), mtype:ChatType.Mine)
         self.Chats.addObject(mineChat)

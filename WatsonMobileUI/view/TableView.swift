@@ -70,7 +70,7 @@ class TableView:UITableView,UITableViewDelegate, UITableViewDataSource
         let item:MessageItem = self.chatDataSource.chatTableView(self, dataForRow:indexPath.row)
         var height:CGFloat = 40
         if(item.mtype == ChatType.Mine ||  item.mtype == ChatType.Someone){
-            height  = item.insets.top + max(item.view.frame.size.height, 52) + item.insets.bottom
+            height  = item.insets!.top + max(item.view!.frame.size.height, 52) + item.insets!.bottom
         }
         return height
     }
@@ -87,15 +87,9 @@ class TableView:UITableView,UITableViewDelegate, UITableViewDataSource
             cell.backgroundColor = UIColor.clearColor()
             return cell
         }
-        // 标准选择一览Cell
-        else if(data.mtype == ChatType.ItemList){
-            let cellId = "ItemCell"
-            let cell = TableViewItemCell(data:data, reuseIdentifier: cellId)
-            return cell
-        }
          // 标准商品一览Cell
         else{
-            let cellId = "ChatCell"
+            let cellId = "GoodsCell"
             let cell = TableViewGoodsCell(data:data, reuseIdentifier: cellId)
             cell.backgroundColor = UIColor.whiteColor()
             cell.layer.borderWidth = 1
